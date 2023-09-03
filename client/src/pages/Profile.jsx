@@ -17,14 +17,18 @@ function Profile() {
     // Add more goals here
   ];
 
-  // State for editing user info
+  // Using 'useState' hook to manage the editing state of the user inforamtion
+  // 'isEditing' is a Boolean that determines if the user is currently editing thier profile info or not
+  // Here we are initializing it with 'false'
   const [isEditing, setIsEditing] = useState(false);
 
-  // State for user info form fields (if needed)
+  // Using 'useState' hook to manage the state of the users infomation fields when in editing mode. 
+  // 'userInfo' is an object that holds the users information (username, email, ect.)
+  // we initialize it with the values from 'userData' when the user edits their information, we update this state. 
   const [userInfo, setUserInfo] = useState({
     username: userData.username,
     email: userData.email,
-    // Add other user info fields here
+    // We can add more propertires here
   });
 
   // Function to handle user info form submission
