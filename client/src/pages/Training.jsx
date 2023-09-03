@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import audioStream from "../utils/pitchdetect";
+import audioStream from "../utils/audioStream";
 
 const Training = () => {
   return(
