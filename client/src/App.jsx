@@ -1,22 +1,18 @@
-import { Outlet } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import './App.css'
 
-/**
- * Uncomment these when apollo is ready
- */
-// const client = new ApolloClient({
-//   uri: '/graphql',
-//   cache: new InMemoryCache(),
-// });
+import Homepage from './pages/Homepage'
 
 function App() {
+  // lets you navigate programmatically
+  const current = useLocation().pathname
 
   return (
-    // <ApolloProvider client={client}>
-      <Outlet/>
-    // </ApolloProvider>
-  )
+    <>
+      <Homepage/>
+    </>
+
+  );
 }
 
 export default App

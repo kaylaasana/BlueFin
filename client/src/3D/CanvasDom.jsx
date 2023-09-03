@@ -1,4 +1,5 @@
 import { Canvas } from '@react-three/fiber'
+import { Route, Routes } from 'react-router-dom'
 
 import Experience from './Experience'
 
@@ -6,7 +7,7 @@ import Experience from './Experience'
  * Setting canvas
  */
 export default function CanvasDom(){
-    <Canvas
+    return <Canvas
         camera={ {
             fov: 45,
             near: 0.1,
