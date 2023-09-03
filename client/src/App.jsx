@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import TrainingRoom from './pages/TrainingRoom'
 import './App.css'
 
 /**
@@ -14,7 +15,7 @@ function App() {
 
   return (
     // <ApolloProvider client={client}>
-      <Outlet/>
+      <TrainingRoom/>
     // </ApolloProvider>
   )
 }
