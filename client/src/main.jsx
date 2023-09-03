@@ -7,6 +7,7 @@ import './index.css'
 
 /**
  * Router setup
+ * Insert more children as we go
  */
 const router = createBrowserRouter([
   {
