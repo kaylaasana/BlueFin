@@ -1,23 +1,31 @@
+const User = require('./models/User');
 const UserLevel = require('./models/Level'); 
 
 const resolvers = {
   Mutation: {
     updateUserProgress: async (_, { userId, levelName, progress }) => {
       try {
-        // Check if a UserLevel document already exists for this user and level
-        let userLevel = await UserLevel.findOne({ UserId: userId, levelName });
+        // Find the user by ID
+        const user = await User.findById(userId);
 
-        if (!userLevel) {
-          // If no document exists, create a new one
-          userLevel = new UserLevel({ UserId: userId, levelName, progress });
-        } else {
-          // If a document exists, update the progress
-          userLevel.progress = progress;
+        if (!user) {
+          throw new Error('User not found');
         }
-        // Save the UserLevel document (either newly created or updated)
-        await userLevel.save();
 
-        return userLevel;
+        // Check if the user has the specified level
+        const levelIndex = user.levels.findIndex(level => level.levelName === levelName);
+
+        if (levelIndex === -1) {
+          throw new Error(`Level '${levelName}' not found for the user`);
+        }
+
+        // Update the progress for the specified level
+        user.levels[levelIndex].progress = progress;
+
+        // Save the updated user
+        await user.save();
+
+        return user;
       } catch (error) {
         console.error(error);
         throw new Error('Failed to update progress');
