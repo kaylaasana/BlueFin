@@ -62,11 +62,27 @@ function Profile() {
 };
 
   // Function to reset progress
-  const resetProgress = () => {
-    // Implement logic to reset progress on the backend
-    // After resetting, update the completedTasks and totalTasks accordingly
-    setCompletedTasks(0); // Reset completed tasks to 0
-    setTotalTasks(10); // Reset total tasks to the initial value
+  const resetProgress = async () => {
+    try {
+      // Make an HTTP request to reset progress on the backend
+      const response = await fetch('/api/resetProgress', {
+        method: 'POST', // Use POST to indicate a reset action
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to reset progress');
+      }
+
+      // If the reset is successful, update the completedTasks and totalTasks state
+      setCompletedTasks(0); // Reset completed tasks to 0
+      setTotalTasks(10); // Reset total tasks to the initial value
+    } catch (error) {
+      console.error(error);
+      // Handle error state or display an error message to the user
+    }
   };
 
   return (
