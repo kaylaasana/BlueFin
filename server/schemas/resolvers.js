@@ -14,7 +14,9 @@ const resolvers = {
 
         // Check if the user has the specified level
         const levelIndex = user.levels.findIndex(level => level.levelName === levelName);
-
+        
+        // ensures that the mutation operation only updates the progress of levels that the user actually has.
+        // If the specified level doesn't exist in the user's levels array, it prevents accidental updates or errors related to nonexistent levels.
         if (levelIndex === -1) {
           throw new Error(`Level '${levelName}' not found for the user`);
         }
