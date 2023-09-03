@@ -32,14 +32,34 @@ function Profile() {
     // Add more properties here
   });
 
-  // Function to handle user info form submission
-  const handleUserInfoSubmit = (e) => {
-    e.preventDefault();
-    // Implement logic to update user info in your backend
-    // Update userInfo state accordingly
-    setUserData(userInfo); // Update userData with new values
+ // Function to handle user info form submission
+ const handleUserInfoSubmit = async (e) => {
+  e.preventDefault();
+  
+  try {
+    // Make an HTTP request to update user info
+    const response = await fetch('/api/updateUserInfo', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userInfo), // Send the updated user info to the backend
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update user info');
+    }
+
+    // Update the userData state with the new user info
+    setUserData(userInfo);
+
+    // Exit editing mode
     setIsEditing(false);
-  };
+  } catch (error) {
+    console.error(error);
+    // Handle error state or display an error message to the user
+  }
+};
 
   // Function to reset progress
   const resetProgress = () => {
