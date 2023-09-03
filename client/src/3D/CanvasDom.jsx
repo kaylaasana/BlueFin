@@ -1,5 +1,4 @@
 import { Canvas } from '@react-three/fiber'
-import { Route, Routes } from 'react-router-dom'
 
 import Experience from './Experience'
 
