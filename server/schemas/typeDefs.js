@@ -10,7 +10,7 @@ type User {
   type Level {
     _id: ID!
     levelName: String!
-    progress: Int!
+    levelNumber: Int!
   }
 
 // Query type is defining a single query getUser, allows us to retrieve a user by their userId.
@@ -25,7 +25,7 @@ type User {
 
 // The mutation type defines 'updateUserProgress' mutation to update a user's progress.
   type Mutation {
-    updateUserProgress(userId: ID!, levelName: String!, progress: Int!): User
+    updateUserProgress(userId: ID!, levelName: String!, levelNumber: Int!): User
   }
   
 // The schema definition specifies the entry points for queries and mutations.

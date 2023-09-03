@@ -3,7 +3,7 @@ const UserLevel = require('./models/Level');
 
 const resolvers = {
   Mutation: {
-    updateUserProgress: async (_, { userId, levelName, progress }) => {
+    updateUserProgress: async (_, { userId, levelName, levelNumber }) => {
       try {
         // Find the user by ID
         const user = await User.findById(userId);
@@ -22,7 +22,7 @@ const resolvers = {
         }
 
         // Update the progress for the specified level
-        user.levels[levelIndex].progress = progress;
+        user.levels[levelIndex].levelNumber = levelNumber;
 
         // Save the updated user
         await user.save();
