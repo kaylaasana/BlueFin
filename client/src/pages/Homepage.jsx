@@ -1,3 +1,5 @@
+import CanvasDom from '../3D/CanvasDom'
+
 export default function Homepage(){
-    return <div>Hello</div>
+    return <CanvasDom/>
 }
