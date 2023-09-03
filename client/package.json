@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.2",
-    "@react-three/drei": "^9.80.9",
+    "@react-three/drei": "^9.81.0",
     "@react-three/fiber": "^8.13.7",
     "graphql": "^16.8.0",
     "r3f-perf": "^7.1.2",
