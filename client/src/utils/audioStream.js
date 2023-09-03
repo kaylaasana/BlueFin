@@ -2,6 +2,13 @@
 function audioStream() {
   const context = new AudioContext();
   
+  const analyser = new AnalyserNode(
+    context, {
+    minDecibels : -100,
+    maxDecibels : -10,
+    smoothingTimeConstant : 0.85 
+  })
+  
   navigator.mediaDevices.getUserMedia({
     audio: {
       echoCancellation: false,
@@ -11,8 +18,9 @@ function audioStream() {
     }
   }).then((stream) => {
     const source = context.createMediaStreamSource(stream);
-    source.connect(context.destination)
-    console.log("hello")
+    source.connect(analyser)
+    console.log(analyser)
+
   }).catch((err) => {
     console.log(err)
   })
