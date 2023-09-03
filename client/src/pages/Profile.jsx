@@ -1,34 +1,32 @@
 import React, { useState } from 'react';
 
 function Profile() {
-  // Sample user data (replace with actual user data from your app)
-  const userData = {
+  const [userData, setUserData] = useState({
     username: 'Joe Momma',
     email: 'JoeMomma@example.com',
     password: 'JoeDaddy'
-  };
+  });
 
-  // Sample completion data and goals (replace with actual data)
-  const completedTasks = 5; // Number of completed tasks
-  const totalTasks = 10; // Total number of tasks for the level
+  const [completedTasks, setCompletedTasks] = useState(5); // Number of tasks the user has completed
+  const [totalTasks, setTotalTasks] = useState(10); // Total number of tasks for the level
   const goals = [
     { id: 1, name: 'Goal 1', completed: true },
     { id: 2, name: 'Goal 2', completed: false },
     // Add more goals here
   ];
 
-  // Using 'useState' hook to manage the editing state of the user inforamtion
-  // 'isEditing' is a Boolean that determines if the user is currently editing thier profile info or not
-  // Here we are initializing it with 'false'
+  // Using 'useState' hook to manage the editing state of the user information
+  // 'isEditing' is a Boolean that determines if the user is currently editing their profile info or not
+  // Here, we are initializing it with 'false'
   const [isEditing, setIsEditing] = useState(false);
 
-  // Using 'useState' hook to manage the state of the users infomation fields when in editing mode. 
-  // 'userInfo' is an object that holds the users information (username, email, ect.)
-  // we initialize it with the values from 'userData' when the user edits their information, we update this state. 
+  // Using 'useState' hook to manage the state of the user's information fields when in editing mode.
+  // 'userInfo' is an object that holds the user's information (username, email, etc.)
+  // We initialize it with the values from 'userData' when the user edits their information.
   const [userInfo, setUserInfo] = useState({
     username: userData.username,
     email: userData.email,
-    // We can add more propertires here
+    // Add more properties here
   });
 
   // Function to handle user info form submission
@@ -36,7 +34,16 @@ function Profile() {
     e.preventDefault();
     // Implement logic to update user info in your backend
     // Update userInfo state accordingly
+    setUserData(userInfo); // Update userData with new values
     setIsEditing(false);
+  };
+
+  // Function to reset progress
+  const resetProgress = () => {
+    // Implement logic to reset progress on the backend
+    // After resetting, update the completedTasks and totalTasks accordingly
+    setCompletedTasks(0); // Reset completed tasks to 0
+    setTotalTasks(10); // Reset total tasks to the initial value
   };
 
   return (
@@ -77,7 +84,7 @@ function Profile() {
           Progress: {Math.floor((completedTasks / totalTasks) * 100)}%
         </div>
         {/* Add reset progress button */}
-        <button>Reset Progress</button>
+        <button onClick={resetProgress}>Reset Progress</button>
       </div>
       <div className="completed-tasks">
         {/* Display completed tasks */}
