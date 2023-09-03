@@ -1,26 +1,18 @@
-import { ScrollControls, Scroll, useScroll } from '@react-three/drei'
+import { ScrollControls, Scroll, useScroll, useGLTF, } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 
 function Composition() {
-    const cube = useRef()
+    
     const scroll = useScroll()
-    console.log(scroll);
+    const mic = useGLTF('./models/microphone.glb')
+    console.log(mic);
+
     useFrame((state, delta) => {
-        cube.current.rotation.y += delta * 0.2
-        const offset = 6 - (scroll.offset * 10)
-        state.camera.position.z = offset
+        // const offset = 10 - (scroll.offset * 10)
+        // state.camera.position.z = offset
     })
     return <>
-        <mesh position-x={- 2}>
-            <sphereGeometry />
-            <meshStandardMaterial color="orange" />
-        </mesh>
-
-        <mesh ref={cube} position-x={2} scale={1.5}>
-            <boxGeometry />
-            <meshStandardMaterial color="mediumpurple" />
-        </mesh>
 
         <mesh
             position-y={- 1}
@@ -30,6 +22,8 @@ function Composition() {
             <planeGeometry />
             <meshStandardMaterial color="greenyellow" />
         </mesh>
+
+        <primitive object={mic.scene} position-y={-1} />
     </>
 }
 
