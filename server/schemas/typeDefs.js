@@ -17,8 +17,13 @@ type User {
   type Query {
     getUser(userId: ID!): User
   }
+ 
+// Define mutation type for creating a new user
+  type Mutation {
+    createUser(username: String!, email: String!, password: String!): User
+  }
 
-// THe mutaation type defines 'updateUserProgress' mutation to update a user's progress.
+// The mutation type defines 'updateUserProgress' mutation to update a user's progress.
   type Mutation {
     updateUserProgress(userId: ID!, levelName: String!, progress: Int!): User
   }
@@ -29,4 +34,3 @@ type User {
     mutation: Mutation
   }
   `;
-  
