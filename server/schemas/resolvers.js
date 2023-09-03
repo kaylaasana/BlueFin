@@ -1,8 +1,21 @@
 const User = require("./models/User");
 const UserLevel = require("./models/Level");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Mutation: {
+    // create user new mutation
+    createUser: async (_, { username, email, password }) => {
+      // create new user and store in user variable
+      const user = await User.create({ username, email, password });
+
+      // immediately assign a JWT to the user and log them in once created
+      const token = signToken(user);
+
+      // return authentication object that contains the user and their web token
+      return { token, user };
+    },
+
     updateUserProgress: async (_, { userId, levelName, levelNumber }) => {
       try {
         // Find the user by ID
