@@ -1,18 +1,18 @@
 const { Schema, model } = require('mongoose');
 
-// Reference user Id from User models
-// levelName stores which level the user is on
-// progress stores the users progress for the specific level they are on
 const userLevelSchema = new Schema({
+    // Reference user Id from User models
     UserId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        requires: true,
+        required: true, // Corrected from "requires" to "required"
     },
+    // levelName stores which level the user is on
     levelName: {
         type: String,
         required: true,
     },
+    // progress stores the user's progress for the specific level they are on
     progress: {
         type: Number,
         default: 0,
