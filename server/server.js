@@ -29,7 +29,7 @@ const app = express();
  * Apollo Server
  */
 const startApolloServer = async () => {
-  await server.start();
+//   await server.start();
 
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
