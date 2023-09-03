@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+// using 'useState' hook to define 'userData' and initialize it with an object containing the users information.
+// the setuserData function is used to update that information when needed, such as when the user edits their profile.
 function Profile() {
   const [userData, setUserData] = useState({
     username: 'Joe Momma',
@@ -7,12 +8,14 @@ function Profile() {
     password: 'JoeDaddy'
   });
 
-  const [completedTasks, setCompletedTasks] = useState(5); // Number of tasks the user has completed
-  const [totalTasks, setTotalTasks] = useState(10); // Total number of tasks for the level
+  // useState hook to define a state variable completedTasks and its associated setter function setCompletedTasks
+  // nitializes completedTasks with the value 5, representing the number of tasks the user has completed
+  // shouldnt this be retireved from the back end progress to display the completed tasks?? 
+  const [completedTasks, setCompletedTasks] = useState(5); 
+  const [totalTasks, setTotalTasks] = useState(10); 
   const goals = [
     { id: 1, name: 'Goal 1', completed: true },
     { id: 2, name: 'Goal 2', completed: false },
-    // Add more goals here
   ];
 
   // Using 'useState' hook to manage the editing state of the user information
