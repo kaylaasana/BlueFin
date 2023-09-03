@@ -6,14 +6,19 @@ const resolvers = {
   Mutation: {
     // create user new mutation
     createUser: async (_, { username, email, password }) => {
-      // create new user and store in user variable
-      const user = await User.create({ username, email, password });
+      try {
+        // create new user and store in user variable
+        const user = await User.create({ username, email, password });
 
-      // immediately assign a JWT to the user and log them in once created
-      const token = signToken(user);
+        // immediately assign a JWT to the user and log them in once created
+        const token = signToken(user);
 
-      // return authentication object that contains the user and their web token
-      return { token, user };
+        // return authentication object that contains the user and their web token
+        return { token, user };
+      } catch (error) {
+        console.error(error);
+        throw new Error("Failed to create new user");
+      }
     },
 
     updateUserProgress: async (_, { userId, levelName, levelNumber }) => {
@@ -48,6 +53,8 @@ const resolvers = {
         throw new Error("Failed to update progress");
       }
     },
+    // delete user's progress function
+    deleteUserProgress: async(User, {  }),
   },
 };
 
