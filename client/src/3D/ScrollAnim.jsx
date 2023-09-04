@@ -2,21 +2,26 @@ import { ScrollControls, Scroll, useScroll, useGLTF, MeshReflectorMaterial, Spar
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { useControls } from 'leva'
+import * as THREE from 'three'
 
 function Composition() {
     
     const scroll = useScroll()
     const mic = useGLTF('./models/microphone.glb')
-    console.log(mic);
+    const micObj = useRef()
 
     const {color} = useControls('reflection', {
         color: '#ffffff'
     })
 
     useFrame((state, delta) => {
-        // const offset = 10 - (scroll.offset * 10)
-        // state.camera.position.z = offset
+        const {elapsedTime} = state.clock
+        const offset = 10 - (scroll.offset * 5)
+        state.camera.position.z = offset
+        state.camera.lookAt(new THREE.Vector3(-3, 0.5, 0))
+        micObj.current.rotation.y = offset + 1
     })
+
     return <>
 
         <mesh
@@ -34,11 +39,11 @@ function Composition() {
             />
         </mesh>
 
-        <primitive object={mic.scene} position-y={-1} />
+        <primitive ref={micObj} object={mic.scene} position-y={-1} />
         <Sparkles
             position-y={2}
             size={2}
-            scale={ [10, 2, 10] }
+            scale={ [10, 4, 10] }
             count={40}
         />
     </>

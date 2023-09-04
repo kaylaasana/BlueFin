@@ -19,7 +19,7 @@ export default function Experience()
             resolution={216}
         />
 
-        <OrbitControls makeDefault  />
+        {/* <OrbitControls makeDefault  /> */}
 
         { displayPerform && <Perf position={'top-left'}/>}
 
