@@ -9,8 +9,11 @@
   }
   
   .profile-info {
+    border: solid;
+    border-radius: 2px;
+    border-color: rgb(255, 255, 255);
     background-color: #dadada;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
   .profile-info h2 {
