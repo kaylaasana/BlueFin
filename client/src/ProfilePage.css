@@ -1,5 +1,5 @@
 .profile-container {
-  background-color: grey;
+    background-color: grey;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,6 +8,15 @@
     text-align: center; 
   }
   
+  .homepage-button {
+    text-decoration: none;
+    background-color: #899091;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
   .profile-info {
     border: solid;
     border-radius: 2px;
@@ -24,3 +33,6 @@
     margin-top: 20px; 
   }
   
+  .goals {
+    margin-top: 50px;
+  }
