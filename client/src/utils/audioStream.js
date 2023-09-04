@@ -31,8 +31,17 @@ function audioStream() {
     let valueToDisplay = noteStrings[noteFromPitch(autoCorrelateValue) % 12]
 
   // once audioStream gets imported to Training.jsx, it will render the div's innerText to display the note 
-    document.getElementById('note').innerText = valueToDisplay;
+    document.getElementById('note').innerText = valueToDisplay; 
+    
+    if (autoCorrelateValue === -1) {
+    document.getElementById('note').innerText = "Listening......"
+    }
+
+    
+  
   }
+
+ 
 
    // Get access to the user's audio input device and setup additional options
   navigator.mediaDevices.getUserMedia({
