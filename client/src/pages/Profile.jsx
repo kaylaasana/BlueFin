@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../ProfilePage.css'
 
 function ProfilePage() {
   const [userData] = useState({
