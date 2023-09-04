@@ -1,7 +1,10 @@
 
 function audioStream() {
+  
   const context = new AudioContext();
   
+  // Create an analyser node and attach it to our audio context so that
+  // we can see the data that passes through our audio context node
   const analyser = new AnalyserNode(
     context, {
     minDecibels : -100,
@@ -9,6 +12,7 @@ function audioStream() {
     smoothingTimeConstant : 0.85 
   })
   
+  // Get access to the user's audio input device and setup additional options
   navigator.mediaDevices.getUserMedia({
     audio: {
       echoCancellation: false,
@@ -17,7 +21,10 @@ function audioStream() {
       latency: 0
     }
   }).then((stream) => {
+    // Once promise is fulfilled we will create a Media stream
+    // source on our audio context and pass the stream to it
     const source = context.createMediaStreamSource(stream);
+    // Connect the newly created source with the analyser node
     source.connect(analyser)
   
     drawNote()
@@ -25,12 +32,16 @@ function audioStream() {
     console.log(err)
   })
 
+  // The noteStrings array currently only takes a guitar with standard tuning in mind
   let noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-    function noteFromPitch( frequency ) {
+    
+  // noteFromPitch is responsible for converting an incoming audio frequency into a note 
+      function noteFromPitch( frequency ) {
       let noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
       return Math.round( noteNum ) + 69;
     }
 
+  // drawNote handles displaying the actual note value on the frontend via valueToDisplay
   function drawNote() {
     requestAnimationFrame(drawNote);
     let bufferLength = analyser.fftSize;
@@ -40,7 +51,7 @@ function audioStream() {
 
     let valueToDisplay = noteStrings[noteFromPitch(autoCorrelateValue) % 12];
 
-    console.log(valueToDisplay)
+    return valueToDisplay
   }
 }
 
