@@ -127,7 +127,7 @@ export default function Portal() {
 
         {/* Right Profile*/}
         <Float speed={floatSpeed} rotationIntensity={floatRotation}>
-            <Frame position={[2, 0, 0]} bg={rightColor} text={'Profile'} textPosition={[-0.425, 1, 0.01]} rotation={[0, -Math.PI * 0.2, 0]}>
+            <Frame position={[2, 0, 0]} bg={rightColor} text={'Profile'} textPosition={[-0.425, 1, 0.01]} rotation={[0, -Math.PI * 0.2, 0]} link={'/profile'}>
                 <mesh scale={0.3}>
                     <torusGeometry />
                     <meshNormalMaterial />
