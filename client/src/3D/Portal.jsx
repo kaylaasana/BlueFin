@@ -51,21 +51,32 @@ function Frame({
         console.log(e)
     }
 
+    /** 
+     * Animating 'Getting into the portal'
+     */
     useFrame((state, delta)=>{
+        // check if it's clicked
         if(isClicked){
+            // check if it's positioned
             if(!positioned){
                 state.camera.position.set(0, 0, 5)
                 state.camera.lookAt(new THREE.Vector3(x, y, z))
                 setPositioned(true)
             }
+
+            // sets fov for lightning effect
             if(state.camera.fov < 147){
                 state.camera.fov += delta * 80
                 state.camera.updateProjectionMatrix()
             }else {
+
+                // after setting fov, zoom in
                 if(state.camera.position.z > -5){
                     state.camera.position.z -= delta * 15
+                    state.camera.position.x += delta * (x * 3)
                     console.log(state.camera.position.z);
                 }else {
+                    // after zooming in enough, redirect the user to different page
                     window.location.href = link
                 }
             }
