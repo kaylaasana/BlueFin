@@ -21,7 +21,8 @@ type User {
  
 // Define mutation type for creating a new user
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): User
+    createUser(username: String!, email: String!, password: String!): Auth
+    login(username: String!, password: String!): Auth
   }
 
 // Define delete progress mutation

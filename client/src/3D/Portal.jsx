@@ -106,7 +106,7 @@ export default function Portal() {
 
         {/* Left */}
         <Float speed={floatSpeed} rotationIntensity={floatRotation}>
-            <Frame position={[-2, 0, 0]} bg={leftColor} text={'Login'} rotation={[0, Math.PI * 0.2, 0]}>
+            <Frame position={[-2, 0, 0]} bg={leftColor} text={'Login'} rotation={[0, Math.PI * 0.2, 0]} link={'/login'}>
                 <mesh scale={0.5}>
                     <boxGeometry />
                     <meshNormalMaterial />
