@@ -16,11 +16,11 @@ function ProfilePage() {
 
   // Array of goal objects, each with an ID, name, and completion status
   const [goals, setGoals] = useState([
-    { id: 1, name: 'Goal 1', completed: true },
-    { id: 2, name: 'Goal 2', completed: true },
-    { id: 3, name: 'Goal 3', completed: false },
-    { id: 4, name: 'Goal 4', completed: false },
-    { id: 5, name: 'Goal 5', completed: false },
+    { id: 1, name: 'Goal 1'},
+    { id: 2, name: 'Goal 2'},
+    { id: 3, name: 'Goal 3'},
+    { id: 4, name: 'Goal 4'},
+    { id: 5, name: 'Goal 5'},
   ]);
 
   // array of booleans indicating if each goal is in an editable state
