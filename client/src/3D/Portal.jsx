@@ -7,7 +7,7 @@ import { useControls } from 'leva'
 import * as THREE from 'three'
 extend(geometry)
 
-function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01], rotation = [0, 0, 0], link = '/' }) {
+function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01], rotation = [0, 0, 0], link='/' }) {
     const [isClicked, setClicked] = useState(false)
 
     const [x, y, z] = position
@@ -18,7 +18,7 @@ function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01],
 
     const handleClick = (e) => {
         e.stopPropagation()
-        // window.location.href = link
+        window.location.href = link
         setClicked(true)
         console.log(e)
     }
@@ -93,8 +93,8 @@ export default function Portal() {
         </Float>
 
         {/* Middle */}
-        <Float speed={floatSpeed} rotationIntensity={floatRotation}>
-            <Frame position={[0, 0, 0]} bg={middleColor} text={'Train'}>
+        <Float speed={floatSpeed} rotationIntensity={floatRotation} >
+            <Frame position={[0, 0, 0]} bg={middleColor} text={'Train'} link={'/training'}>
                 <Environment
                     files={'./envMap/blender-2k.hdr'}
                     resolution={16}
