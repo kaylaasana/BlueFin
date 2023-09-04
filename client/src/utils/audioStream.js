@@ -36,7 +36,7 @@ function audioStream() {
 
    // Get access to the user's audio input device and setup additional options
   navigator.mediaDevices.getUserMedia({
-    audio: {
+    audio: { 
       echoCancellation: false,
       autoGainControl: false,
       noiseSuppression: false,
