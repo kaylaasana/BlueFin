@@ -1,5 +1,14 @@
 import { useThree, useFrame } from '@react-three/fiber'
-import { OrbitControls, Text, MeshPortalMaterial, MeshReflectorMaterial, Float, Gltf, Sky, Environment, SpotLight } from '@react-three/drei'
+import { 
+    OrbitControls, 
+    Text, 
+    MeshPortalMaterial, 
+    MeshReflectorMaterial, 
+    Float, 
+    Gltf, 
+    Environment, 
+    CameraControls
+} from '@react-three/drei'
 import { extend } from '@react-three/fiber'
 import { geometry } from 'maath'
 import { useRef, useState } from 'react'
@@ -14,27 +23,59 @@ extend(geometry)
 /**
  * Setting Frame for portal
  */
-function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01], rotation = [0, 0, 0], link='/' }) {
+function Frame({ 
+    position, 
+    children, 
+    bg, 
+    text, 
+    textPosition = [-0.375, 1, 0.01], 
+    rotation = [0, 0, 0], 
+    link='/',
+    setOrbit 
+}) {
     const [isClicked, setClicked] = useState(false)
-
+    const [positioned , setPositioned] = useState(false)
     const [x, y, z] = position
 
-    const obj = useRef()
+    const vector = new THREE.Vector3(x, y, z)
 
+    const obj = useRef()
+    
 
     // redirects the user to another page (default to homepage if you don't provide any props)
-
     const handleClick = (e) => {
         e.stopPropagation()
-        window.location.href = link
+        // window.location.href = link
+        setOrbit(false)
         setClicked(true)
         console.log(e)
     }
 
+    useFrame((state, delta)=>{
+        if(isClicked){
+            if(!positioned){
+                state.camera.position.set(0, 0, 5)
+                state.camera.lookAt(new THREE.Vector3(x, y, z))
+                setPositioned(true)
+            }
+            if(state.camera.fov < 147){
+                state.camera.fov += delta * 80
+                state.camera.updateProjectionMatrix()
+            }else {
+                if(state.camera.position.z > -5){
+                    state.camera.position.z -= delta * 15
+                    console.log(state.camera.position.z);
+                }else {
+                    window.location.href = link
+                }
+            }
+            
+        }
+    })
+
 
     // Returning groups for a portal object 
     return (
-
         <group position={position} rotation={rotation}>
             {/* Contructing text that hovers on the portal */}
             <Text
@@ -74,7 +115,7 @@ export default function Portal() {
     const [isPositioned, setPositioned] = useState(false)
     const floatSpeed = 2
     const floatRotation = 0.05
-
+    const [enableOrbit, setOrbit] = useState(true)
     /**
      * Animation at the start
      */
@@ -83,6 +124,7 @@ export default function Portal() {
             state.camera.position.z -= delta * 15
         } else {
             setPositioned(true)
+            
         }
     })
 
@@ -100,13 +142,19 @@ export default function Portal() {
     })
 
     return <>
-        <OrbitControls enablePan={false} />
+        <OrbitControls enablePan={false} enabled={enableOrbit} />
 
         <directionalLight color={lightColor} />
 
         {/* Left */}
         <Float speed={floatSpeed} rotationIntensity={floatRotation}>
-            <Frame position={[-2, 0, 0]} bg={leftColor} text={'Login'} rotation={[0, Math.PI * 0.2, 0]}>
+            <Frame 
+                position={[-2, 0, 0]} 
+                bg={leftColor} 
+                text={'Login'} 
+                rotation={[0, Math.PI * 0.2, 0]}
+                setOrbit={setOrbit}
+            >
                 <mesh scale={0.5}>
                     <boxGeometry />
                     <meshNormalMaterial />
@@ -116,7 +164,13 @@ export default function Portal() {
 
         {/* Middle */}
         <Float speed={floatSpeed} rotationIntensity={floatRotation} >
-            <Frame position={[0, 0, 0]} bg={middleColor} text={'Train'} link={'/training'}>
+            <Frame 
+                position={[0, 0, 0]} 
+                bg={middleColor} 
+                text={'Train'} 
+                link={'/training'}
+                setOrbit={setOrbit}
+            >
                 <Environment
                     files={'./envMap/blender-2k.hdr'}
                     resolution={16}
@@ -127,7 +181,14 @@ export default function Portal() {
 
         {/* Right Profile*/}
         <Float speed={floatSpeed} rotationIntensity={floatRotation}>
-            <Frame position={[2, 0, 0]} bg={rightColor} text={'Profile'} textPosition={[-0.425, 1, 0.01]} rotation={[0, -Math.PI * 0.2, 0]}>
+            <Frame 
+                position={[2, 0, 0]} 
+                bg={rightColor} 
+                text={'Profile'} 
+                textPosition={[-0.425, 1, 0.01]} 
+                rotation={[0, -Math.PI * 0.2, 0]}
+                setOrbit={setOrbit}
+            >
                 <mesh scale={0.3}>
                     <torusGeometry />
                     <meshNormalMaterial />
