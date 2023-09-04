@@ -54,7 +54,7 @@ const resolvers = {
       }
     },
     // delete user's progress function
-    deleteUserProgress: async(_, { userId, level }) => {
+    deleteUserProgress: async(_, { userId }) => {
       try {
         // find user by _id
         const user = await User.findById(userId)
