@@ -5,6 +5,7 @@ import App from './App.jsx'
 import Homepage from './pages/Homepage.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
+import Training from './pages/Training.jsx'
 
 /**
  * Router setup
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Homepage/>
+      },
+      {
+        path: "Training",
+        element: <Training/>
       }
     ]
   }
