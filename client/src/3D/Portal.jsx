@@ -5,8 +5,15 @@ import { geometry } from 'maath'
 import { useRef, useState } from 'react'
 import { useControls } from 'leva'
 import * as THREE from 'three'
+
+/**
+ * Extending the geometry to add
+ */
 extend(geometry)
 
+/**
+ * Setting Frame for portal
+ */
 function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01], rotation = [0, 0, 0], link='/' }) {
     const [isClicked, setClicked] = useState(false)
 
@@ -15,6 +22,7 @@ function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01],
     const obj = useRef()
 
 
+    // redirects the user to another page (default to homepage if you don't provide any props)
 
     const handleClick = (e) => {
         e.stopPropagation()
@@ -24,10 +32,11 @@ function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01],
     }
 
 
-
+    // Returning groups for a portal object 
     return (
 
         <group position={position} rotation={rotation}>
+            {/* Contructing text that hovers on the portal */}
             <Text
                 fontSize={0.3}
                 anchorY="top"
@@ -38,15 +47,19 @@ function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01],
             >
                 {text}
             </Text>
+
+            {/* Portal */}
             <mesh
                 ref={obj}
                 onPointerEnter={() => { document.body.style.cursor = 'pointer' }}
                 onPointerLeave={() => { document.body.style.cursor = 'default' }}
                 onClick={handleClick}
             >
+                {/* rounded geometry coming from maath package */}
                 <roundedPlaneGeometry args={[1.2, 1.61803398875, 0.1]} />
                 <MeshPortalMaterial side={THREE.DoubleSide}>
                     <color attach={'background'} args={[bg]} />
+                    {/* Passing children that would rendered in the portal */}
                     {children}
                 </MeshPortalMaterial>
             </mesh>
@@ -54,11 +67,17 @@ function Frame({ position, children, bg, text, textPosition = [-0.375, 1, 0.01],
     )
 }
 
+/**
+ * Constructing Portal with multiple portals
+ */
 export default function Portal() {
     const [isPositioned, setPositioned] = useState(false)
     const floatSpeed = 2
     const floatRotation = 0.05
 
+    /**
+     * Animation at the start
+     */
     useFrame((state, delta) => {
         if (state.camera.position.z > 5 && !isPositioned) {
             state.camera.position.z -= delta * 15
@@ -67,6 +86,9 @@ export default function Portal() {
         }
     })
 
+    /**
+     * Debug UI
+     */
     const { lightColor } = useControls('light', {
         lightColor: '#7c7571'
     })
