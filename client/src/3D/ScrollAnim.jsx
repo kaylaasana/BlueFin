@@ -1,13 +1,13 @@
 import { ScrollControls, Scroll, useScroll, useGLTF, MeshReflectorMaterial, Sparkles } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useControls } from 'leva'
 import * as THREE from 'three'
 
 /**
  * Sub component for scroll animation
  */
-function Composition() {
+function Composition({clicked}) {
     
     // useScroll method returns variety of values related with scroll such as offset, range etc
     const scroll = useScroll()
@@ -27,16 +27,25 @@ function Composition() {
 
     // For animating the scene
     useFrame((state, delta) => {
+        if(clicked){
+            state.camera.position.x -= delta * 3
+            state.camera.position.z -= delta * 3
+            if(state.camera.position.z < -0.75){
+                window.location.href = '/portal'
+            }
 
-        // offset calculated from scroll
-        const offset = 10 - (scroll.offset * 5)
-        state.camera.position.z = offset
+        }else {
+            // offset calculated from scroll
+            const offset = 10 - (scroll.offset * 5)
+            state.camera.position.z = offset
+    
+            // making camera lookat certain position
+            state.camera.lookAt(new THREE.Vector3(-3, 0.5, 0))
+    
+            // animating mic
+            micObj.current.rotation.y = offset + 1
+        }
 
-        // making camera lookat certain position
-        state.camera.lookAt(new THREE.Vector3(-3, 0.5, 0))
-
-        // animating mic
-        micObj.current.rotation.y = offset + 1
     })
 
     return <>
@@ -75,6 +84,8 @@ function Composition() {
  */
 export default function ScrollAnim() {
 
+    const [clicked, setClicked] = useState(false)
+
     // debug panel
     const {textColor} = useControls('text', {
         textColor: '#912F40'
@@ -84,12 +95,16 @@ export default function ScrollAnim() {
 
         {/* Putting Scroll components inside scroll controls */}
         <ScrollControls pages={3} damping={0.1}>
-            <Composition/>
+            <Composition clicked={clicked}/>
             <Scroll html>
-                <h1 className="intro mx-3" style={{ top: '30vh', color: textColor }} >Welcome</h1>
-                <h1 className="intro mx-3" style={{ top: '140vh', color: textColor }}>To This</h1>
-                <h1 className="intro mx-3" style={{ top: '240vh', color: textColor }}>Ready?</h1>
-                <button className="intro p-2 mx-3 go-btn" style={{ top: '250vh', color: textColor }}>GO!</button>
+                { !clicked &&
+                    <>
+                        <h1 className="intro mx-3" style={{ top: '30vh', color: textColor }} >Welcome</h1>
+                        <h1 className="intro mx-3" style={{ top: '140vh', color: textColor }}>To This</h1>
+                        <h1 className="intro mx-3" style={{ top: '240vh', color: textColor }}>Ready?</h1>
+                        <button className="intro p-2 mx-3 go-btn" style={{ top: '250vh', color: textColor }} onClick={()=> setClicked(true)} >GO!</button>
+                    </>
+                }
             </Scroll>
         </ScrollControls>
 
