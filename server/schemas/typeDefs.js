@@ -4,23 +4,34 @@ type User {
     _id: ID!
     username: String!
     email: String!
-    levels: [Level] 
+    levels: [levelSchema] 
   }
   
-  type Level {
+  type levelSchema {
     _id: ID!
     levelName: String!
-    progress: Int!
+    levelNumber: Int!
   }
 
 // Query type is defining a single query getUser, allows us to retrieve a user by their userId.
   type Query {
     getUser(userId: ID!): User
+    level: [String!]
+  }
+ 
+// Define mutation type for creating a new user
+  type Mutation {
+    createUser(username: String!, email: String!, password: String!): User
   }
 
-// THe mutaation type defines 'updateUserProgress' mutation to update a user's progress.
+// Define delete progress mutation
   type Mutation {
-    updateUserProgress(userId: ID!, levelName: String!, progress: Int!): User
+    deleteUserProgress(userId: ID!, level: [levelSchema]): User
+  }
+
+// The mutation type defines 'updateUserProgress' mutation to update a user's progress.
+  type Mutation {
+    updateUserProgress(userId: ID!, levelName: String!, levelNumber: Int!): User
   }
   
 // The schema definition specifies the entry points for queries and mutations.
