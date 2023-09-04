@@ -54,7 +54,28 @@ const resolvers = {
       }
     },
     // delete user's progress function
-    deleteUserProgress: async(User, {  }),
+    deleteUserProgress: async(_, { userId, level }) => {
+      try {
+        // find user by _id
+        const user = await User.findById(userId)
+
+        // check if user exists
+        if(!user){
+          throw new Error("No user found");
+        }
+
+        // set user level to 0 by using an empty array
+        user.level = [];
+
+        // save updated user
+        await user.save();
+
+        return "user progress deleted"
+      } catch (error) {
+        console.error(error)
+        throw new Error("Failed to delete progress")
+      }
+    },
   },
 };
 
