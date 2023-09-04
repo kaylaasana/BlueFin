@@ -6,6 +6,7 @@ import Homepage from './pages/Homepage.jsx'
 import PortalPage from './pages/PortalPage.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
+import Training from './pages/Training.jsx'
 
 /**
  * Router setup
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Homepage/>
+      },
+      {
+        path: "Training",
+        element: <Training/>
       },
       {
         path: '/portal',
