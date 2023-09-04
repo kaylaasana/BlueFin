@@ -14,7 +14,7 @@ function ProfilePage() {
   const [completedTasks, setCompletedTasks] = useState(2);
   const totalTasks = 5;
 
-  // Array of goal objects, each with an ID, name, and completion status
+  // Array of goal objects, each with an ID, name
   const [goals, setGoals] = useState([
     { id: 1, name: 'Goal 1'},
     { id: 2, name: 'Goal 2'},
