@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import App from './App.jsx'
 import Homepage from './pages/Homepage.jsx'
+import PortalPage from './pages/PortalPage.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Homepage/>
+      },
+      {
+        path: '/portal',
+        element: <PortalPage/>
       }
     ]
   }
