@@ -63,9 +63,10 @@ export default function ScrollAnim() {
         <ScrollControls pages={3} damping={0.1}>
             <Composition/>
             <Scroll html>
-                <h1 className="intro" style={{ top: '30vh', color: textColor }} >Welcome</h1>
-                <h1 className="intro" style={{ top: '140vh', color: textColor }}>To This</h1>
-                <h1 className="intro" style={{ top: '240vh', color: textColor }}>Ready?</h1>
+                <h1 className="intro mx-3" style={{ top: '30vh', color: textColor }} >Welcome</h1>
+                <h1 className="intro mx-3" style={{ top: '140vh', color: textColor }}>To This</h1>
+                <h1 className="intro mx-3" style={{ top: '240vh', color: textColor }}>Ready?</h1>
+                <button className="intro p-2 mx-3 go-btn" style={{ top: '250vh', color: textColor }}>GO!</button>
             </Scroll>
         </ScrollControls>
 
