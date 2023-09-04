@@ -4,10 +4,10 @@ type User {
     _id: ID!
     username: String!
     email: String!
-    levels: [Level] 
+    levels: [levelSchema] 
   }
   
-  type Level {
+  type levelSchema {
     _id: ID!
     levelName: String!
     levelNumber: Int!
@@ -16,6 +16,7 @@ type User {
 // Query type is defining a single query getUser, allows us to retrieve a user by their userId.
   type Query {
     getUser(userId: ID!): User
+    level: [String!]
   }
  
 // Define mutation type for creating a new user

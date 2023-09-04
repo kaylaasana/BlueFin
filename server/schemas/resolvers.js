@@ -1,8 +1,13 @@
 const User = require("./models/User");
-const UserLevel = require("./models/Level");
+// const UserLevel = require("./models/Level");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
+  Query: {
+    user: async (_, { userId }) => {
+      return User.findById({ _id: userId });
+    }
+  },
   Mutation: {
     // create user new mutation
     createUser: async (_, { username, email, password }) => {
