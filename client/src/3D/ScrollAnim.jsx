@@ -14,6 +14,8 @@ function Composition() {
         color: '#ffffff'
     })
 
+    
+
     useFrame((state, delta) => {
         const {elapsedTime} = state.clock
         const offset = 10 - (scroll.offset * 5)
@@ -51,12 +53,22 @@ function Composition() {
 
 
 export default function ScrollAnim() {
+
+    const {textColor} = useControls('text', {
+        textColor: '#912F40'
+    })
     
     return <>
 
-        <ScrollControls pages={3}>
+        <ScrollControls pages={3} damping={0.1}>
             <Composition/>
+            <Scroll html>
+                <h1 className="intro" style={{ top: '30vh', color: textColor }} >Welcome</h1>
+                <h1 className="intro" style={{ top: '140vh', color: textColor }}>To This</h1>
+                <h1 className="intro" style={{ top: '240vh', color: textColor }}>Ready?</h1>
+            </Scroll>
         </ScrollControls>
+
 
     </>
 }

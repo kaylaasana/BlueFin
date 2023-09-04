@@ -21,7 +21,7 @@ export default function Experience()
 
         {/* <OrbitControls makeDefault  /> */}
 
-        { displayPerform && <Perf position={'top-left'}/>}
+        { displayPerform && <Perf position={'bottom-right'}/>}
 
         {/* <directionalLight position={ [ lightPosition.x, lightPosition.y, lightPosition.z ] } intensity={ intensity } />
         <ambientLight intensity={ 0.5 } /> */}

@@ -30,3 +30,8 @@ body,
     background: #555; 
     border-radius: 10px;
   }
+
+  .intro{
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+  }
