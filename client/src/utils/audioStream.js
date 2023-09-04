@@ -50,8 +50,8 @@ function audioStream() {
     let autoCorrelateValue = autoCorrelate(buffer, context.sampleRate) 
 
     let valueToDisplay = noteStrings[noteFromPitch(autoCorrelateValue) % 12];
+    console.log(valueToDisplay)
 
-    return valueToDisplay
   }
 }
 
