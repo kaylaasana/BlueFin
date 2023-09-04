@@ -7,6 +7,7 @@ extend(geometry)
 function Frame({ position, children, bg, text, textPosition=[-0.375, 1, 0.01], rotation=[0, 0, 0], link='/'}){
 
     const handleClick = (e)=>{
+        e.stopPropagation()
         window.location.href = link
     }
 
@@ -25,7 +26,7 @@ function Frame({ position, children, bg, text, textPosition=[-0.375, 1, 0.01], r
             <mesh 
                 onPointerEnter={()=> {document.body.style.cursor = 'pointer'}} 
                 onPointerLeave={()=>{document.body.style.cursor='default'}} 
-                onClick={handleClick}
+                onDoubleClick={handleClick}
             >
                 <roundedPlaneGeometry args={[1.2, 1.61803398875, 0.1]} />
                 <MeshPortalMaterial side={THREE.DoubleSide}>
@@ -42,7 +43,7 @@ export default function Portal(){
         <OrbitControls/>
 
         {/* Left */}
-        <Frame position={[-2, 0, 0]} bg={'red'} text={'Login'} rotation={[0, Math.PI * 0.2, 0]}>
+        <Frame position={[-2, 0, 0]} bg={'#E2E8CE'} text={'Login'} rotation={[0, Math.PI * 0.2, 0]}>
             <mesh scale={0.5}>
                 <boxGeometry/>
                 <meshNormalMaterial/>
@@ -50,7 +51,7 @@ export default function Portal(){
         </Frame>
 
         {/* Middle */}
-        <Frame position={[0, 0, 0]} bg={'blue'} text={'Train'}>
+        <Frame position={[0, 0, 0]} bg={'#ACBFA4'} text={'Train'}>
             <mesh scale={0.5}>
                 <boxGeometry/>
                 <meshNormalMaterial/>
@@ -58,7 +59,7 @@ export default function Portal(){
         </Frame>
 
         {/* Right */}
-        <Frame position={[2, 0, 0]} bg={'yellow'} text={'Profile'} textPosition={[-0.425, 1, 0.01]} rotation={[0, -Math.PI * 0.2, 0]}>
+        <Frame position={[2, 0, 0]} bg={'#7180AC'} text={'Profile'} textPosition={[-0.425, 1, 0.01]} rotation={[0, -Math.PI * 0.2, 0]}>
             <mesh scale={0.5}>
                 <boxGeometry/>
                 <meshNormalMaterial/>
