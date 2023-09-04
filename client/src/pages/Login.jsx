@@ -48,7 +48,9 @@ const Login = () => {
   return (
     <div>
       <div className="d-flex justify-content-start">
-        <Link to='/'><button>Homepage</button></Link>
+        <Link to="/">
+          <button>Homepage</button>
+        </Link>
       </div>
       <div className="col d-flex justify-content-center">
         <form onSubmit={handleFormSubmit}>
@@ -79,6 +81,10 @@ const Login = () => {
           <button type="submit">Submit</button>
           <button>Sign Up</button>
         </form>
+
+        {error && (
+          <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
+        )}
       </div>
     </div>
   );
