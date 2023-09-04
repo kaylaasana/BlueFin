@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
 
+// using useState initializing 'userData' with default values for 'username' and 'email'
 function ProfilePage() {
   const [userData, setUserData] = useState({
     username: 'User Name',
     email: 'UserEmail@example.com',
   });
 
+  // State for the number of completed tasks and its setter function
+  // Constant representing the total number of tasks
   const [completedTasks, setCompletedTasks] = useState(2);
   const totalTasks = 5;
 
+  // Array of goal objects, each with an ID, name, and completion status
   const [goals, setGoals] = useState([
     { id: 1, name: 'Goal 1', completed: true },
     { id: 2, name: 'Goal 2', completed: true },
@@ -19,60 +23,89 @@ function ProfilePage() {
     { id: 5, name: 'Goal 5', completed: false },
   ]);
 
-  const [editableGoals, setEditableGoals] = useState(goals.map(() => false)); // New editableGoals state
+  // array of booleans indicating if each goal is in an editable state
+  // setEditableGoals function is used to update this state.
+  const [editableGoals, setEditableGoals] = useState(goals.map(() => false)); 
 
+  // tracking whether the user is in an editing mode
+  // setIsEditing function is used to toggle this state
   const [isEditing, setIsEditing] = useState(false);
 
+  // Storing edited user information, based on userData
+  // setEditedUserInfo function is used to update this state.
   const [editedUserInfo, setEditedUserInfo] = useState({
     username: userData.username,
     email: userData.email,
   });
 
+  // state for the users profile picture, set to null initially
   const [profilePicture, setProfilePicture] = useState(null);
 
+  // Handler for submitting the user info
   const handleUserInfoSubmit = (e) => {
     e.preventDefault();
+
+    // Turn off editing mode
     setIsEditing(false);
+
+    // Updating the user data state with the edited user information
     setUserData({
       username: editedUserInfo.username,
       email: editedUserInfo.email,
     });
   };
 
+  // Handler for resetting the progress by setting completed tasks to 0
+  // Update the state variable completedTasks to 0
   const resetProgress = () => {
     setCompletedTasks(0);
   };
 
+  // toggling the completion status of a goal
   const toggleGoalCompletion = (goalId) => {
+    // Map through the goals array and update the completed status of the goal with the given ID
     const updatedGoals = goals.map((goal) =>
       goal.id === goalId ? { ...goal, completed: !goal.completed } : goal
     );
+    // Update the state variable goals with the updated array
     setGoals(updatedGoals);
   };
 
+  // toggling the edit mode of a goal
   const toggleGoalEdit = (goalId) => {
+    // Create a copy of the editableGoals array
     const updatedEditableGoals = [...editableGoals];
+    // Toggle the edit mode for the goal with the given ID
     updatedEditableGoals[goalId - 1] = !updatedEditableGoals[goalId - 1];
+    // Update the state variable editableGoals with the updated array
     setEditableGoals(updatedEditableGoals);
   };
 
+  // Handler for editing a goal's name
   const handleGoalEdit = (goalId, newName) => {
+    // Map through the goals array and update the name of the goal with the given ID
     const updatedGoals = goals.map((goal) =>
       goal.id === goalId ? { ...goal, name: newName } : goal
     );
+    // Update the state variable goals with the updated array
     setGoals(updatedGoals);
   };
 
+  // saving changes made to a goal
   const saveGoalEdit = (goalId) => {
+    // Calling the toggleGoalEdit function to exit edit mode
     toggleGoalEdit(goalId);
-    // You can add code here to save the updated goals to a backend or local storage if needed
   };
 
+  // Handler for changing the user's profile picture
   const handleProfilePictureChange = (e) => {
+    // Retrieve the selected file from the input element
     const file = e.target.files[0];
+    // Update the state variable profilePicture with the selected file
     setProfilePicture(file);
   };
 
+  // Layout of the page below with links
   return (
     <div>
       {/* Top left corner buttons */}
