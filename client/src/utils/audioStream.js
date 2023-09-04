@@ -37,13 +37,10 @@ function audioStream() {
     document.getElementById('note').innerText = "Listening......"
     }
 
-    
   
   }
 
- 
-
-   // Get access to the user's audio input device and setup additional options
+  // Get access to the user's audio input device and setup additional options
   navigator.mediaDevices.getUserMedia({
     audio: { 
       echoCancellation: false,
