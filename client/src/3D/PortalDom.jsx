@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-
+import { Perf } from 'r3f-perf'
 
 import Portal from './Portal'
 
@@ -12,9 +12,10 @@ export default function PortalDom(){
             fov: 45,
             near: 0.1,
             far: 30,
-            position: [0, 0, 35]
+            position: [0, 1, 35]
         } }
     >
+        <Perf position={'top-left'}/>
         <Portal/>
     </Canvas>
 }
