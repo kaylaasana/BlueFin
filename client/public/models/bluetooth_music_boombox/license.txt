@@ -1,0 +1,11 @@
+Model Information:
+* title:	Bluetooth music boombox
+* source:	https://sketchfab.com/3d-models/bluetooth-music-boombox-1f4d347445c8431995355b482f1f1a46
+* author:	Dani Satellite (https://sketchfab.com/dani-satellite)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Bluetooth music boombox" (https://sketchfab.com/3d-models/bluetooth-music-boombox-1f4d347445c8431995355b482f1f1a46) by Dani Satellite (https://sketchfab.com/dani-satellite) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
