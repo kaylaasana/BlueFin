@@ -29,4 +29,4 @@ type User {
     mutation: Mutation
   }
   `;
-  
+  module.exports = typeDefs
