@@ -1,6 +1,4 @@
-
 function audioStream() {
-  
   const context = new AudioContext();
   
   // Create an analyser node and attach it to our audio context so that
@@ -10,26 +8,6 @@ function audioStream() {
     minDecibels : -100,
     maxDecibels : -10,
     smoothingTimeConstant : 0.85 
-  })
-  
-  // Get access to the user's audio input device and setup additional options
-  navigator.mediaDevices.getUserMedia({
-    audio: {
-      echoCancellation: false,
-      autoGainControl: false,
-      noiseSuppression: false,
-      latency: 0
-    }
-  }).then((stream) => {
-    // Once promise is fulfilled we will create a Media stream
-    // source on our audio context and pass the stream to it
-    const source = context.createMediaStreamSource(stream);
-    // Connect the newly created source with the analyser node
-    source.connect(analyser)
-  
-    drawNote()
-  }).catch((err) => {
-    console.log(err)
   })
 
   // The noteStrings array currently only takes a guitar with standard tuning in mind
@@ -50,9 +28,32 @@ function audioStream() {
     let autoCorrelateValue = autoCorrelate(buffer, context.sampleRate) 
 
     let valueToDisplay = noteStrings[noteFromPitch(autoCorrelateValue) % 12];
+
     console.log(valueToDisplay)
 
+    document.getElementById('note').innerText = valueToDisplay;
   }
+
+   // Get access to the user's audio input device and setup additional options
+  navigator.mediaDevices.getUserMedia({
+    audio: {
+      echoCancellation: false,
+      autoGainControl: false,
+      noiseSuppression: false,
+      latency: 0
+    }
+  }).then((stream) => {
+    // Once promise is fulfilled we will create a Media stream
+    // source on our audio context and pass the stream to it
+    const source = context.createMediaStreamSource(stream);
+    // Connect the newly created source with the analyser node
+    source.connect(analyser)
+    
+    drawNote();
+  }).catch((err) => {
+    console.log(err)
+  })
+
 }
 
 function autoCorrelate(buffer, sampleRate) {

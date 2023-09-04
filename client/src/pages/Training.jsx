@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import audioStream from "../utils/audioStream";
 
 const Training = () => {
-  const[note, setNote] = useState()
+  const onClick = () => audioStream()
 
   return(
   <>
-    <button onClick={() => audioStream()}>Test</button>
-    <div>{note}</div>
+    <button onClick={onClick}>Test</button>
+    
+    <div id="note" style={{ color: 'white' }}></div>
   </>
   )
 }
