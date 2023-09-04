@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../ProfilePage.css'
+import '../ProfilePage.css';
 
 function ProfilePage() {
   const [userData] = useState({
@@ -7,24 +7,19 @@ function ProfilePage() {
     email: 'UserEmail@example.com',
   });
 
-   // useState hook to define a state variable completedTasks and its associated setter function setCompletedTasks
-  // nitializes completedTasks with the value 5, representing the number of tasks the user has completed
-  const [completedTasks, setCompletedTasks] = useState(5);
-  const totalTasks = 10;
+  const [completedTasks, setCompletedTasks] = useState(2);
+  const totalTasks = 5;
 
-  const goals = [
+  const [goals, setGoals] = useState([
     { id: 1, name: 'Goal 1', completed: true },
-    { id: 2, name: 'Goal 2', completed: false },
-  ];
+    { id: 2, name: 'Goal 2', completed: true },
+    { id: 3, name: 'Goal 3', completed: false },
+    { id: 4, name: 'Goal 4', completed: false },
+    { id: 5, name: 'Goal 5', completed: false },
+  ]);
 
-  // Using 'useState' hook to manage the editing state of the user information
-  // 'isEditing' is a Boolean that determines if the user is currently editing their profile info or not
-  // Here, we are initializing it with 'false'
   const [isEditing, setIsEditing] = useState(false);
 
-  // Using 'useState' hook to manage the state of the user's information fields when in editing mode.
-  // 'userInfo' is an object that holds the user's information (username, email, etc.)
-  // We initialize it with the values from 'userData' when the user edits their information.
   const [userInfo, setUserInfo] = useState({
     username: userData.username,
     email: userData.email,
@@ -37,6 +32,13 @@ function ProfilePage() {
 
   const resetProgress = () => {
     setCompletedTasks(0);
+  };
+
+  const toggleGoalCompletion = (goalId) => {
+    const updatedGoals = goals.map((goal) =>
+      goal.id === goalId ? { ...goal, completed: !goal.completed } : goal
+    );
+    setGoals(updatedGoals); // Use setGoals to update the state
   };
 
   return (
@@ -88,7 +90,11 @@ function ProfilePage() {
         <ul>
           {goals.map((goal) => (
             <li key={goal.id}>
-              <input type="checkbox" checked={goal.completed} readOnly />
+              <input
+                type="checkbox"
+                checked={goal.completed}
+                onChange={() => toggleGoalCompletion(goal.id)}
+              />
               {goal.name}
             </li>
           ))}

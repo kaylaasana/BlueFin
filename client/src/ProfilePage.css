@@ -1,17 +1,23 @@
 .profile-container {
+  background-color: grey;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Adjust this to control the vertical centering */
-    text-align: center; /* Center text horizontally */
+    height: 100vh; 
+    text-align: center; 
   }
   
   .profile-info {
-    /* Add styles for the profile info if needed */
+    background-color: #dadada;
+    margin-bottom: 20px;
   }
-  
-  /* Add styles for other components as needed */
-  
-  /* Add media queries for responsiveness as needed */
+
+  .profile-info h2 {
+    color: #000000; 
+  }
+
+  .progression {
+    margin-top: 20px; 
+  }
   
