@@ -154,6 +154,7 @@ export default function Portal() {
                 text={'Login'} 
                 rotation={[0, Math.PI * 0.2, 0]}
                 setOrbit={setOrbit}
+                link='/login'
             >
                 <mesh scale={0.5}>
                     <boxGeometry />

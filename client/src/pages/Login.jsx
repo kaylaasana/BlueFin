@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 
 // create login page component
-const Login = () => {
+const Login = (props) => {
   const [formState, setFormState] = useState({ username: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
