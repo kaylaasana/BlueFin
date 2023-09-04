@@ -8,12 +8,10 @@ function audioStream() {
     minDecibels : -100,
     maxDecibels : -10,
     smoothingTimeConstant : 0.85 
-  })
+  });
 
   // The noteStrings array currently only takes a guitar with standard tuning in mind
   let noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-    
-  // noteFromPitch is responsible for converting an incoming audio frequency into a note 
       function noteFromPitch( frequency ) {
       let noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
       return Math.round( noteNum ) + 69;
@@ -21,16 +19,18 @@ function audioStream() {
 
   // drawNote handles displaying the actual note value on the frontend via valueToDisplay
   function drawNote() {
+  // requestAnimationFrame calls drawNote so that the function keeps returning the note 
+  // from the user's microphone
     requestAnimationFrame(drawNote);
     let bufferLength = analyser.fftSize;
     let buffer = new Float32Array(bufferLength);
     analyser.getFloatTimeDomainData(buffer);
     let autoCorrelateValue = autoCorrelate(buffer, context.sampleRate) 
 
-    let valueToDisplay = noteStrings[noteFromPitch(autoCorrelateValue) % 12];
+  // valueToDisplay will return the index to the user to show them the note they're playing from noteStrings
+    let valueToDisplay = noteStrings[noteFromPitch(autoCorrelateValue) % 12]
 
-    console.log(valueToDisplay)
-
+  // once audioStream gets imported to Training.jsx, it will render the div's innerText to display the note 
     document.getElementById('note').innerText = valueToDisplay;
   }
 
