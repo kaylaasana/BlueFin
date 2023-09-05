@@ -6,7 +6,7 @@ import Auth from "../utils/auth";
 
 // create login page component
 const Login = (props) => {
-  const [formState, setFormState] = useState({ username: "", password: "" });
+  const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update the state based on the form input changes
@@ -39,7 +39,7 @@ const Login = (props) => {
 
     // reset input fields on submission
     setFormState({
-      username: "",
+      email: "",
       password: "",
     });
   };
@@ -55,14 +55,14 @@ const Login = (props) => {
       <div className="col d-flex justify-content-center">
         <form onSubmit={handleFormSubmit}>
           <label className="row text">
-            Username
+            Email
             <br></br>
             <input
               className="row"
-              placeholder="your username"
-              name="username"
-              type="username"
-              value={formState.username}
+              placeholder="your email"
+              name="email"
+              type="email"
+              value={formState.email}
               onChange={handleChange}
             />
           </label>

@@ -1,6 +1,5 @@
 const typeDefs = `
 # Defining User and Level, which represent our data models.
-# Defining User and Level, which represent our data models.
 type User {
     _id: ID!
     username: String!
@@ -30,9 +29,9 @@ type User {
 # The mutation type defines 'updateUserProgress' mutation to update a user's progress.
   type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
-    login(username: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
     updateUserProgress(userId: ID!, levelName: String!, levelNumber: Int!): User
-    deleteUserProgress(userId: ID!, level: [levelSchema]): User
+    deleteUserProgress(userId: ID!, level: String!): User
   }
 
   

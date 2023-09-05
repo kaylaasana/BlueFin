@@ -27,6 +27,30 @@ const resolvers = {
       }
     },
 
+    // login user
+    login: async (parent, { email, password }) => {
+      // find user by email
+      const user = await User.findOne({ email });
+      
+      // check if user exists 
+      if (!user) {
+        throw AuthenticationError;
+      }
+
+      // await password input from user
+      const correctPw = await user.isCorrectPassword(password);
+
+      // check if password matches user
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
+
+      // assign token to user
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
     // Mutation for updating a user's progress
     updateUserProgress: async (_, { userId, levelName, levelNumber }) => {
       try {
