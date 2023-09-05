@@ -97,14 +97,6 @@ function ProfilePage() {
     toggleGoalEdit(goalId);
   };
 
-  // Handler for changing the user's profile picture
-  const handleProfilePictureChange = (e) => {
-    // Retrieve the selected file from the input element
-    const file = e.target.files[0];
-    // Update the state variable profilePicture with the selected file
-    setProfilePicture(file);
-  };
-
   // Layout of the page below with links
   return (
     <div>
@@ -116,14 +108,6 @@ function ProfilePage() {
       </div>
 
       <div className="profile-container">
-        <div className="profile-picture">
-          {/* Display user's profile picture */}
-          <img src={profilePicture ? URL.createObjectURL(profilePicture) : 'profile-picture.jpg'} alt="Profile" />
-          {/* Conditional rendering of input field for profile picture upload */}
-          {isEditing ? (
-            <input type="file" accept="image/*" onChange={handleProfilePictureChange} />
-          ) : null}
-        </div>
         <div className="profile-info">
           <h2>{userData.username}'s Profile</h2>
           <p>Email: {userData.email}</p>
