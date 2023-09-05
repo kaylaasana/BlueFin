@@ -1,5 +1,5 @@
-// Import the User model and the signToken function from the required files
-const User = require("./models/User");
+const User = require("../models/User");
+// const UserLevel = require("./models/Level");
 const { signToken } = require("../utils/auth");
 
 // Defining the GraphQL resolvers
@@ -25,6 +25,30 @@ const resolvers = {
         console.error(error);
         throw new Error("Failed to create new user");
       }
+    },
+
+    // login user
+    login: async (parent, { email, password }) => {
+      // find user by email
+      const user = await User.findOne({ email });
+      
+      // check if user exists 
+      if (!user) {
+        throw AuthenticationError;
+      }
+
+      // await password input from user
+      const correctPw = await user.isCorrectPassword(password);
+
+      // check if password matches user
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
+
+      // assign token to user
+      const token = signToken(user);
+
+      return { token, user };
     },
 
     // Mutation for updating a user's progress

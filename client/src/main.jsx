@@ -7,6 +7,7 @@ import PortalPage from './pages/PortalPage.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 import Training from './pages/Training.jsx'
+import Login from './pages/Login.jsx'
 import Profile from './pages/Profile.jsx'
 
 /**
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Homepage/>
+      },
+      {
+        path: '/login',
+        element: <Login />
       },
       {
         path: "/training",
