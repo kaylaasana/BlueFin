@@ -8,10 +8,10 @@ const Training = () => {
   console.log()
   const tuner = () => audioStream()
   const note = () => {
-    playNote();
-    setPlaybackNote()
+    playNote()
+
   }
-  console.log(playNote())
+    console.log(playNote())
   return(
   <>                        
     <button onClick={tuner}>Test</button>

@@ -33,7 +33,7 @@ async function playNote() {
     baseUrl: "https://tonejs.github.io/audio/salamander/",
   }).toDestination();
 
-  const result = await Tone.loaded().then(() => {
+  const tones = await Tone.loaded()
     let notes = [
     'A1','A2','A3','A4','A5','A6','A#1','A#2','A#3','A#4','A#5','A#6',
     'B1','B2','B3','B4','B5','B6',
@@ -44,12 +44,12 @@ async function playNote() {
     'G1','G2','G3','G4','G5','G6','G#1','G#2','G#3','G#4','G#5','G#6'
   ]
     
-  let idx = notes[Math.floor(Math.random() * notes.length)];   
+    let idx = notes[Math.floor(Math.random() * notes.length)];   
 
-    piano.triggerAttackRelease(idx, 3);
-    console.log(idx, result)
-    return idx
-  })
+    piano.triggerAttackRelease(idx, 4);
+    console.log(idx)
+  return idx
+  
 }
 
 export default playNote
