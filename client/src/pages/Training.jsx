@@ -9,7 +9,6 @@ const Training = () => {
   const tuner = () => audioStream()
   const note = () => {
     playNote()
-
   }
     console.log(playNote())
   return(

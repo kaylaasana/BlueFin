@@ -48,6 +48,7 @@ async function playNote() {
 
     piano.triggerAttackRelease(idx, 4);
     console.log(idx)
+    console.log(tones)
   return idx
   
 }
