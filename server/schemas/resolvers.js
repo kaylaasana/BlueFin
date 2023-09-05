@@ -1,4 +1,4 @@
-const User = require("./models/User");
+const User = require("../models/User");
 // const UserLevel = require("./models/Level");
 const { signToken } = require("../utils/auth");
 

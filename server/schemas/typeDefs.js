@@ -1,5 +1,5 @@
 const typeDefs = `
-// Defining User and Level, which represent our data models.
+# Defining User and Level, which represent our data models.
 type User {
     _id: ID!
     username: String!
@@ -12,33 +12,38 @@ type User {
     levelName: String!
     levelNumber: Int!
   }
+  
+  type Auth {
+    token: ID!
+    user: User
+  }
 
-// Query type is defining a single query getUser, allows us to retrieve a user by their userId.
+# Query type is defining a single query getUser, allows us to retrieve a user by their userId.
   type Query {
     getUser(userId: ID!): User
     level: [String!]
   }
  
-// Define mutation type for creating a new user
+# Define mutation type for creating a new user
   type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
   }
 
-// Define delete progress mutation
+# Define delete progress mutation
   type Mutation {
     deleteUserProgress(userId: ID!, level: [levelSchema]): User
   }
 
-// The mutation type defines 'updateUserProgress' mutation to update a user's progress.
+# The mutation type defines 'updateUserProgress' mutation to update a user's progress.
   type Mutation {
     updateUserProgress(userId: ID!, levelName: String!, levelNumber: Int!): User
   }
   
-// The schema definition specifies the entry points for queries and mutations.
+# The schema definition specifies the entry points for queries and mutations.
   schema {
     query: Query
     mutation: Mutation
   }
   `;
-  module.exports = typeDefs
+module.exports = typeDefs;

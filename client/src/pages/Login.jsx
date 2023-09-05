@@ -79,7 +79,7 @@ const Login = (props) => {
             />
           </label>
           <button type="submit">Submit</button>
-          <button>Sign Up</button>
+          <Link to='/sign-up'><button>Sign Up</button></Link>
         </form>
 
         {error && (
