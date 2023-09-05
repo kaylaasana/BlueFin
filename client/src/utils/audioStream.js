@@ -36,8 +36,6 @@ function audioStream() {
     if (autoCorrelateValue === -1) {
     document.getElementById('note').innerText = "Listening......"
     }
-
-  
   }
 
   // Get access to the user's audio input device and setup additional options
