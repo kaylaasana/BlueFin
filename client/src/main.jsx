@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 import Training from './pages/Training.jsx'
 import Login from './pages/Login.jsx'
+import Profile from './pages/Profile.jsx'
 
 /**
  * Router setup
@@ -34,7 +35,11 @@ const router = createBrowserRouter([
       {
         path: '/portal',
         element: <PortalPage/>
-      }
+      },
+      {
+        path: "/profile",
+        element: <Profile/>
+      },
     ]
   }
 ])

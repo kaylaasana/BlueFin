@@ -1,0 +1,38 @@
+.profile-container {
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+    text-align: center; 
+  }
+  
+  .homepage-button {
+    text-decoration: none;
+    background-color: #899091;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .profile-info {
+    border: solid;
+    border-radius: 2px;
+    border-color: rgb(255, 255, 255);
+    background-color: #dadada;
+    margin-bottom: 30px;
+  }
+
+  .profile-info h2 {
+    color: #000000; 
+  }
+
+  .progression {
+    margin-top: 20px; 
+  }
+  
+  .goals {
+    margin-top: 50px;
+  }
