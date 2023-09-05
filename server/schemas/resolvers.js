@@ -1,24 +1,25 @@
-const User = require("./models/User");
+const User = require("../models/User");
 // const UserLevel = require("./models/Level");
 const { signToken } = require("../utils/auth");
 
+// Defining the GraphQL resolvers
 const resolvers = {
   Query: {
-    user: async (_, { userId }) => {
-      return User.findById({ _id: userId });
-    }
+    // Resolver for fetching a user by userId
+    getUser: async (_, { userId }) => { 
+      // Find a user by their userId
+      return User.findById(userId);
+    },
   },
   Mutation: {
-    // create user new mutation
+    // Mutation for creating a new user
     createUser: async (_, { username, email, password }) => {
       try {
-        // create new user and store in user variable
+        // Create a new user with the provided data
         const user = await User.create({ username, email, password });
-
-        // immediately assign a JWT to the user and log them in once created
+        // Generate a JWT token for the user
         const token = signToken(user);
-
-        // return authentication object that contains the user and their web token
+        // Return an authentication object containing the token and user data
         return { token, user };
       } catch (error) {
         console.error(error);
@@ -26,59 +27,81 @@ const resolvers = {
       }
     },
 
+    // login user
+    login: async (parent, { email, password }) => {
+      // find user by email
+      const user = await User.findOne({ email });
+      
+      // check if user exists 
+      if (!user) {
+        throw AuthenticationError;
+      }
+
+      // await password input from user
+      const correctPw = await user.isCorrectPassword(password);
+
+      // check if password matches user
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
+
+      // assign token to user
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
+    // Mutation for updating a user's progress
     updateUserProgress: async (_, { userId, levelName, levelNumber }) => {
       try {
-        // Find the user by ID
+        // Find the user by their userId
         const user = await User.findById(userId);
-
         if (!user) {
           throw new Error("User not found");
         }
 
-        // Check if the user has the specified level
+        // Find the index of the specified level
         const levelIndex = user.levels.findIndex(
           (level) => level.levelName === levelName
         );
 
-        // ensures that the mutation operation only updates the progress of levels that the user actually has.
-        // If the specified level doesn't exist in the user's levels array, it prevents accidental updates or errors related to nonexistent levels.
+        // Check if the level exists in the user's levels
         if (levelIndex === -1) {
           throw new Error(`Level '${levelName}' not found for the user`);
         }
 
-        // Update the progress for the specified level
+        // Update the progress of the specified level
         user.levels[levelIndex].levelNumber = levelNumber;
-
         // Save the updated user
         await user.save();
 
+        // Returning the updated user
         return user;
       } catch (error) {
         console.error(error);
         throw new Error("Failed to update progress");
       }
     },
-    // delete user's progress function
+
+    // Mutation for deleting a user's progress
     deleteUserProgress: async(_, { userId }) => {
       try {
-        // find user by _id
-        const user = await User.findById(userId)
-
-        // check if user exists
-        if(!user){
-          throw new Error("No user found");
+        // Find the user by their userId
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error("User not found");
         }
 
-        // set user level to 0 by using an empty array
-        user.level = [];
-
-        // save updated user
+        // Clear user's levels
+        user.levels = [];
+        // Save the updated user
         await user.save();
 
-        return "user progress deleted"
+        // Return a success message here
+        return "User progress deleted";
       } catch (error) {
-        console.error(error)
-        throw new Error("Failed to delete progress")
+        console.error(error);
+        throw new Error("Failed to delete progress");
       }
     },
   },

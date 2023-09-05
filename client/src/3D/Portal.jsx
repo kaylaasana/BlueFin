@@ -165,6 +165,7 @@ export default function Portal() {
                 text={'Login'} 
                 rotation={[0, Math.PI * 0.2, 0]}
                 setOrbit={setOrbit}
+                link='/login'
             >
                 <mesh scale={0.5}>
                     <boxGeometry />
@@ -199,6 +200,7 @@ export default function Portal() {
                 textPosition={[-0.425, 1, 0.01]} 
                 rotation={[0, -Math.PI * 0.2, 0]}
                 setOrbit={setOrbit}
+                link={"/profile"}
             >
                 <mesh scale={0.3}>
                     <torusGeometry />
