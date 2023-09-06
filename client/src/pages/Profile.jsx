@@ -126,10 +126,10 @@ function ProfilePage() {
                 value={editedUserInfo.email}
                 onChange={(e) => setEditedUserInfo({ ...editedUserInfo, email: e.target.value })}
               />
-              <button type="submit">Save</button>
+              <button type="submit" className="button">Save</button>
             </form>
           ) : (
-            <button onClick={() => setIsEditing(true)}>Edit Info</button>
+            <button onClick={() => setIsEditing(true)} className="button">Edit Info</button>
           )}
         </div>
         <div className="progression">
@@ -140,7 +140,7 @@ function ProfilePage() {
     </div>
   </div>
   {/* Add reset progress button */}
-  <button onClick={resetProgress}>Reset Progress</button>
+  <button onClick={resetProgress} className="button">Reset Progress</button>
 </div>
 
         <div className="goals">
@@ -155,7 +155,7 @@ function ProfilePage() {
                  value={goal.name}
                  onChange={(e) => handleGoalEdit(goal.id, e.target.value)}
              />
-             <button onClick={() => saveGoalEdit(goal.id)}>Save</button>
+             <button onClick={() => saveGoalEdit(goal.id)} className="button">Save</button>
              </>
          ) : (
               <>
@@ -165,7 +165,7 @@ function ProfilePage() {
                onChange={() => toggleGoalCompletion(goal.id)}
               />
              {goal.name}
-             <button onClick={() => toggleGoalEdit(goal.id)}>Edit</button>
+             <button onClick={() => toggleGoalEdit(goal.id)} className="editButton">Edit</button>
             </>
             )}
          </li>

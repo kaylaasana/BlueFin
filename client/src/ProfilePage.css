@@ -33,40 +33,68 @@
   margin-top: 50px;
 }
 
-/* CSS for the progress bar */
+/* CSS for styling buttons */
+.button {
+  background-color: #505050;
+  margin-top: 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* CSS for styling smaller buttons */
+.editButton {
+  background-color: #505050;
+  margin-top: 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px; 
+  cursor: pointer;
+  font-size: 12px; 
+
+}
+
+
+
+/* CSS for the progression bar */
 .progression {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
 }
 
 .progress-bar-container {
-  width: 100%;
-  height: 30px;
+  width: 175%;
+  height: 40px;
   background-color: #ddd;
-  /* Background color of the progress bar container */
   border-radius: 5px;
-  /* Rounded corners for the container */
   position: relative;
+  overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
   background-color: #4bb54e;
-  /* Color of the filled portion of the progress bar */
   text-align: center;
-  line-height: 30px;
-  /* Vertical alignment of progress text */
+  line-height: 40px;
   color: white;
-  /* Text color */
   border-radius: 5px;
-  /* Rounded corners for the progress bar */
   transition: width 0.3s ease-in-out;
-  /* Smooth transition animation */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0; /* Initial width is 0, it will expand as the progress increases */
 }
 
 .progress-text {
   position: absolute;
   left: 50%;
-  top: 0;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
 }
