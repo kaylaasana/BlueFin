@@ -5,6 +5,7 @@ import { useState } from 'react';
 const Training = () => {
   const currentNote = new Note();
   const [playbackNote, setPlaybackNote] = useState();
+  const [isMatch, setMatch] = useState(false)
 
   const tuner = () => currentNote.audioStream();
   const note = () => {

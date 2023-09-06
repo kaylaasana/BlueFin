@@ -60,18 +60,18 @@ function Frame({
             // check if it's positioned
             if(!positioned){
                 state.camera.position.set(0, 0, 5)
-                state.camera.lookAt(new THREE.Vector3(x, y, z))
+                state.camera.lookAt(vector)
                 setPositioned(true)
             }
 
             // sets fov for lightning effect
             if(state.camera.fov < 147){
-                state.camera.fov += delta * 80
+                state.camera.fov += delta * 130
                 state.camera.updateProjectionMatrix()
             }else {
 
                 // after setting fov, zoom in
-                if(state.camera.position.z > -5){
+                if(state.camera.position.z > -1){
                     state.camera.position.z -= delta * 15
                     state.camera.position.x += delta * (x * 3)
                     console.log(state.camera.position.z);
