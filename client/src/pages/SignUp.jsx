@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from "../utils/mutations";
-
+import { CREATE_USER } from "../utils/mutation";
 import Auth from "../utils/auth";
 
-const SingUp = () => {
+const SignUp = () => {
   const [formState, setFormState] = useState({
     username: "",
     email: "",
@@ -48,6 +46,61 @@ const SingUp = () => {
       password: "",
     });
   };
+  return (
+    <div>
+      <div className="d-flex justify-content-between">
+        <Link to="/">
+          <button>Homepage</button>
+        </Link>
+        <Link to='/login'><button>Log In</button></Link>
+      </div>
+      <div className="col d-flex justify-content-center">
+        <form onSubmit={handleFormSubmit}>
+          <label className="row text">
+            Username
+            <br></br>
+            <input
+              className="row"
+              placeholder="username"
+              name="username"
+              type="username"
+              value={formState.username}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="row">
+            Email
+            <br></br>
+            <input
+              className="row"
+              placeholder="your email"
+              name="email"
+              type="email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="row">
+            Password
+            <br></br>
+            <input
+              className="row"
+              placeholder="********"
+              name="password"
+              type="password"
+              value={formState.password}
+              onChange={handleChange}
+            />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+
+        {error && (
+          <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default SignUp;
