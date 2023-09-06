@@ -6,14 +6,14 @@ const { signToken } = require("../utils/auth");
 const resolvers = {
   Query: {
     // Resolver for fetching a user by userId
-    getUser: async (_, { userId }) => { 
+    getUser: async (parent, { userId }) => { 
       // Find a user by their userId
       return User.findById(userId);
     },
   },
   Mutation: {
     // Mutation for creating a new user
-    createUser: async (_, { username, email, password }) => {
+    createUser: async (parent, { username, email, password }) => {
       try {
         // Create a new user with the provided data
         const user = await User.create({ username, email, password });
@@ -52,7 +52,7 @@ const resolvers = {
     },
 
     // Mutation for updating a user's progress
-    updateUserProgress: async (_, { userId, levelName, levelNumber }) => {
+    updateUserProgress: async (parent, { userId, levelName, levelNumber }) => {
       try {
         // Find the user by their userId
         const user = await User.findById(userId);
@@ -84,7 +84,7 @@ const resolvers = {
     },
 
     // Mutation for deleting a user's progress
-    deleteUserProgress: async(_, { userId }) => {
+    deleteUserProgress: async(parent, { userId }) => {
       try {
         // Find the user by their userId
         const user = await User.findById(userId);
