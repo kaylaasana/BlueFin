@@ -1,38 +1,72 @@
 .profile-container {
-    background-color: grey;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; 
-    text-align: center; 
-  }
-  
-  .homepage-button {
-    text-decoration: none;
-    background-color: #899091;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
 
-  .profile-info {
-    border: solid;
-    border-radius: 2px;
-    border-color: rgb(255, 255, 255);
-    background-color: #dadada;
-    margin-bottom: 30px;
-  }
+.homepage-button {
+  text-decoration: none;
+  background-color: #899091;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .profile-info h2 {
-    color: #000000; 
-  }
+.profile-info {
+  border: solid;
+  border-radius: 2px;
+  border-color: rgb(255, 255, 255);
+  background-color: #dadada;
+  margin-bottom: 30px;
+}
 
-  .progression {
-    margin-top: 20px; 
-  }
-  
-  .goals {
-    margin-top: 50px;
-  }
+.profile-info h2 {
+  color: #000000;
+}
+
+.goals {
+  margin-top: 50px;
+}
+
+/* CSS for the progress bar */
+.progression {
+  margin-top: 20px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 30px;
+  background-color: #ddd;
+  /* Background color of the progress bar container */
+  border-radius: 5px;
+  /* Rounded corners for the container */
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4bb54e;
+  /* Color of the filled portion of the progress bar */
+  text-align: center;
+  line-height: 30px;
+  /* Vertical alignment of progress text */
+  color: white;
+  /* Text color */
+  border-radius: 5px;
+  /* Rounded corners for the progress bar */
+  transition: width 0.3s ease-in-out;
+  /* Smooth transition animation */
+}
+
+.progress-text {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 100%;
+}

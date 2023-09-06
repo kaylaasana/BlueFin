@@ -133,13 +133,16 @@ function ProfilePage() {
           )}
         </div>
         <div className="progression">
-          {/* Display progression bar */}
-          <div className="progress-bar">
-            Progress: {Math.floor((completedTasks / totalTasks) * 100)}%
-          </div>
-          {/* Add reset progress button */}
-          <button onClick={resetProgress}>Reset Progress</button>
-        </div>
+  {/* Display progression bar */}
+  <div className="progress-bar-container">
+    <div className="progress-bar" style={{ width: `${Math.floor((completedTasks / totalTasks) * 100)}%` }}>
+      <span className="progress-text">{Math.floor((completedTasks / totalTasks) * 100)}%</span>
+    </div>
+  </div>
+  {/* Add reset progress button */}
+  <button onClick={resetProgress}>Reset Progress</button>
+</div>
+
         <div className="goals">
     <h3>Goals and Objectives</h3>
     <ul style={{ listStyleType: 'none' }}> {/* Add inline style to remove bullet points */}
