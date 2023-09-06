@@ -17,6 +17,6 @@
         "concurrently": "^8.2.0"
     },
     "dependencies": {
-        "jwt-decode": "^3.1.2"
+        "tone": "^14.7.77"
     }
 }
