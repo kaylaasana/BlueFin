@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../utils/mutation";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from "../utils/mutation";
 import Auth from "../utils/auth";
 
-// create login page component
-const Login = (props) => {
-  const [formState, setFormState] = useState({ email: "", password: "" });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+const SignUp = () => {
+  const [formState, setFormState] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [createUser, { error, data }] = useMutation(CREATE_USER);
 
   // update the state based on the form input changes
   const handleChange = (event) => {
@@ -26,15 +29,15 @@ const Login = (props) => {
 
     // assign formState to data
     try {
-      const { data } = await login({
+      const { data } = await createUser({
         variables: { ...formState },
       });
 
       // assign token to user data at login
-      Auth.login(data.login.token);
+      Auth.login(data.createUser.token);
     } catch (error) {
       console.error(error);
-      throw new Error("Login failed");
+      throw new Error("Sign-up failed");
     }
 
     // reset input fields on submission
@@ -43,18 +46,29 @@ const Login = (props) => {
       password: "",
     });
   };
-
-  // build page layout
   return (
     <div>
-      <div className="d-flex justify-content-start">
+      <div className="d-flex justify-content-between">
         <Link to="/">
           <button>Homepage</button>
         </Link>
+        <Link to='/login'><button>Log In</button></Link>
       </div>
       <div className="col d-flex justify-content-center">
         <form onSubmit={handleFormSubmit}>
           <label className="row text">
+            Username
+            <br></br>
+            <input
+              className="row"
+              placeholder="username"
+              name="username"
+              type="username"
+              value={formState.username}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="row">
             Email
             <br></br>
             <input
@@ -79,7 +93,6 @@ const Login = (props) => {
             />
           </label>
           <button type="submit">Submit</button>
-          <Link to='/signup'><button>Sign Up</button></Link>
         </form>
 
         {error && (
@@ -90,4 +103,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default SignUp;
