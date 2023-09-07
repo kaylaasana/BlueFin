@@ -6,8 +6,8 @@ Source: https://sketchfab.com/3d-models/bluetooth-music-boombox-1f4d347445c84319
 Title: Bluetooth music boombox
 */
 
-import React, { useRef, useState } from "react";
-import { useGLTF, PositionalAudio } from "@react-three/drei";
+import React, { useRef } from "react";
+import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
 export function Model(props) {
@@ -71,4 +71,4 @@ export function Model(props) {
     );
 }
 
-useGLTF.preload("/bluetooth_music_boombox.glb");
+useGLTF.preload("./models/bluetooth_music_boombox/scene.gltf");
