@@ -8,7 +8,6 @@ import {
     Gltf, 
     Environment, 
     PositionalAudio,
-    CameraControls
 } from '@react-three/drei'
 import { extend } from '@react-three/fiber'
 import { geometry } from 'maath'
@@ -119,12 +118,13 @@ function Frame({
                 onClick={handleClick}
             >
                 {isAudio && 
+                    // setting positional audio
                     <PositionalAudio 
-                    url="./music/sexy-music.mp3"
-                    distance={musicDistance}
-                    detune={1}
-                    autoplay
-                    loop
+                        url="./music/sexy-music.mp3"
+                        distance={musicDistance}
+                        detune={1}
+                        autoplay
+                        loop
                     />
                 }
                 {/* rounded geometry coming from maath package */}
@@ -145,7 +145,6 @@ function Frame({
 export default function Portal() {
     const [isPositioned, setPositioned] = useState(false)
     const [enableOrbit, setOrbit] = useState(true)
-    const [musicDistance, setMusicDistance] = useState(0.1)
     const cassette = useRef()
     const floatSpeed = 2
     const floatRotation = 0.05
@@ -167,7 +166,6 @@ export default function Portal() {
      * Animation at the start
      */
     useFrame((state, delta) => {
-        const { elapsedTime } = state.clock
         cassette.current.rotation.y +=delta
         cassette.current.rotation.z +=delta
         if (state.camera.position.z > 5 && !isPositioned) {
