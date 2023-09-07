@@ -54,10 +54,27 @@ class Note {
       if (time < 1 && this.noteTracker) {
         this.confirmNote.push(this.noteTracker);
         console.log(this.noteTracker);
-      } else if (this.confirmNote.every((val) => val == this.confirmNote[0])) {
-        console.log('you played', this.confirmNote[0]);
       } else {
-        this.confirmNote = [];
+        function mostFreqNote(arr, n) {
+          let hash = new Map();
+          for (let i = 0; i < n; i++) {
+            if (hash.has(arr[i])) {
+              hash.set(arr[i], hash.get(arr[i]) + 1);
+            } else {
+              hash.set(arr[i], 1);
+            }
+
+            let maxCount = 0;
+            let res = -1;
+            hash.forEach((value, key) => {
+              if (maxCount < value) {
+                res = key;
+                maxCount = value;
+              }
+            });
+          }
+        }
+        return res;
       }
     });
 
@@ -89,11 +106,6 @@ class Note {
 
     // once audioStream gets imported to Training.jsx, it will render the div's innerText to display the note
     document.getElementById('note').innerText = valueToDisplay;
-
-    // let confirmNote = [];
-    // confirmNote.push(this.noteTracker);
-
-    // console.log(confirmNote);
 
     this.noteTracker = valueToDisplay;
 

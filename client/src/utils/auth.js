@@ -1,5 +1,5 @@
 // import decode from JWT to decode user's information from token
-// import decode from 'jwt-decode';
+import decode from 'jwt-decode';
 
 // create class to authenticate user each time user logs in
 class Auth {
@@ -13,6 +13,20 @@ class Auth {
   loggedIn() {
     const token = this.getToken();
     return token ? true : false;
+  }
+
+  // checking if the token is expired
+  isTokenExpired(token) {
+    // use decode method to decode the web token
+    const decoded = decode(token);
+
+    // check if the token is less than the current time...
+    if (decoded.exp < Date.now() / 1000) {
+      //  ...if so, remove from local storage
+      localStorage.removeItem('id_token');
+      return true;
+    }
+    return false;
   }
 
   // gets the token from user's local storage

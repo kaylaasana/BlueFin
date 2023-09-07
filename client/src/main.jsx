@@ -9,6 +9,7 @@ import './index.css'
 import Training from './pages/Training.jsx'
 import Login from './pages/Login.jsx'
 import Profile from './pages/Profile.jsx'
+import SignUp from './pages/SignUp.jsx'
 
 /**
  * Router setup
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Homepage/>
+      },
+      {
+        path: 'signup',
+        element: <SignUp />
       },
       {
         path: '/login',
