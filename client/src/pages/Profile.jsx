@@ -106,7 +106,7 @@ function ProfilePage() {
           Homepage
         </Link>
       </div>
-
+  
       <div className="profile-container">
         <div className="profile-info">
           <h2>{userData.username}'s Profile</h2>
@@ -133,48 +133,52 @@ function ProfilePage() {
           )}
         </div>
         <div className="progression">
-  {/* Display progression bar */}
-  <div className="progress-bar-container">
-    <div className="progress-bar" style={{ width: `${Math.floor((completedTasks / totalTasks) * 100)}%` }}>
-      <span className="progress-text">{Math.floor((completedTasks / totalTasks) * 100)}%</span>
+          {/* Display progression bar */}
+          <div className="progress-bar-container">
+            <div className="progress-bar" style={{ width: `${Math.floor((completedTasks / totalTasks) * 100)}%` }}>
+              <span className="progress-text">{Math.floor((completedTasks / totalTasks) * 100)}%</span>
+            </div>
+          </div>
+          {/* Add reset progress button */}
+          <button onClick={resetProgress} className="button">Reset Progress</button>
+        </div>
+  
+        {/* Incorporate the provided code for Goals and Objectives */}
+        <div className="goals-container">
+          <div className="fixed-goals-box">
+            <h3>Goals and Objectives</h3>
+            <ul style={{ listStyleType: 'none' }}>
+              {goals.map((goal) => (
+                <li key={goal.id}>
+                  {editableGoals[goal.id - 1] ? (
+                    <>
+                      <input
+                        type="text"
+                        value={goal.name}
+                        onChange={(e) => handleGoalEdit(goal.id, e.target.value)}
+                      />
+                      <button onClick={() => saveGoalEdit(goal.id)} className="button">Save</button>
+                    </>
+                  ) : (
+                    <>
+                      <input
+                        type="checkbox"
+                        checked={goal.completed}
+                        onChange={() => toggleGoalCompletion(goal.id)}
+                      />
+                      {goal.name}
+                      <button onClick={() => toggleGoalEdit(goal.id)} className="editButton">Edit</button>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  {/* Add reset progress button */}
-  <button onClick={resetProgress} className="button">Reset Progress</button>
-</div>
-
-        <div className="goals">
-    <h3>Goals and Objectives</h3>
-    <ul style={{ listStyleType: 'none' }}> {/* Add inline style to remove bullet points */}
-     {goals.map((goal) => (
-        <li key={goal.id}>
-          {editableGoals[goal.id - 1] ? (
-             <>
-             <input
-                type="text"
-                 value={goal.name}
-                 onChange={(e) => handleGoalEdit(goal.id, e.target.value)}
-             />
-             <button onClick={() => saveGoalEdit(goal.id)} className="button">Save</button>
-             </>
-         ) : (
-              <>
-              <input
-               type="checkbox"
-                checked={goal.completed}
-               onChange={() => toggleGoalCompletion(goal.id)}
-              />
-             {goal.name}
-             <button onClick={() => toggleGoalEdit(goal.id)} className="editButton">Edit</button>
-            </>
-            )}
-         </li>
-        ))}
-    </ul>
-    </div>
-    </div>
-</div>
   );
+  
 }
 
 export default ProfilePage;
