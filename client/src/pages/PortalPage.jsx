@@ -1,8 +1,11 @@
+import PortalDom from '../3D/PortalDom';
+import player from '../utils/portalMusic';
 
-import PortalDom from "../3D/PortalDom"
-
-export default function PortalPage(){
-    return <>
-        <PortalDom/>
+export default function PortalPage() {
+  player();
+  return (
+    <>
+      <PortalDom />
     </>
+  );
 }
