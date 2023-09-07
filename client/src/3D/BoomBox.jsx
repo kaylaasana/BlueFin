@@ -10,7 +10,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
-export function Model(props) {
+export function BoomBox(props) {
     const { nodes, materials } = useGLTF("./models/bluetooth_music_boombox/scene.gltf");
     const speaker = useRef()
     const speaker2 = useRef()

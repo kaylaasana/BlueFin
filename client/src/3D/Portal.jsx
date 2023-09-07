@@ -8,6 +8,7 @@ import {
     Gltf, 
     Environment, 
     PositionalAudio,
+    Center
 } from '@react-three/drei'
 import { extend } from '@react-three/fiber'
 import { geometry } from 'maath'
@@ -15,7 +16,7 @@ import { useRef, useState } from 'react'
 import { useControls } from 'leva'
 import * as THREE from 'three'
 
-import { Model } from './Model'
+import { BoomBox } from './BoomBox'
 
 /**
  * Extending the geometry to add
@@ -146,6 +147,8 @@ export default function Portal() {
     const [isPositioned, setPositioned] = useState(false)
     const [enableOrbit, setOrbit] = useState(true)
     const cassette = useRef()
+    const tapeRecorder = useRef()
+
     const floatSpeed = 2
     const floatRotation = 0.05
     
@@ -168,6 +171,7 @@ export default function Portal() {
     useFrame((state, delta) => {
         cassette.current.rotation.y +=delta
         cassette.current.rotation.z +=delta
+        tapeRecorder.current.rotation.y += delta * 2
         if (state.camera.position.z > 5 && !isPositioned) {
             state.camera.position.z -= delta * 15
         } else {
@@ -194,7 +198,9 @@ export default function Portal() {
                     files={'./envMap/blender-2k.hdr'}
                     resolution={16}
                 />
-                
+                <Center position-z={-0.4}>
+                    <Gltf ref={tapeRecorder} src='./models/tape_recorder.glb' scale={0.15} rotation-y={Math.PI} rotation-z={Math.PI / 8} position-z={-1}/>
+                </Center>
             </Frame>
         </Float>
 
@@ -212,7 +218,7 @@ export default function Portal() {
                     files={'./envMap/blender-2k.hdr'}
                     resolution={16}
                 />
-                <Model scale={0.05} position={[-0.4, -0.25, -1]} rotation-z={Math.PI * 0.1}/>
+                <BoomBox scale={0.05} position={[-0.4, -0.25, -1]} rotation-z={Math.PI * 0.1}/>
             </Frame>
         </Float>
 
