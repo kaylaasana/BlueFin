@@ -127,10 +127,13 @@ export default function Portal() {
     const floatSpeed = 2
     const floatRotation = 0.05
     const [enableOrbit, setOrbit] = useState(true)
+    const cassette = useRef()
     /**
      * Animation at the start
      */
     useFrame((state, delta) => {
+        const { elapsedTime } = state.clock
+        cassette.current.rotation.y = Math.sin(elapsedTime)
         if (state.camera.position.z > 5 && !isPositioned) {
             state.camera.position.z -= delta * 15
         } else {
@@ -202,10 +205,11 @@ export default function Portal() {
                 setOrbit={setOrbit}
                 link={"/profile"}
             >
-                <mesh scale={0.3}>
-                    <torusGeometry />
-                    <meshNormalMaterial />
-                </mesh>
+                <Environment
+                    files={'./envMap/blender-2k.hdr'}
+                    resolution={16}
+                />
+                <Gltf ref={cassette} src="./models/cassette.glb" scale={10} rotation-x={Math.PI * 0.5}/>
             </Frame>
         </Float>
 

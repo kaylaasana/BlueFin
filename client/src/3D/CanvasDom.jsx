@@ -1,7 +1,8 @@
 import { Canvas } from '@react-three/fiber'
-
+import { Suspense } from 'react'
 
 import Experience from './Experience'
+import Loading from './Loading'
 
 /**
  * Setting canvas
@@ -15,6 +16,8 @@ export default function CanvasDom(){
             position: [ 3, 0, 6 ]
         } }
     >
-        <Experience/>
+        <Suspense fallback={<Loading/>}>
+            <Experience/>
+        </Suspense>
     </Canvas>
 }
