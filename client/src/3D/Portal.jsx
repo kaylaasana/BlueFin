@@ -7,6 +7,7 @@ import {
     Float, 
     Gltf, 
     Environment, 
+    PositionalAudio,
     CameraControls
 } from '@react-three/drei'
 import { extend } from '@react-three/fiber'
@@ -14,6 +15,8 @@ import { geometry } from 'maath'
 import { useRef, useState } from 'react'
 import { useControls } from 'leva'
 import * as THREE from 'three'
+
+import { Model } from './Model'
 
 /**
  * Extending the geometry to add
@@ -31,10 +34,12 @@ function Frame({
     textPosition = [-0.375, 1, 0.01], 
     rotation = [0, 0, 0], 
     link='/',
-    setOrbit 
+    setOrbit,
+    isAudio = false
 }) {
     const [isClicked, setClicked] = useState(false)
     const [positioned , setPositioned] = useState(false)
+    const [musicDistance, setMusicDistance] = useState(0.1)
     const [x, y, z] = position
 
     const vector = new THREE.Vector3(x, y, z)
@@ -103,10 +108,25 @@ function Frame({
             {/* Portal */}
             <mesh
                 ref={obj}
-                onPointerEnter={() => { document.body.style.cursor = 'pointer' }}
-                onPointerLeave={() => { document.body.style.cursor = 'default' }}
+                onPointerEnter={() => { 
+                    document.body.style.cursor = 'pointer' 
+                    setMusicDistance(0.5)
+                }}
+                onPointerLeave={() => { 
+                    document.body.style.cursor = 'default' 
+                    setMusicDistance(0.1)
+                }}
                 onClick={handleClick}
             >
+                {isAudio && 
+                    <PositionalAudio 
+                    url="./music/sexy-music.mp3"
+                    distance={musicDistance}
+                    detune={1}
+                    autoplay
+                    loop
+                    />
+                }
                 {/* rounded geometry coming from maath package */}
                 <roundedPlaneGeometry args={[1.2, 1.61803398875, 0.1]} />
                 <MeshPortalMaterial side={THREE.DoubleSide}>
@@ -124,16 +144,32 @@ function Frame({
  */
 export default function Portal() {
     const [isPositioned, setPositioned] = useState(false)
+    const [enableOrbit, setOrbit] = useState(true)
+    const [musicDistance, setMusicDistance] = useState(0.1)
+    const cassette = useRef()
     const floatSpeed = 2
     const floatRotation = 0.05
-    const [enableOrbit, setOrbit] = useState(true)
-    const cassette = useRef()
+    
+    /**
+     * Debug UI
+    */
+   const { lightColor } = useControls('light', {
+       lightColor: '#7c7571'
+    })
+    
+    const {middleColor, leftColor, rightColor} = useControls('portalBackground', {
+        middleColor: '#E49273',
+        leftColor: '#E2E8CE',
+        rightColor: '#7180AC',
+    })
+    
     /**
      * Animation at the start
      */
     useFrame((state, delta) => {
         const { elapsedTime } = state.clock
-        cassette.current.rotation.y = Math.sin(elapsedTime)
+        cassette.current.rotation.y +=delta
+        cassette.current.rotation.z +=delta
         if (state.camera.position.z > 5 && !isPositioned) {
             state.camera.position.z -= delta * 15
         } else {
@@ -141,20 +177,6 @@ export default function Portal() {
             
         }
     })
-
-    /**
-     * Debug UI
-     */
-    const { lightColor } = useControls('light', {
-        lightColor: '#7c7571'
-    })
-
-    const {middleColor, leftColor, rightColor} = useControls('portalBackground', {
-        middleColor: '#E49273',
-        leftColor: '#E2E8CE',
-        rightColor: '#7180AC',
-    })
-
     return <>
         <OrbitControls enablePan={false} enabled={enableOrbit} />
 
@@ -170,10 +192,11 @@ export default function Portal() {
                 setOrbit={setOrbit}
                 link='/login'
             >
-                <mesh scale={0.5}>
-                    <boxGeometry />
-                    <meshNormalMaterial />
-                </mesh>
+                <Environment
+                    files={'./envMap/blender-2k.hdr'}
+                    resolution={16}
+                />
+                
             </Frame>
         </Float>
 
@@ -185,12 +208,13 @@ export default function Portal() {
                 text={'Train'} 
                 link={'/training'}
                 setOrbit={setOrbit}
+                isAudio={true}
             >
                 <Environment
                     files={'./envMap/blender-2k.hdr'}
                     resolution={16}
                 />
-                <Gltf src="./models/bluetooth_music_boombox/scene.gltf" scale={0.05} position={[-0.4, -0.25, -1]} rotation-z={Math.PI * 0.1} />
+                <Model scale={0.05} position={[-0.4, -0.25, -1]} rotation-z={Math.PI * 0.1}/>
             </Frame>
         </Float>
 
@@ -209,7 +233,12 @@ export default function Portal() {
                     files={'./envMap/blender-2k.hdr'}
                     resolution={16}
                 />
-                <Gltf ref={cassette} src="./models/cassette.glb" scale={10} rotation-x={Math.PI * 0.5}/>
+                <Gltf 
+                    ref={cassette} 
+                    src="./models/cassette.glb" 
+                    scale={7} 
+                    rotation-x={Math.PI * 0.5}
+                />
             </Frame>
         </Float>
 
