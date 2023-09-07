@@ -45,8 +45,7 @@
   font-size: 14px;
 }
 
-/* CSS for styling smaller buttons */
-.editButton {
+/* CSS for styling smaller buttons */ .editButton {
   background-color: #505050;
   margin-top: 15px;
   color: white;

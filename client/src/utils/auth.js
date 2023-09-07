@@ -15,6 +15,20 @@ class Auth {
         return token ? true : false;
     }
 
+    // checking if the token is expired
+    isTokenExpired(token) {
+        // use decode method to decode the web token
+        const decoded = decode(token);
+        
+        // check if the token is less than the current time...
+        if (decoded.exp < Date.now() / 1000) {
+        //  ...if so, remove from local storage
+          localStorage.removeItem('id_token');
+          return true;
+        }
+        return false;
+      }
+
     // gets the token from user's local storage
     getToken() {
         return localStorage.getItem('id_token');
