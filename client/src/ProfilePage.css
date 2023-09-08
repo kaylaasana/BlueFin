@@ -18,19 +18,14 @@
 }
 
 .profile-info {
+  justify-content: center;
+  flex-direction: column;
   border: solid;
   border-radius: 2px;
   border-color: rgb(255, 255, 255);
   background-color: #dadada;
-  margin-bottom: 30px;
-}
-
-.profile-info h2 {
-  color: #000000;
-}
-
-.goals {
-  margin-top: 50px;
+  margin-top: 30px;
+  height: 50vh;
 }
 
 /* CSS for styling buttons */
@@ -62,7 +57,7 @@
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center horizontally */
+  align-items: center; 
 }
 
 .progress-bar-container {
@@ -72,6 +67,7 @@
   border-radius: 5px;
   position: relative;
   overflow: hidden;
+  margin-top: 75px;
 }
 
 .progress-bar {
@@ -102,12 +98,11 @@
   align-items: flex-start; 
   height: 100vh; 
   padding: 20px; 
+  margin-top: 35px;
 }
 
 .fixed-goals-box {
-  width: 300px; 
-  border: 1px solid #ccc; 
-  padding: 20px; 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  width: 400px; 
+  border: 2px solid #ccc; 
+  padding: 20px;  
 }
-
