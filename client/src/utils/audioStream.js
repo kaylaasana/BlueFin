@@ -4,6 +4,7 @@ class Note {
   constructor() {
     this.confirmNote = [];
     this.clock = new THREE.Clock();
+    this.playBackNote = '';
     this.noteTracker = 'testing';
     this.context = new AudioContext();
     this.analyser = new AnalyserNode(this.context, {

@@ -1,27 +1,33 @@
 import { Note } from '../utils/audioStream';
 import playNote from '../utils/playNote';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Training = () => {
   const currentNote = new Note();
   const [playbackNote, setPlaybackNote] = useState();
   const [score, setScore] = useState(0);
+  const [timer, setTimer] = useState(10);
+
+  const checkNote = (interval) => {
+    if (playbackNote == currentNote.noteTracker) {
+      setScore(score + 1);
+      clearInterval(interval);
+      console.log('if statement called');
+      note();
+    }
+    console.log('playbackNote: ', playbackNote);
+    console.log('currentNote: ', currentNote.noteTracker);
+  };
 
   const tuner = () => currentNote.audioStream();
   const note = () => {
-    playNote().then((note) => {
-      let extractedNote = note.split('');
-      extractedNote.pop();
-      extractedNote = extractedNote.join('');
-      setPlaybackNote(extractedNote);
-
-      console.log('Extracted Note: ', extractedNote);
+    playNote(playbackNote).then((noted) => {
+      setPlaybackNote(noted);
     });
   };
 
-  const testInterval = () => {
+  useEffect(() => {
     currentNote.audioStream();
-    currentNote.noteTracker;
 
     let time = 0;
     const interval = setInterval(function () {
@@ -30,36 +36,20 @@ const Training = () => {
         console.log("time's up");
         clearInterval(interval);
       }
-      if (playbackNote == currentNote.noteTracker) {
-        setScore(score + 1);
-        note();
-      }
-      console.log('playbackNote: ', playbackNote);
-      console.log('currentNote: ', currentNote.noteTracker);
+      checkNote(interval);
     }, 1000);
-  };
-
-  // create an array that will track noteChecker's inputs up to a certain length
-  // once that length is reached, check to see if the array's elements are all the same
-  // if they are, user gets a point, else clear the array.
-  const noteChecker = () => {
-    console.log('Your Note: ', currentNote.noteTracker);
-  };
-
-  // can create another variable to keep track of when to stop everything.
-  //  let stopCount = 0
-  //  something something happens, stopCount ++, when stopCount = some number, stop everything
+  }, [playbackNote]);
 
   return (
     <>
       <button onClick={tuner}>Test</button>
       <button onClick={note}>Play This Note</button>
-      <button onClick={noteChecker}>Note Checker</button>
-      <button onClick={testInterval}>Testing Interval, sort of</button>
+      {/* <button onClick={testInterval}>Testing Interval, sort of</button> */}
 
       <div style={{ color: 'white', fontSize: 100 }}>
         Play This Note {playbackNote}
       </div>
+      <div style={{ color: 'white', fontSize: 100 }}>Timeleft: {timer}</div>
       <div style={{ color: 'white', fontSize: 100 }}>Your Score: {score}</div>
 
       <div id='note' style={{ color: 'white', fontSize: 100 }}></div>
