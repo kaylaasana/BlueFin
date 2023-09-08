@@ -4,16 +4,39 @@ import { useState } from 'react';
 
 const Training = () => {
   const currentNote = new Note();
-  currentNote.confirmNote = [];
   const [playbackNote, setPlaybackNote] = useState();
   const [score, setScore] = useState(0);
 
   const tuner = () => currentNote.audioStream();
   const note = () => {
     playNote().then((note) => {
-      setPlaybackNote(note);
-      console.log('Played Note: ', note);
+      let extractedNote = note.split('');
+      extractedNote.pop();
+      extractedNote = extractedNote.join('');
+      setPlaybackNote(extractedNote);
+
+      console.log('Extracted Note: ', extractedNote);
     });
+  };
+
+  const testInterval = () => {
+    currentNote.audioStream();
+    currentNote.noteTracker;
+
+    let time = 0;
+    const interval = setInterval(function () {
+      time++;
+      if (time >= 10) {
+        console.log("time's up");
+        clearInterval(interval);
+      }
+      if (playbackNote == currentNote.noteTracker) {
+        setScore(score + 1);
+        note();
+      }
+      console.log('playbackNote: ', playbackNote);
+      console.log('currentNote: ', currentNote.noteTracker);
+    }, 1000);
   };
 
   // create an array that will track noteChecker's inputs up to a certain length
@@ -32,6 +55,7 @@ const Training = () => {
       <button onClick={tuner}>Test</button>
       <button onClick={note}>Play This Note</button>
       <button onClick={noteChecker}>Note Checker</button>
+      <button onClick={testInterval}>Testing Interval, sort of</button>
 
       <div style={{ color: 'white', fontSize: 100 }}>
         Play This Note {playbackNote}
