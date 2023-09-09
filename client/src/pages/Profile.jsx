@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
+// import Auth from '../utils/auth';
 import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client'; // Import gql
 import { GET_USER_DATA } from '../utils/queries';
 
@@ -91,6 +92,10 @@ function ProfilePage() {
           Homepage
         </Link>
       </div>
+
+      {/* <div>
+        <button onClick={Auth.logout}>Logout</button>
+      </div> */}
 
       <div className="profile-container">
         <div className="profile-info">
