@@ -1,4 +1,5 @@
 // const { GraphQLError } = require("graphql");
+// const { GraphQLError } = require("graphql");
 // require JWT
 const jwt = require("jsonwebtoken");
 
