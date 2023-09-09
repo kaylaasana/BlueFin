@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
+import Auth from '../utils/auth';
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client'; // Import gql
+import { GET_USER_DATA } from '../utils/queries';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:3001/graphql',
+  cache: new InMemoryCache(),
+});
 
 function ProfilePage() {
+  console.log(Auth.getUser());
+  const {data} = Auth.getUser();
+  const username = data?.username
+  const email = data?.email
   // Initialize state variables
   const [userData, setUserData] = useState({
-    username: 'User Name',
-    email: 'UserEmail@example.com',
+    username: username,
+    email: email,
   });
+
   const [completedTasks, setCompletedTasks] = useState(2);
   const totalTasks = 5;
   const [goals, setGoals] = useState([
@@ -17,13 +30,13 @@ function ProfilePage() {
     { id: 4, name: 'Write your goals here' },
     { id: 5, name: 'Write your goals here' },
   ]);
-  
+
   const [isEditing, setIsEditing] = useState(false);
   const [editedUserInfo, setEditedUserInfo] = useState({
     username: userData.username,
     email: userData.email,
   });
-  const [editingGoalId, setEditingGoalId] = useState(null); 
+  const [editingGoalId, setEditingGoalId] = useState(null);
 
   const handleUserInfoSubmit = (e) => {
     e.preventDefault();
@@ -33,6 +46,16 @@ function ProfilePage() {
       email: editedUserInfo.email,
     });
   };
+
+  // // Update the state with the user data when it's available
+  // useEffect(() => {
+  //   if (!loading && !error && data && data.user) {
+  //     setUserData({
+  //       username: data.user.username,
+  //       email: data.user.email,
+  //     });
+  //   }
+  // }, [loading, error, data]);
 
   const resetProgress = () => {
     setCompletedTasks(0);
@@ -69,6 +92,10 @@ function ProfilePage() {
         <Link to="/" className="homepage-button">
           Homepage
         </Link>
+      </div>
+
+      <div>
+        <button onClick={Auth.logout}>Logout</button>
       </div>
 
       <div className="profile-container">
@@ -119,13 +146,12 @@ function ProfilePage() {
           </button>
         </div>
 
-
         <div className="goals-container">
           <div className="fixed-goals-box">
             <h3>Goals and Objectives</h3>
             <ul style={{ listStyleType: 'none' }}>
               {goals.map((goal) => (
-                <li key={goal.id} style={{ marginBottom: '20px' }}> 
+                <li key={goal.id} style={{ marginBottom: '20px' }}>
                   {editingGoalId === goal.id ? (
                     <>
                       <input
@@ -143,11 +169,11 @@ function ProfilePage() {
                         type="checkbox"
                         checked={goal.completed}
                         onChange={() => toggleGoalCompletion(goal.id)}
-                        className="checkbox" 
+                        className="checkbox"
                       />
                       <span
                         onClick={() => startEditingGoal(goal.id)}
-                        style={{ cursor: 'pointer', marginLeft: '25px' }} 
+                        style={{ cursor: 'pointer', marginLeft: '25px' }}
                       >
                         {goal.name}
                       </span>
