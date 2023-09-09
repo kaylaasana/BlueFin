@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
+// import Auth from '../utils/auth';
 
 function ProfilePage() {
   // Initialize state variables
@@ -70,6 +71,10 @@ function ProfilePage() {
           Homepage
         </Link>
       </div>
+
+      {/* <div>
+        <button onClick={Auth.logout}>Logout</button>
+      </div> */}
 
       <div className="profile-container">
         <div className="profile-info">
