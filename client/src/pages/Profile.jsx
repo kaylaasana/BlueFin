@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
-// import Auth from '../utils/auth';
+import Auth from '../utils/auth';
 import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client'; // Import gql
 import { GET_USER_DATA } from '../utils/queries';
 
@@ -11,10 +11,14 @@ const client = new ApolloClient({
 });
 
 function ProfilePage() {
+  console.log(Auth.getUser());
+  const {data} = Auth.getUser();
+  const username = data?.username
+  const email = data?.email
   // Initialize state variables
   const [userData, setUserData] = useState({
-    username: 'User Name',
-    email: 'UserEmail@example.com',
+    username: username,
+    email: email,
   });
 
   const [completedTasks, setCompletedTasks] = useState(2);
@@ -43,18 +47,15 @@ function ProfilePage() {
     });
   };
 
-  // Apollo Client fetch user data
-  const { loading, error, data } = useQuery(GET_USER_DATA);
-
-  // Update the state with the user data when it's available
-  useEffect(() => {
-    if (!loading && !error && data && data.user) {
-      setUserData({
-        username: data.user.username,
-        email: data.user.email,
-      });
-    }
-  }, [loading, error, data]);
+  // // Update the state with the user data when it's available
+  // useEffect(() => {
+  //   if (!loading && !error && data && data.user) {
+  //     setUserData({
+  //       username: data.user.username,
+  //       email: data.user.email,
+  //     });
+  //   }
+  // }, [loading, error, data]);
 
   const resetProgress = () => {
     setCompletedTasks(0);
@@ -93,9 +94,9 @@ function ProfilePage() {
         </Link>
       </div>
 
-      {/* <div>
+      <div>
         <button onClick={Auth.logout}>Logout</button>
-      </div> */}
+      </div>
 
       <div className="profile-container">
         <div className="profile-info">
