@@ -80,24 +80,7 @@ function ProfilePage() {
           <h2>{userData.username}'s Profile</h2>
           <p>Email: {userData.email}</p>
         </div>
-        <div className="progression">
-          <div className="progress-bar-container">
-            <div
-              className="progress-bar"
-              style={{
-                width: `${Math.floor((completedTasks / totalTasks) * 100)}%`,
-              }}
-            >
-              <span className="progress-text">
-                {Math.floor((completedTasks / totalTasks) * 100)}%
-              </span>
-            </div>
-          </div>
-          <button onClick={resetProgress} className="button">
-            Reset Progress
-          </button>
-        </div>
-  
+
         <div className="goals-container">
           <div className="fixed-goals-box">
             <h3>Goals and Objectives</h3>
