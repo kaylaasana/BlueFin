@@ -6,41 +6,38 @@ import Auth from "../utils/auth";
 import { validateEmail } from "../utils/helpers";
 
 const SignUp = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const [formState, setFormState] = useState({
     username: "",
     email: "",
     password: "",
   });
   const [createUser, { error, data }] = useMutation(CREATE_USER);
-  // const [userMessage, setUserErrorMessage] = useState("");
-  // const [emailMessage, setEmailErrorMessage] = useState("");
-  // const [passwordMessage, setPasswordErrorMessage] = useState("");
-  // const [formMessage, setFormErrorMessage] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
 
   // update the state based on the form input changes
   const handleChange = (event) => {
-    // const { name, value } = event.target;
-    const { target } = event;
-    const inputType = target.name;
-    const inputValue = target.value;
-
-    //set form state based on the value
-    // setFormState({
-    //   ...formState,
-    //   [name]: value,
-    // });
+    const { name, value } = event.target;
+    // const { target } = event;
+    // const inputType = target.name;
+    // const inputValue = target.value;
 
     // check input type
-    if (inputType === "email") {
-      setEmail(inputValue);
-    } else if (inputType === "username") {
-      setUsername(inputValue);
+    // if (inputType === "email") {
+    //   setEmail(inputValue);
+    // } else if (inputType === "username") {
+    //   setUsername(inputValue);
+    // } else {
+    //   setPassword(inputValue);
+    // }
+    if (name === "email") {
+      setFormState({ ...formState, [name]: value });
+    } else if (name === "username") {
+      setFormState({ ...formState, [name]: value });
     } else {
-      setPassword(inputValue);
+      setFormState({ ...formState, [name]: value });
     }
   };
 
@@ -49,7 +46,7 @@ const SignUp = () => {
     // check if email input is a valid email
     event.preventDefault();
     const errors = [];
-    if (email && !validateEmail(email)) {
+    if (formState.email && !validateEmail(formState.email)) {
       errors.push("email is invalid");
       return;
     }
@@ -62,53 +59,32 @@ const SignUp = () => {
 
       // assign token to user data at login
       Auth.login(data.createUser.token);
+
+      // reset input fields on submission
+      setFormState({
+        username: "",
+        email: "",
+        password: "",
+      });
+      setErrorMessages([]);
     } catch (error) {
       console.error(error);
       throw new Error("Sign-up failed");
     }
-
-    // reset input fields on submission
-    setFormState({
-      username: "",
-      email: "",
-      password: "",
-    });
-
-    setErrorMessages([]);
-
   };
 
   //  alert the user if there is no input
-  // const noInput = (event) => {
-  //   event.preventDefault();
-  //   if (!username && !email && !password){
-  //     setFormErrorMessage("username, email and password required")
-  //   }
-  //   if (!username) {
-  //     setUserErrorMessage("username required");
-  //     return;
-  //   }
-  //   if (!email) {
-  //     setEmailErrorMessage("email required");
-  //     return;
-  //   }
-  //   if (!password) {
-  //     setPasswordErrorMessage("password required");
-  //     return;
-  //   }
-  // };
-
   const noInput = (event) => {
     event.preventDefault();
     const errors = [];
 
-    if (!username) {
+    if (!formState.username) {
       errors.push("Username is required");
     }
-    if (!email) {
+    if (!formState.email) {
       errors.push("Email is required");
     }
-    if (!password) {
+    if (!formState.password) {
       errors.push("Password is required");
     }
 
@@ -135,7 +111,7 @@ const SignUp = () => {
               placeholder="username"
               name="username"
               type="username"
-              value={username}
+              value={formState.username}
               onChange={handleChange}
               onBlur={noInput}
             />
@@ -148,7 +124,7 @@ const SignUp = () => {
               placeholder="your email"
               name="email"
               type="email"
-              value={email}
+              value={formState.email}
               onChange={handleChange}
               onBlur={noInput}
             />
@@ -161,25 +137,22 @@ const SignUp = () => {
               placeholder="********"
               name="password"
               type="password"
-              value={password}
+              value={formState.password}
               onChange={handleChange}
               onBlur={noInput}
             />
           </label>
           <button type="submit">Submit</button>
         </form>
-
-        {/* {[userMessage, passwordMessage, emailMessage, formMessage] && (
-          <div>
-            <p className="error-text">{[userMessage, passwordMessage, emailMessage, formMessage]}</p>
-          </div>
-        )} */}
       </div>
       {errorMessages.length > 0 && (
         <div>
           <ul className="error-list row p-3">
             {errorMessages.map((message, index) => (
-              <li key={index} className="error-text d-flex justify-content-center">
+              <li
+                key={index}
+                className="error-text d-flex justify-content-center"
+              >
                 {message}
               </li>
             ))}
