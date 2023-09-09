@@ -34,7 +34,6 @@ type User {
     deleteUserProgress(userId: ID!, level: String!): User
   }
 
-  
 # The schema definition specifies the entry points for queries and mutations.
   schema {
     query: Query
