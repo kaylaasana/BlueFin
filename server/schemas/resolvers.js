@@ -1,38 +1,58 @@
 const User = require("../models/User");
 // const UserLevel = require("./models/Level");
-const { signToken } = require("../utils/auth");
+const { AuthenticationError, signToken } = require("../utils/auth");
 
 // Defining the GraphQL resolvers
 const resolvers = {
   Query: {
     // Resolver for fetching a user by userId
-    getUser: async (parent, { userId }) => { 
+    getUser: async (parent, { userId }) => {
       // Find a user by their userId
       return User.findById(userId);
     },
+    checkUsernameExists: async (parent, [username]) => {
+      const user = await User.findOne({ username })
+
+      if (user) {
+        throw new AuthenticationError('Username already exists');
+      }
+
+      return 'Username is available'
+    },
+    checkEmailExists: async (parent, [email]) => {
+      const user = await User.findOne({ email })
+
+      if (user) {
+        throw new AuthenticationError('Email already exists');
+      }
+
+      return 'Email is available'
+    }
   },
   Mutation: {
     // Mutation for creating a new user
     createUser: async (parent, { username, email, password }) => {
-      try {
-        // Create a new user with the provided data
-        const user = await User.create({ username, email, password });
-        // Generate a JWT token for the user
-        const token = signToken(user);
-        // Return an authentication object containing the token and user data
-        return { token, user };
-      } catch (error) {
-        console.error(error);
-        throw new Error("Failed to create new user");
-      }
+
+        try {
+          // Create a new user with the provided data
+          const user = await User.create({ username, email, password });
+          // Generate a JWT token for the user
+          const token = signToken(user);
+          // Return an authentication object containing the token and user data
+          return { token, user };
+        } catch (error) {
+          console.error(error);
+          throw new Error("Failed to create new user");
+        }
+      
     },
 
     // login user
     login: async (parent, { email, password }) => {
       // find user by email
       const user = await User.findOne({ email });
-      
-      // check if user exists 
+
+      // check if user exists
       if (!user) {
         throw AuthenticationError;
       }
@@ -84,7 +104,7 @@ const resolvers = {
     },
 
     // Mutation for deleting a user's progress
-    deleteUserProgress: async(parent, { userId }) => {
+    deleteUserProgress: async (parent, { userId }) => {
       try {
         // Find the user by their userId
         const user = await User.findById(userId);

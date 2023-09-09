@@ -23,6 +23,17 @@ type User {
     getUser(userId: ID!): User
     level: [String!]
   }
+
+# Query for user by username
+  type Query {
+    checkUsernameExists(username: String!): User
+  }
+  
+# Query for user by email
+  type Query {
+    checkEmailExists(email: String!): User
+  }
+ 
  
 # Define mutation type for creating a new user
 # Define delete progress mutation
@@ -41,4 +52,4 @@ type User {
   }
   `;
 
-  module.exports = typeDefs
+module.exports = typeDefs;

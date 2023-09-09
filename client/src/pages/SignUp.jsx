@@ -6,9 +6,6 @@ import Auth from "../utils/auth";
 import { validateEmail } from "../utils/helpers";
 
 const SignUp = () => {
-  // const [username, setUsername] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const [formState, setFormState] = useState({
     username: "",
     email: "",
@@ -20,18 +17,8 @@ const SignUp = () => {
   // update the state based on the form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
-    // const { target } = event;
-    // const inputType = target.name;
-    // const inputValue = target.value;
 
-    // check input type
-    // if (inputType === "email") {
-    //   setEmail(inputValue);
-    // } else if (inputType === "username") {
-    //   setUsername(inputValue);
-    // } else {
-    //   setPassword(inputValue);
-    // }
+    // setting the values of the input to their associated state
     if (name === "email") {
       setFormState({ ...formState, [name]: value });
     } else if (name === "username") {
