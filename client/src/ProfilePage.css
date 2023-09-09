@@ -1,38 +1,108 @@
 .profile-container {
-    background-color: grey;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; 
-    text-align: center; 
-  }
-  
-  .homepage-button {
-    text-decoration: none;
-    background-color: #899091;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
 
-  .profile-info {
-    border: solid;
-    border-radius: 2px;
-    border-color: rgb(255, 255, 255);
-    background-color: #dadada;
-    margin-bottom: 30px;
-  }
+.homepage-button {
+  text-decoration: none;
+  background-color: #899091;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .profile-info h2 {
-    color: #000000; 
-  }
+.profile-info {
+  justify-content: center;
+  flex-direction: column;
+  border: solid;
+  border-radius: 2px;
+  border-color: rgb(255, 255, 255);
+  background-color: #dadada;
+  margin-top: 30px;
+  height: 50vh;
+}
 
-  .progression {
-    margin-top: 20px; 
-  }
-  
-  .goals {
-    margin-top: 50px;
-  }
+/* CSS for styling buttons */
+.button {
+  background-color: #505050;
+  margin-top: 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* CSS for styling smaller buttons */ .editButton {
+  background-color: #505050;
+  margin-top: 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 11px; 
+  cursor: pointer;
+  font-size: 12px; 
+
+}
+
+/* CSS for the progression bar */
+.progression {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.progress-bar-container {
+  width: 175%;
+  height: 40px;
+  background-color: #ddd;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 75px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4bb54e;
+  text-align: center;
+  line-height: 40px;
+  color: white;
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0; 
+}
+
+.progress-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.goals-container {
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start; 
+  height: 100vh; 
+  padding: 20px; 
+  margin-top: 35px;
+}
+
+.fixed-goals-box {
+  width: 400px; 
+  border: 2px solid #ccc; 
+  padding: 20px;  
+}
