@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../utils/mutation";
 import Auth from "../utils/auth";
+import { validateEmail } from "../utils/helpers";
 
 const SignUp = () => {
   const [formState, setFormState] = useState({
@@ -11,6 +12,7 @@ const SignUp = () => {
     password: "",
   });
   const [createUser, { error, data }] = useMutation(CREATE_USER);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // update the state based on the form input changes
   const handleChange = (event) => {
@@ -25,8 +27,13 @@ const SignUp = () => {
 
   //form submit
   const handleFormSubmit = async (event) => {
+    // check if email input is a valid email
     event.preventDefault();
-
+    if (email && !validateEmail(email)) {
+      setErrorMessage("email is invalid");
+      return;
+    }
+    
     // assign formState to data
     try {
       const { data } = await createUser({
@@ -42,10 +49,21 @@ const SignUp = () => {
 
     // reset input fields on submission
     setFormState({
+      username:"",
       email: "",
       password: "",
     });
   };
+
+  //  alert the user if there is no input
+  const noInput = (e) => {
+    e.preventDefault();
+    if (!username || !email || !password) {
+      setErrorMessage("all fields required");
+      return;
+    }
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-between">
@@ -95,9 +113,11 @@ const SignUp = () => {
           <button type="submit">Submit</button>
         </form>
 
-        {error && (
-          <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
-        )}
+        {errorMessage && (
+        <div>
+          <p className="error-text">{errorMessage}</p>
+        </div>
+      )}
       </div>
     </div>
   );
