@@ -17,6 +17,7 @@ import { useControls } from 'leva'
 import * as THREE from 'three'
 
 import { BoomBox } from './BoomBox'
+import Auth from '../utils/auth'
 
 /**
  * Extending the geometry to add
@@ -189,10 +190,11 @@ export default function Portal() {
             <Frame 
                 position={[-2, 0, 0]} 
                 bg={leftColor} 
-                text={'Login'} 
+                text={Auth.loggedIn() ? 'Logout': 'Login'} 
                 rotation={[0, Math.PI * 0.2, 0]}
                 setOrbit={setOrbit}
                 link='/login'
+                
             >
                 <Environment
                     files={'./envMap/blender-2k.hdr'}
