@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 
-async function playNote() {
+async function playNote(prevNote) {
   const piano = new Tone.Sampler({
     urls: {
       A1: 'A1.[mp3|ogg]',
@@ -109,11 +109,17 @@ async function playNote() {
     'G#6',
   ];
 
-  let idx = notes[Math.floor(Math.random() * notes.length)];
+  let newNote = notes[Math.floor(Math.random() * notes.length)];
+  let extractedNote = newNote.split('');
+  extractedNote.pop();
+  extractedNote = extractedNote.join('');
 
-  piano.triggerAttackRelease(idx, 4);
-
-  return idx;
+  if (prevNote !== extractedNote) {
+    piano.triggerAttackRelease(newNote, 4);
+    return extractedNote;
+  } else {
+    playNote(prevNote);
+  }
 }
 
 export default playNote;

@@ -1,8 +1,10 @@
+import PortalDom from '../3D/PortalDom';
 
-import PortalDom from "../3D/PortalDom"
-
-export default function PortalPage(){
-    return <>
-        <PortalDom/>
+export default function PortalPage() {
+  player();
+  return (
+    <>
+      <PortalDom />
     </>
+  );
 }
