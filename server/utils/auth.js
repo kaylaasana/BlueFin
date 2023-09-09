@@ -9,11 +9,11 @@ const expiration = "2h";
 
 module.exports = {
   // error handling for authentication
-  AuthenticationError: new GraphQLError("Could not authenticate user.", {
-    extensions: {
-      code: "UNAUTHENTICATED",
-    },
-  }),
+  // AuthenticationError: new GraphQLError("Could not authenticate user.", {
+  //   extensions: {
+  //     code: "UNAUTHENTICATED",
+  //   },
+  // }),
   
   authMiddleware: function ({ req }) {
     // storing the token in 'token' if it comes from req.body, req.query or headers
