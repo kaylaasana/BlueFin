@@ -1,6 +1,5 @@
 import { Html } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { DEG2RAD } from "three/src/math/MathUtils";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
@@ -9,7 +8,7 @@ import { CHECK_USERNAME_EXISTS, CHECK_EMAIL_EXISTS } from "../../utils/queries";
 import Auth from "../../utils/auth";
 import { validateEmail } from "../../utils/helpers";
 
-const SignUp = ({ occludeObj, setCameraControl, cameraControl }) => {
+const SignUp = ({ occludeObj, handleRotate }) => {
   /**
    * Everything not related with 3D
    */
@@ -137,12 +136,6 @@ const SignUp = ({ occludeObj, setCameraControl, cameraControl }) => {
   /**
    * 3D
    */
-  const rotateCamera = ()=>{
-    console.log('rotate now')
-    setCameraControl(true)
-    cameraControl.current.rotate(180 * DEG2RAD, 0, true)
-    // setCameraControl(false)
-  }
 
   return (
     <Html
@@ -156,7 +149,7 @@ const SignUp = ({ occludeObj, setCameraControl, cameraControl }) => {
       <div>
         <div className="d-flex justify-content-between">
             <button>Homepage</button>
-            <button onClick={rotateCamera}>Log In</button>
+            <button onClick={handleRotate}>Log In</button>
         </div>
         <div className="col d-flex justify-content-center">
           <form onSubmit={handleFormSubmit} onBlur={noInput}>

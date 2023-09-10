@@ -6,7 +6,7 @@ import { LOGIN_USER } from "../../utils/mutation";
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth";
 
-export default function LoginPart({ occludeObj, setCameraControl, cameraControl }) {
+export default function LoginPart({ occludeObj, handleRotate }) {
     /**
      * Everything not related with 3D
      */
@@ -51,6 +51,7 @@ export default function LoginPart({ occludeObj, setCameraControl, cameraControl 
     /**
      * 3D
      */
+    
     return <Html
         transform
         distanceFactor={5}
@@ -60,12 +61,8 @@ export default function LoginPart({ occludeObj, setCameraControl, cameraControl 
     >
         <div className="container">
             <div className="d-flex justify-content-between">
-                {/* <Link to="/"> */}
                 <button>Homepage</button>
-                {/* </Link> */}
-                {/* <Link to="/signup"> */}
-                <button>Sign Up</button>
-                {/* </Link> */}
+                <button onClick={handleRotate}>Sign Up</button>
             </div>
             <div className="row">
                 <div className="col d-flex justify-content-center">
