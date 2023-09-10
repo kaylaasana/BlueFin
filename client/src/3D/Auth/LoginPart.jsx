@@ -1,11 +1,15 @@
 import { Html } from "@react-three/drei"
+import { DEG2RAD } from "three/src/math/MathUtils";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutation";
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth";
 
-export default function LoginPart() {
+export default function LoginPart({ occludeObj, setCameraControl, cameraControl }) {
+    /**
+     * Everything not related with 3D
+     */
     const [formState, setFormState] = useState({ email: "", password: "" });
     const [login, { error, data }] = useMutation(LOGIN_USER);
 
@@ -43,11 +47,16 @@ export default function LoginPart() {
             password: "",
         });
     };
+
+    /**
+     * 3D
+     */
     return <Html
         transform
         distanceFactor={5}
         position={ [ 0, 0, -4 ] }
         rotation-y={Math.PI}
+        occlude={occludeObj}
     >
         <div className="container">
             <div className="d-flex justify-content-between">

@@ -1,4 +1,6 @@
 import { Html } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { DEG2RAD } from "three/src/math/MathUtils";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
@@ -7,7 +9,10 @@ import { CHECK_USERNAME_EXISTS, CHECK_EMAIL_EXISTS } from "../../utils/queries";
 import Auth from "../../utils/auth";
 import { validateEmail } from "../../utils/helpers";
 
-const SignUp = () => {
+const SignUp = ({ occludeObj, setCameraControl, cameraControl }) => {
+  /**
+   * Everything not related with 3D
+   */
   const [formState, setFormState] = useState({
     username: "",
     email: "",
@@ -129,23 +134,29 @@ const SignUp = () => {
     }
   };
 
+  /**
+   * 3D
+   */
+  const rotateCamera = ()=>{
+    console.log('rotate now')
+    setCameraControl(true)
+    cameraControl.current.rotate(180 * DEG2RAD, 0, true)
+    // setCameraControl(false)
+  }
+
   return (
     <Html
       transform
       distanceFactor={5}
       position={ [ 0, 0, 4 ] }
-      
+      occlude={occludeObj}
     >
 
 
       <div>
         <div className="d-flex justify-content-between">
-          {/* <Link to="/"> */}
             <button>Homepage</button>
-          {/* </Link> */}
-          {/* <Link to="/login"> */}
-            <button>Log In</button>
-          {/* </Link> */}
+            <button onClick={rotateCamera}>Log In</button>
         </div>
         <div className="col d-flex justify-content-center">
           <form onSubmit={handleFormSubmit} onBlur={noInput}>
