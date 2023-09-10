@@ -33,15 +33,12 @@ const Training = ({ difficulty, setDifficulty }) => {
     note();
   }, []);
 
-  // useEffect(() => {
-  //   const id = setInterval(() => {
-  //     // Your code here
-  //     console.log('are you counting down?');
-  //     setCount(count + 1); // Example: Increment count every second
-  //   }, 1000); // Interval in milliseconds (e.g., 1000ms = 1 second)
-  //   // Clear the interval when the component unmounts
-  //   return () => clearInterval(id);
-  // }, []);
+  useEffect(() => {
+    setInterval(() => {
+      console.log('are you counting down?');
+      setCount((count) => count + 1);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     currentNote.audioStream();
@@ -49,7 +46,7 @@ const Training = ({ difficulty, setDifficulty }) => {
       setTimer(timer - 1);
       if (timer <= 0) {
         setTimer("Time's Up!");
-        // clearInterval(interval);
+        clearInterval(interval);
       }
       checkNote(interval);
     }, 1000);
