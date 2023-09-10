@@ -1,5 +1,5 @@
 // import decode from JWT to decode user's information from token
-import decode from 'jwt-decode';
+import decode from "jwt-decode";
 
 // create class to authenticate user each time user logs in
 class Auth {
@@ -12,7 +12,7 @@ class Auth {
   // this does not check if the token is expired
   loggedIn() {
     const token = this.getToken();
-    return token ? true : false;
+    return token && !this.isTokenExpired(token) ? true : false;
   }
 
   // checking if the token is expired
@@ -23,7 +23,7 @@ class Auth {
     // check if the token is less than the current time...
     if (decoded.exp < Date.now() / 1000) {
       //  ...if so, remove from local storage
-      localStorage.removeItem('id_token');
+      localStorage.removeItem("id_token");
       return true;
     }
     return false;
@@ -31,24 +31,24 @@ class Auth {
 
   // gets the token from user's local storage
   getToken() {
-    return localStorage.getItem('id_token');
+    return localStorage.getItem("id_token");
   }
 
   // log user in
   login(idToken) {
     // save token to localStorage
-    localStorage.setItem('id_token', idToken);
+    localStorage.setItem("id_token", idToken);
     // reloads page and sends user to profile page
-    window.location.assign('/profile');
+    window.location.assign("/profile");
   }
 
-    // log user out
-    logout() { 
-        // clear user's token and profile data from local storage
-        localStorage.removeItem('id_token');
-        // reloads the page and resets the state of the app
-        window.location.assign('/login');
-    }
+  // log user out
+  logout() {
+    // clear user's token and profile data from local storage
+    localStorage.removeItem("id_token");
+    // reloads the page and resets the state of the app
+    window.location.assign("/login");
+  }
 }
 
 export default new Auth();
