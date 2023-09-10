@@ -1,4 +1,4 @@
-import { useThree, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { 
     OrbitControls, 
     Text, 
@@ -17,6 +17,7 @@ import { useControls } from 'leva'
 import * as THREE from 'three'
 
 import { BoomBox } from './BoomBox'
+import Auth from '../utils/auth'
 
 /**
  * Extending the geometry to add
@@ -53,7 +54,6 @@ function Frame({
         // window.location.href = link
         setOrbit(false)
         setClicked(true)
-        console.log(e)
     }
 
     /** 
@@ -79,10 +79,13 @@ function Frame({
                 if(state.camera.position.z > -1){
                     state.camera.position.z -= delta * 15
                     state.camera.position.x += delta * (x * 3)
-                    console.log(state.camera.position.z);
                 }else {
-                    // after zooming in enough, redirect the user to different page
-                    window.location.href = link
+                    // after zooming in enough, redirect the user to different page or log out
+                    if(link == 'Logout'){
+                        Auth.logout()
+                    }else {
+                        window.location.assign(link)
+                    }
                 }
             }
             
@@ -189,10 +192,11 @@ export default function Portal() {
             <Frame 
                 position={[-2, 0, 0]} 
                 bg={leftColor} 
-                text={'Login'} 
+                text={Auth.loggedIn() ? 'Logout': 'Login'} 
                 rotation={[0, Math.PI * 0.2, 0]}
                 setOrbit={setOrbit}
-                link='/login'
+                link={Auth.loggedIn() ? 'Logout': '/auth'}
+                
             >
                 <Environment
                     files={'./envMap/blender-2k.hdr'}
