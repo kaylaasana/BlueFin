@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 
-import Experience from '../Experience'
+import Experience from '../Home/Experience'
 import Loading from '../Loading'
 
 /**

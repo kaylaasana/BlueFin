@@ -11,6 +11,7 @@ import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
 import SignUp from './pages/SignUp.jsx';
 import Difficulty from './pages/Difficulty.jsx';
+import Auth from './pages/Auth.jsx';
 /**
  * Router setup
  * Insert more children as we go
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
         path: '/difficulty',
         element: <Difficulty />,
       },
+      {
+        path: '/auth',
+        element: <Auth/>
+      }
     ],
   },
 ]);
