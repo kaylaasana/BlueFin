@@ -44,3 +44,8 @@ ul {
   list-style-type: none;
   color:#be0000;
 }
+
+label,
+.error-text {
+  color: white;
+}

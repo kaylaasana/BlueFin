@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { CREATE_USER } from "../utils/mutation";
+import { CHECK_USERNAME_EXISTS, CHECK_EMAIL_EXISTS } from "../utils/queries";
 import Auth from "../utils/auth";
 import { validateEmail } from "../utils/helpers";
 
@@ -11,30 +12,86 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const [createUser, { error, data }] = useMutation(CREATE_USER);
+  const [usernameExists, setUsernameExists] = useState(false);
+  const [emailExists, setEmailExists] = useState(false);
+  const [
+    checkUsernameExists,
+    { loading: usernameLoading },
+  ] = useLazyQuery(CHECK_USERNAME_EXISTS, {
+    // await the response of the query
+    onCompleted: (data) => {
+      // Set the state based on the response
+      setUsernameExists(data.checkUsernameExists); 
+    },
+  });
+  const [
+    checkEmailExists,
+    { loading: emailLoading },
+  ] = useLazyQuery(CHECK_EMAIL_EXISTS, {
+    // await the response of the query
+    onCompleted: (data) => {
+       // Set the state based on the response
+      setEmailExists(data.checkEmailExists);
+    },
+  });
+  const [createUser, { error: createUserError, data: createUserData }] =
+    useMutation(CREATE_USER);
   const [errorMessages, setErrorMessages] = useState([]);
 
-  // update the state based on the form input changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
 
-    // setting the values of the input to their associated state
-    if (name === "email") {
-      setFormState({ ...formState, [name]: value });
-    } else if (name === "username") {
-      setFormState({ ...formState, [name]: value });
-    } else {
-      setFormState({ ...formState, [name]: value });
+  // update the state based on the form input changes
+  const handleChange = async (event) => {
+    const { name, value } = event.target;
+    setFormState({ ...formState, [name]: value });
+
+    // check if username and/or email exists in database
+    if (name === "username") {
+      checkUsernameExists({ variables: { username: value } });
+    } else if (name === "email") {
+      checkEmailExists({ variables: { email: value } });
     }
+  };
+
+  //  alert the user if there is no input
+  const noInput = () => {
+    const errors = [];
+    if (!formState.username) {
+      errors.push("Username is required");
+    }
+    if (!formState.email) {
+      errors.push("Email is required");
+    }
+    if (!formState.password) {
+      errors.push("Password is required");
+    }
+    setErrorMessages(errors);
   };
 
   //form submit
   const handleFormSubmit = async (event) => {
-    // check if email input is a valid email
     event.preventDefault();
     const errors = [];
+
+    // check if email input is a valid email
     if (formState.email && !validateEmail(formState.email)) {
-      errors.push("email is invalid");
+      errors.push("Email is invalid");
+      setErrorMessages(errors);
+      return;
+    }
+    
+    if (usernameExists) {
+      errors.push("Username already exists");
+      setErrorMessages(errors);
+      return;
+    }
+
+    if (emailExists) {
+      errors.push("Email already exists");
+      setErrorMessages(errors);
+      return;
+    }
+
+    if (errors.length > 0) {
       return;
     }
 
@@ -58,24 +115,6 @@ const SignUp = () => {
       console.error(error);
       throw new Error("Sign-up failed");
     }
-  };
-
-  //  alert the user if there is no input
-  const noInput = (event) => {
-    event.preventDefault();
-    const errors = [];
-
-    if (!formState.username) {
-      errors.push("Username is required");
-    }
-    if (!formState.email) {
-      errors.push("Email is required");
-    }
-    if (!formState.password) {
-      errors.push("Password is required");
-    }
-
-    setErrorMessages(errors);
   };
 
   return (
@@ -103,6 +142,11 @@ const SignUp = () => {
               onBlur={noInput}
             />
           </label>
+          {usernameExists && (
+            <div className="error-text d-flex justify-content-center">
+              Username already exists
+            </div>
+          )}
           <label className="row">
             Email
             <br></br>
@@ -116,6 +160,11 @@ const SignUp = () => {
               onBlur={noInput}
             />
           </label>
+          {emailExists && (
+            <div className="error-text d-flex justify-content-center">
+              Email already exists
+            </div>
+          )}
           <label className="row">
             Password
             <br></br>

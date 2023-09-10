@@ -10,41 +10,32 @@ const resolvers = {
       // Find a user by their userId
       return User.findById(userId);
     },
-    checkUsernameExists: async (parent, [username]) => {
-      const user = await User.findOne({ username })
-
-      if (user) {
-        throw new AuthenticationError('Username already exists');
-      }
-
-      return 'Username is available'
+    // check if username already exists in database
+    checkUsernameExists: async (parent, { username }) => {
+      const existingUser = await User.findOne({ username });
+      return !!existingUser;
     },
-    checkEmailExists: async (parent, [email]) => {
-      const user = await User.findOne({ email })
 
-      if (user) {
-        throw new AuthenticationError('Email already exists');
-      }
-
-      return 'Email is available'
-    }
+    // check if email already exists in database
+    checkEmailExists: async (parent, { email }) => {
+      const existingUser = await User.findOne({ email });
+      return !!existingUser;
+    },
   },
   Mutation: {
     // Mutation for creating a new user
     createUser: async (parent, { username, email, password }) => {
-
-        try {
-          // Create a new user with the provided data
-          const user = await User.create({ username, email, password });
-          // Generate a JWT token for the user
-          const token = signToken(user);
-          // Return an authentication object containing the token and user data
-          return { token, user };
-        } catch (error) {
-          console.error(error);
-          throw new Error("Failed to create new user");
-        }
-      
+      try {
+        // Create a new user with the provided data
+        const user = await User.create({ username, email, password });
+        // Generate a JWT token for the user
+        const token = signToken(user);
+        // Return an authentication object containing the token and user data
+        return { token, user };
+      } catch (error) {
+        console.error(error);
+        throw new Error("Failed to create new user");
+      }
     },
 
     // login user

@@ -1,5 +1,5 @@
 // utils/queries.js
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const GET_USER_DATA = gql`
   query GetUser {
@@ -8,5 +8,17 @@ export const GET_USER_DATA = gql`
       username
       email
     }
+  }
+`;
+
+export const CHECK_USERNAME_EXISTS = gql`
+  query CheckUsernameExists($username: String!) {
+    checkUsernameExists(username: $username)
+  }
+`;
+
+export const CHECK_EMAIL_EXISTS = gql `
+  query CheckEmailExists($email: String!) {
+    checkEmailExists(email: $email)
   }
 `;

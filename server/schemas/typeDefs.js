@@ -26,12 +26,12 @@ type User {
 
 # Query for user by username
   type Query {
-    checkUsernameExists(username: String!): User
+    checkUsernameExists(username: String!): Boolean
   }
   
 # Query for user by email
   type Query {
-    checkEmailExists(email: String!): User
+    checkEmailExists(email: String!): Boolean
   }
  
  
