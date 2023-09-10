@@ -5,12 +5,19 @@ type User {
     username: String!
     email: String!
     levels: [levelSchema] 
+    goals: [Goal] 
   }
   
   type levelSchema {
     _id: ID!
     levelName: String!
     levelNumber: Int!
+  }
+
+  type Goal {
+    _id: ID!
+    name: String!
+    completed: Boolean!
   }
   
   type Auth {
@@ -22,6 +29,7 @@ type User {
   type Query {
     getUser(userId: ID!): User
     level: [String!]
+    GetUserGoals(userId: ID!): [Goal] 
   }
  
 # Define mutation type for creating a new user
@@ -32,7 +40,17 @@ type User {
     login(email: String!, password: String!): Auth
     updateUserProgress(userId: ID!, levelName: String!, levelNumber: Int!): User
     deleteUserProgress(userId: ID!, level: String!): User
+    addGoalToUser(userId: ID!, goal: GoalInput!): User   # Add a mutation to add a goal
+    updateGoalCompletion(userId: ID!, goalId: ID!, completed: Boolean!): User   # Add a mutation to update goal completion
+    updateGoalName(userId: ID!, goalId: ID!, name: String!): User   # Add a mutation to update goal name
+    deleteGoal(userId: ID!, goalId: ID!): User
   }
+
+  # Input type for creating or updating a goal
+input GoalInput {
+  name: String!
+  completed: Boolean!
+}
 
 # The schema definition specifies the entry points for queries and mutations.
   schema {

@@ -2,54 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
 import Auth from '../utils/auth';
-import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client'; // Import gql
-import { GET_USER_DATA } from '../utils/queries';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql',
-  cache: new InMemoryCache(),
-});
+import { useQuery, useMutation } from '@apollo/client'; 
+import { GET_USER_DATA, GET_USER_GOALS, UPDATE_USER_GOALS, UPDATE_GOAL_COMPLETION } from '../utils/queries';
 
 function ProfilePage() {
-  console.log(Auth.getUser());
-  const {data} = Auth.getUser();
-  const username = data?.username
-  const email = data?.email
-  // Initialize state variables
+  const { data } = Auth.getUser();
+  const username = data?.username;
+  const email = data?.email;
+
+  const { data: userDataQuery } = useQuery(GET_USER_DATA);
+  const { data: userGoalsData } = useQuery(GET_USER_GOALS);
+
+  // Initialize state variables for user data and goals
   const [userData, setUserData] = useState({
     username: username,
     email: email,
   });
 
-  const [completedTasks, setCompletedTasks] = useState(2);
-  const totalTasks = 5;
-  const [goals, setGoals] = useState([
-    { id: 1, name: 'Write your goals here' },
-    { id: 2, name: 'Write your goals here' },
-    { id: 3, name: 'Write your goals here' },
-    { id: 4, name: 'Write your goals here' },
-    { id: 5, name: 'Write your goals here' },
-  ]);
-
+  const [goals, setGoals] = useState([]);
+  const [newGoal, setNewGoal] = useState('');
   const [editingGoalId, setEditingGoalId] = useState(null);
 
-  const resetProgress = () => {
-    setCompletedTasks(0);
-  };
+  useEffect(() => {
+    if (userGoalsData) {
+      setGoals(userGoalsData.user.goals); // Corrected to access the correct property
+    }
+  }, [userGoalsData]);
+
+  const [updateUserGoals] = useMutation(UPDATE_USER_GOALS);
+  const [updateGoalCompletion] = useMutation(UPDATE_GOAL_COMPLETION); // Added mutation
 
   const toggleGoalCompletion = (goalId) => {
     const updatedGoals = goals.map((goal) =>
       goal.id === goalId ? { ...goal, completed: !goal.completed } : goal
     );
     setGoals(updatedGoals);
+    saveGoalsToServer(updatedGoals);
   };
 
-  // Start editing a goal
   const startEditingGoal = (goalId) => {
     setEditingGoalId(goalId);
   };
 
-  // Handler for editing a goal's name
   const handleGoalEdit = (goalId, newName) => {
     const updatedGoals = goals.map((goal) =>
       goal.id === goalId ? { ...goal, name: newName } : goal
@@ -57,30 +51,56 @@ function ProfilePage() {
     setGoals(updatedGoals);
   };
 
-  // Handler for saving changes made to a goal
   const saveGoalEdit = () => {
-    setEditingGoalId(null); // Exit editing mode by resetting the currently edited goal ID
+    setEditingGoalId(null);
+    saveGoalsToServer(goals);
+  };
+
+  const handleAddGoal = () => {
+    if (newGoal.trim() !== '') {
+      const newGoalItem = {
+        id: goals.length + 1,
+        name: newGoal,
+        completed: false,
+      };
+
+      const updatedGoals = [...goals, newGoalItem];
+      setGoals(updatedGoals);
+      saveGoalsToServer(updatedGoals);
+
+      setNewGoal('');
+    }
+  };
+
+  const saveGoalsToServer = (newGoals) => {
+    updateUserGoals({
+      variables: {
+        goals: newGoals,
+      },
+    })
+      .then((result) => {
+        console.log('Goals updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating goals:', error);
+      });
   };
 
   return (
     <div className="profile-page-container">
-      
-        <Link to="/" className="homepage-button">
-          Homepage
-        </Link>
-     
+      <Link to="/" className="homepage-button">
+        Homepage
+      </Link>
       <div>
         <button onClick={Auth.logout} className="logout-button">
           Logout
         </button>
       </div>
-  
       <div className="profile-container">
         <div className="profile-info">
           <h2>{userData.username}'s Profile</h2>
           <p>Email: {userData.email}</p>
         </div>
-
         <div className="goals-container">
           <div className="fixed-goals-box">
             <h3>Goals and Objectives</h3>
@@ -116,6 +136,17 @@ function ProfilePage() {
                   )}
                 </li>
               ))}
+              <li>
+                <input
+                  type="text"
+                  placeholder="Add a new goal"
+                  value={newGoal}
+                  onChange={(e) => setNewGoal(e.target.value)}
+                />
+                <button onClick={handleAddGoal} className="button">
+                  Add
+                </button>
+              </li>
             </ul>
           </div>
         </div>

@@ -104,6 +104,60 @@ const resolvers = {
         throw new Error("Failed to delete progress");
       }
     },
+        // Resolver for adding a new goal to a user
+        addGoalToUser: async (parent, { userId, goalName }) => {
+          try {
+            const user = await User.findById(userId);
+            if (!user) {
+              throw new Error("User not found");
+            }
+    
+            // Create a new goal object
+            const newGoal = {
+              id: user.goals.length + 1,
+              name: goalName,
+              completed: false,
+            };
+    
+            // Push the new goal to the user's goals array
+            user.goals.push(newGoal);
+    
+            // Save the updated user
+            await user.save();
+    
+            return user;
+          } catch (error) {
+            console.error(error);
+            throw new Error("Failed to add goal to user");
+          }
+        },
+    
+        // Resolver for updating a user's goal completion status
+        updateGoalCompletion: async (parent, { userId, goalId, completed }) => {
+          try {
+            const user = await User.findById(userId);
+            if (!user) {
+              throw new Error("User not found");
+            }
+    
+            // Find the goal by ID
+            const goalIndex = user.goals.findIndex((goal) => goal.id === goalId);
+            if (goalIndex === -1) {
+              throw new Error("Goal not found");
+            }
+    
+            // Update the goal's completion status
+            user.goals[goalIndex].completed = completed;
+    
+            // Save the updated user
+            await user.save();
+    
+            return user;
+          } catch (error) {
+            console.error(error);
+            throw new Error("Failed to update goal completion");
+          }
+        },
   },
 };
 
