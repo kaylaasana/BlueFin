@@ -84,8 +84,20 @@ const SignUp = () => {
       return;
     }
 
+    if(formState.username.length <= 4 || formState.username.length >= 10) {
+      errors.push("Username must be between 4-10 characters long");
+      setErrorMessages(errors);
+      return;
+    }
+
     if (emailExists) {
       errors.push("Email already exists");
+      setErrorMessages(errors);
+      return;
+    }
+    
+    if(formState.password.length <= 8) {
+      errors.push("Password must be at least 8 characters long");
       setErrorMessages(errors);
       return;
     }

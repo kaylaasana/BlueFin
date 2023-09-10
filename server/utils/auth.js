@@ -9,7 +9,7 @@ const expiration = "2h";
 
 module.exports = {
   // error handling for authentication
-  AuthenticationError: new GraphQLError("Could not authenticate user.", {
+  AuthenticationError: new GraphQLError("Incorrect email or password", {
     extensions: {
       code: "UNAUTHENTICATED",
     },
