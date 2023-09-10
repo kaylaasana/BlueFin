@@ -1,14 +1,12 @@
-import { Html } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { Html, Text, Float } from "@react-three/drei";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { CREATE_USER } from "../../utils/mutation";
 import { CHECK_USERNAME_EXISTS, CHECK_EMAIL_EXISTS } from "../../utils/queries";
 import Auth from "../../utils/auth";
 import { validateEmail } from "../../utils/helpers";
 
-const SignUp = ({ occludeObj, handleRotate }) => {
+const SignUp = ({ occludeObj, handleRotate, text = 'SignUp' }) => {
   /**
    * Everything not related with 3D
    */
@@ -138,92 +136,105 @@ const SignUp = ({ occludeObj, handleRotate }) => {
    */
 
   return (
-    <Html
-      transform
-      distanceFactor={5}
-      position={ [ 0, 0, -4 ] }
-      rotation-y={Math.PI}
-      occlude={occludeObj}
-    >
+    <group position={[0, 0, -4]} rotation-y={Math.PI}>
+
+      <Html
+        transform
+        distanceFactor={5}
+        occlude={occludeObj}
+      >
 
 
-      <div>
-        <div className="d-flex justify-content-between">
+        <div>
+          <div className="d-flex justify-content-between">
             <button>Homepage</button>
-            <button onClick={handleRotate}>Log In</button>
-        </div>
-        <div className="col d-flex justify-content-center">
-          <form onSubmit={handleFormSubmit} onBlur={noInput}>
-            <label className="row text">
-              Username
-              <br></br>
-              <input
-                className="row"
-                placeholder="username"
-                name="username"
-                type="username"
-                value={formState.username}
-                onChange={handleChange}
-                onBlur={noInput}
-              />
-            </label>
-            {usernameExists && (
-              <div className="error-text d-flex justify-content-center">
-                Username already exists
-              </div>
-            )}
-            <label className="row">
-              Email
-              <br></br>
-              <input
-                className="row"
-                placeholder="your email"
-                name="email"
-                type="email"
-                value={formState.email}
-                onChange={handleChange}
-                onBlur={noInput}
-              />
-            </label>
-            {emailExists && (
-              <div className="error-text d-flex justify-content-center">
-                Email already exists
-              </div>
-            )}
-            <label className="row">
-              Password
-              <br></br>
-              <input
-                className="row"
-                placeholder="********"
-                name="password"
-                type="password"
-                value={formState.password}
-                onChange={handleChange}
-                onBlur={noInput}
-              />
-            </label>
-            <div className="p-2">
-              <button type="submit">Submit</button>
-            </div>
-          </form>
-        </div>
-        {errorMessages.length > 0 && (
-          <div>
-            <ul className="error-list row p-3">
-              {errorMessages.map((message, index) => (
-                <li
-                  key={index}
-                  className="error-text d-flex justify-content-center"
-                >
-                  {message}
-                </li>
-              ))}
-            </ul>
+            <button id="toLogin" onClick={handleRotate}>Log In Instead</button>
           </div>
-        )}
-      </div>
-    </Html>
+          <div className="col d-flex justify-content-center">
+            <form onSubmit={handleFormSubmit} onBlur={noInput}>
+              <label className="row text">
+                Username
+                <br></br>
+                <input
+                  className="row"
+                  placeholder="username"
+                  name="username"
+                  type="username"
+                  value={formState.username}
+                  onChange={handleChange}
+                  onBlur={noInput}
+                />
+              </label>
+              {usernameExists && (
+                <div className="error-text d-flex justify-content-center">
+                  Username already exists
+                </div>
+              )}
+              <label className="row">
+                Email
+                <br></br>
+                <input
+                  className="row"
+                  placeholder="your email"
+                  name="email"
+                  type="email"
+                  value={formState.email}
+                  onChange={handleChange}
+                  onBlur={noInput}
+                />
+              </label>
+              {emailExists && (
+                <div className="error-text d-flex justify-content-center">
+                  Email already exists
+                </div>
+              )}
+              <label className="row">
+                Password
+                <br></br>
+                <input
+                  className="row"
+                  placeholder="********"
+                  name="password"
+                  type="password"
+                  value={formState.password}
+                  onChange={handleChange}
+                  onBlur={noInput}
+                />
+              </label>
+              <div className="p-2">
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+          {errorMessages.length > 0 && (
+            <div>
+              <ul className="error-list row p-3">
+                {errorMessages.map((message, index) => (
+                  <li
+                    key={index}
+                    className="error-text d-flex justify-content-center"
+                  >
+                    {message}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </Html>
+
+      <Float>
+        <Text
+          fontSize={0.5}
+          anchorY="top"
+          anchorX="left"
+          lineHeight={0.8}
+          position={[0, 2.3, 0]}
+        >
+          {text}
+        </Text>
+      </Float>
+    </group>
   );
 };
 
