@@ -55,8 +55,8 @@ export default function LoginPart({ occludeObj, handleRotate }) {
     return <Html
         transform
         distanceFactor={5}
-        position={ [ 0, 0, -4 ] }
-        rotation-y={Math.PI}
+        position={ [ 0, 0, 4 ] }
+        // set occlude so that anything behind this object doesn't get rendered
         occlude={occludeObj}
     >
         <div className="container">

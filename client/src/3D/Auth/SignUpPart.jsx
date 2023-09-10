@@ -141,7 +141,8 @@ const SignUp = ({ occludeObj, handleRotate }) => {
     <Html
       transform
       distanceFactor={5}
-      position={ [ 0, 0, 4 ] }
+      position={ [ 0, 0, -4 ] }
+      rotation-y={Math.PI}
       occlude={occludeObj}
     >
 

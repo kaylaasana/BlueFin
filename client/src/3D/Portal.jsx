@@ -195,7 +195,7 @@ export default function Portal() {
                 text={Auth.loggedIn() ? 'Logout': 'Login'} 
                 rotation={[0, Math.PI * 0.2, 0]}
                 setOrbit={setOrbit}
-                link={Auth.loggedIn() ? 'Logout': '/login'}
+                link={Auth.loggedIn() ? 'Logout': '/auth'}
                 
             >
                 <Environment
