@@ -1,8 +1,8 @@
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 
-import Experience from './Experience'
-import Loading from './Loading'
+import Experience from '../Experience'
+import Loading from '../Loading'
 
 /**
  * Setting canvas
