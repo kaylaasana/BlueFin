@@ -1,14 +1,25 @@
 const User = require("../models/User");
 // const UserLevel = require("./models/Level");
-const { signToken } = require("../utils/auth");
+const { AuthenticationError, signToken } = require("../utils/auth");
 
 // Defining the GraphQL resolvers
 const resolvers = {
   Query: {
     // Resolver for fetching a user by userId
-    getUser: async (parent, { userId }) => { 
+    getUser: async (parent, { userId }) => {
       // Find a user by their userId
       return User.findById(userId);
+    },
+    // check if username already exists in database
+    checkUsernameExists: async (parent, { username }) => {
+      const existingUser = await User.findOne({ username });
+      return !!existingUser;
+    },
+
+    // check if email already exists in database
+    checkEmailExists: async (parent, { email }) => {
+      const existingUser = await User.findOne({ email });
+      return !!existingUser;
     },
   },
   Mutation: {
@@ -31,8 +42,8 @@ const resolvers = {
     login: async (parent, { email, password }) => {
       // find user by email
       const user = await User.findOne({ email });
-      
-      // check if user exists 
+
+      // check if user exists
       if (!user) {
         throw AuthenticationError;
       }
@@ -84,7 +95,7 @@ const resolvers = {
     },
 
     // Mutation for deleting a user's progress
-    deleteUserProgress: async(parent, { userId }) => {
+    deleteUserProgress: async (parent, { userId }) => {
       try {
         // Find the user by their userId
         const user = await User.findById(userId);
