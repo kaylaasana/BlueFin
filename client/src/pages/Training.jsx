@@ -44,6 +44,7 @@ const Training = ({ difficulty }) => {
               currentNote={currentNote}
               checkNote={checkNote}
               interval={interval}
+              score={score}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
@@ -62,6 +63,7 @@ const Training = ({ difficulty }) => {
               currentNote={currentNote}
               checkNote={checkNote}
               interval={interval}
+              score={score}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
