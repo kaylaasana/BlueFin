@@ -48,12 +48,12 @@ const Login = (props) => {
   return (
     <div className="container">
       <div className="d-flex justify-content-between">
-        <Link to="/">
+        {/* <Link to="/"> */}
           <button>Homepage</button>
-        </Link>
-        <Link to="/signup">
+        {/* </Link> */}
+        {/* <Link to="/signup"> */}
           <button>Sign Up</button>
-        </Link>
+        {/* </Link> */}
       </div>
       <div className="row">
         <div className="col d-flex justify-content-center">

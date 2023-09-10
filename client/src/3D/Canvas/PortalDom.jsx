@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { Perf } from 'r3f-perf'
 import { Leva } from 'leva'
-import Portal from './Portal'
+import Portal from '../Portal'
 
 /**
  * Setting canvas
