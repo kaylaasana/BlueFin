@@ -46,45 +46,51 @@ const Login = (props) => {
 
   // build page layout
   return (
-    <div>
-      <div className="d-flex justify-content-start">
-        <Link to="/">
-          <button>Homepage</button>
-        </Link>
+    <div className="container">
+      <div className="row">
+        <div className="col">
+          <div className="d-flex justify-content-start">
+            <Link to="/">
+              <button>Homepage</button>
+            </Link>
+          </div>
+        </div>
       </div>
-      <div className="col d-flex justify-content-center">
-        <form onSubmit={handleFormSubmit}>
-          <label className="row text">
-            Email
-            <br></br>
-            <input
-              className="row"
-              placeholder="your email"
-              name="email"
-              type="email"
-              value={formState.email}
-              onChange={handleChange}
-            />
-          </label>
-          <label className="row">
-            Password
-            <br></br>
-            <input
-              className="row"
-              placeholder="********"
-              name="password"
-              type="password"
-              value={formState.password}
-              onChange={handleChange}
-            />
-          </label>
-          <button type="submit">Submit</button>
-          <Link to='/signup'><button>Sign Up</button></Link>
-        </form>
-
-        {error && (
-          <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
-        )}
+      <div className="row">
+        <div className="col d-flex justify-content-center">
+          <form onSubmit={handleFormSubmit}>
+            <label className="row text">
+              Email
+              <br />
+              <input
+                className="row"
+                placeholder="your email"
+                name="email"
+                type="email"
+                value={formState.email}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="row">
+              Password
+              <br />
+              <input
+                className="row"
+                placeholder="********"
+                name="password"
+                type="password"
+                value={formState.password}
+                onChange={handleChange}
+              />
+            </label>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col d-flex justify-content-center">
+          {error && <div className="error-text p-3">{error.message}</div>}
+        </div>
       </div>
     </div>
   );
