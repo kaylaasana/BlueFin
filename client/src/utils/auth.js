@@ -12,7 +12,7 @@ class Auth {
   // this does not check if the token is expired
   loggedIn() {
     const token = this.getToken();
-    return token ? true : false;
+    return token && !this.isTokenExpired(token) ? true : false;
   }
 
   // checking if the token is expired
