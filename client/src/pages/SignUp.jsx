@@ -14,30 +14,29 @@ const SignUp = () => {
   });
   const [usernameExists, setUsernameExists] = useState(false);
   const [emailExists, setEmailExists] = useState(false);
-  const [
-    checkUsernameExists,
-    { loading: usernameLoading },
-  ] = useLazyQuery(CHECK_USERNAME_EXISTS, {
-    // await the response of the query
-    onCompleted: (data) => {
-      // Set the state based on the response
-      setUsernameExists(data.checkUsernameExists); 
-    },
-  });
-  const [
-    checkEmailExists,
-    { loading: emailLoading },
-  ] = useLazyQuery(CHECK_EMAIL_EXISTS, {
-    // await the response of the query
-    onCompleted: (data) => {
-       // Set the state based on the response
-      setEmailExists(data.checkEmailExists);
-    },
-  });
+  const [checkUsernameExists, { loading: usernameLoading }] = useLazyQuery(
+    CHECK_USERNAME_EXISTS,
+    {
+      // await the response of the query
+      onCompleted: (data) => {
+        // Set the state based on the response
+        setUsernameExists(data.checkUsernameExists);
+      },
+    }
+  );
+  const [checkEmailExists, { loading: emailLoading }] = useLazyQuery(
+    CHECK_EMAIL_EXISTS,
+    {
+      // await the response of the query
+      onCompleted: (data) => {
+        // Set the state based on the response
+        setEmailExists(data.checkEmailExists);
+      },
+    }
+  );
   const [createUser, { error: createUserError, data: createUserData }] =
     useMutation(CREATE_USER);
   const [errorMessages, setErrorMessages] = useState([]);
-
 
   // update the state based on the form input changes
   const handleChange = async (event) => {
@@ -78,7 +77,7 @@ const SignUp = () => {
       setErrorMessages(errors);
       return;
     }
-    
+
     if (usernameExists) {
       errors.push("Username already exists");
       setErrorMessages(errors);
@@ -178,7 +177,9 @@ const SignUp = () => {
               onBlur={noInput}
             />
           </label>
-          <button type="submit">Submit</button>
+          <div className="p-2">
+            <button type="submit">Submit</button>
+          </div>
         </form>
       </div>
       {errorMessages.length > 0 && (

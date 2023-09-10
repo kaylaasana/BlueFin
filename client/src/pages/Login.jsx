@@ -47,14 +47,13 @@ const Login = (props) => {
   // build page layout
   return (
     <div className="container">
-      <div className="row">
-        <div className="col">
-          <div className="d-flex justify-content-start">
-            <Link to="/">
-              <button>Homepage</button>
-            </Link>
-          </div>
-        </div>
+      <div className="d-flex justify-content-between">
+        <Link to="/">
+          <button>Homepage</button>
+        </Link>
+        <Link to="/signup">
+          <button>Sign Up</button>
+        </Link>
       </div>
       <div className="row">
         <div className="col d-flex justify-content-center">
@@ -83,7 +82,9 @@ const Login = (props) => {
                 onChange={handleChange}
               />
             </label>
-            <button type="submit">Submit</button>
+            <div className="p-2">
+              <button type="submit">Submit</button>
+            </div>
           </form>
         </div>
       </div>
