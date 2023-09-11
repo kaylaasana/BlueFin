@@ -6,11 +6,9 @@ import { useQuery, useMutation, useApolloClient } from '@apollo/client';
 import {
   GET_USER_DATA,
   GET_USER_GOALS,
-  UPDATE_USER_GOALS,
-  UPDATE_GOAL_COMPLETION,
 } from '../utils/queries';
 
-import { ADD_GOAL_TO_USER } from '../utils/mutation';
+import { ADD_GOAL_TO_USER, UPDATE_USER_GOALS, UPDATE_GOAL_COMPLETION  } from '../utils/mutation';
 
 function ProfilePage() {
   // Get user data from authentication (assuming Auth.getUser() returns user data)
@@ -28,6 +26,8 @@ function ProfilePage() {
   });
 
   const [addGoal, {error}] = useMutation(ADD_GOAL_TO_USER)
+  const [updateGoal] = useMutation(UPDATE_USER_GOALS) 
+  const [updateGoalCompletion] = useMutation(UPDATE_GOAL_COMPLETION) 
 
   // Initialize Apollo Client
   // const client = useApolloClient();
@@ -59,16 +59,28 @@ function ProfilePage() {
     }
   }, [userDataQuery]);
 
-  // Define GraphQL mutation for updating user goals
-  const [updateUserGoals] = useMutation(UPDATE_USER_GOALS);
-
   // Toggle completion of a goal
-  const toggleGoalCompletion = (goalId) => {
-    const updatedGoals = goals.map((goal) =>
-      goal.id === goalId ? { ...goal, completed: !goal.completed } : goal
-    );
+  const toggleGoalCompletion = async (goalId) => {
+    let goalCompletion = false;
+    const updatedGoals = goals.map((goal) => {
+      if(goal._id == goalId) {
+        goalCompletion = !goal.completed
+
+        return { ...goal, completed: !goal.completed}
+      } else {
+        return goal;
+      }
+    }
+  );
+    await updateGoalCompletion({
+      variables: {
+        userId: id,
+        goalId: goalId,
+        completed: goalCompletion,
+      }
+    });
+
     setGoals(updatedGoals);
-    saveGoalsToServer(updatedGoals);
   };
 
   // Start editing a goal
@@ -77,17 +89,24 @@ function ProfilePage() {
   };
 
   // Handle editing a goal
-  const handleGoalEdit = (goalId, newName) => {
+  const handleGoalEdit = async (goalId, newName) => {
     const updatedGoals = goals.map((goal) =>
-      goal.id === goalId ? { ...goal, name: newName } : goal
+      goal._id === goalId ? { ...goal, name: newName } : goal
     );
+    await updateGoal({
+      variables: {
+        userId: id,
+        goalId: goalId,
+        name: newName,
+      }
+    });
+
     setGoals(updatedGoals);
   };
 
   // Save edited goal
   const saveGoalEdit = () => {
     setEditingGoalId(null);
-    saveGoalsToServer(goals);
   };
 
   // Handle adding a new goal
@@ -112,13 +131,13 @@ function ProfilePage() {
   };
 
   // Save goals to the server
-  const saveGoalsToServer = async (newGoal) => {
+  const saveGoalsToServer = async (updatedGoals) => {
     if (data?._id) {
       try{
         await addGoal({
           variables: {
             userId: data._id,
-            goal: newGoal,
+            goal: updatedGoals,
           }
         })
       }catch(error){ 
@@ -149,13 +168,13 @@ function ProfilePage() {
             <h3>Goals and Objectives</h3>
             <ul style={{ listStyleType: 'none' }}>
               {goals.map((goal) => (
-                <li key={goal.id} className="goal-item">
-                  {editingGoalId === goal.id ? (
+                <li key={goal._id} className="goal-item">
+                  {editingGoalId === goal._id ? (
                     <>
                       <input
                         type="text"
                         value={goal.name}
-                        onChange={(e) => handleGoalEdit(goal.id, e.target.value)}
+                        onChange={(e) => handleGoalEdit(goal._id, e.target.value)}
                       />
                       <button onClick={saveGoalEdit} className="button">
                         Save
@@ -166,10 +185,10 @@ function ProfilePage() {
                       <input
                         type="checkbox"
                         checked={goal.completed}
-                        onChange={() => toggleGoalCompletion(goal.id)}
+                        onChange={() => toggleGoalCompletion(goal._id)}
                         className="checkbox"
                       />
-                      <span onClick={() => startEditingGoal(goal.id)} className="goal-name">
+                      <span onClick={() => startEditingGoal(goal._id)} className="goal-name">
                         {goal.name}
                       </span>
                     </>

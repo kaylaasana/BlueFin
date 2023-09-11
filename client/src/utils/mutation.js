@@ -33,3 +33,33 @@ mutation addGoalToUser($userId: ID!, $goal: String!) {
   }
 }
 `;
+
+export const UPDATE_USER_GOALS = gql `
+mutation updateGoalName($userId: ID!, $goalId: ID!, $name: String!) {
+  updateGoalName(userId: $userId, goalId: $goalId, name: $name) {
+    _id
+    username
+    email
+    goals {
+      _id
+      name
+      completed
+    }
+  }
+}
+`;
+
+export const  UPDATE_GOAL_COMPLETION = gql `
+mutation updateGoalCompletion($userId: ID!, $goalId: ID!, $completed: Boolean!) {
+  updateGoalCompletion(userId: $userId, goalId: $goalId, completed: $completed) {
+    _id
+    username
+    email
+    goals {
+      _id
+      name
+      completed
+    }
+  }
+}
+`
