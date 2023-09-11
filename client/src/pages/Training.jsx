@@ -50,6 +50,7 @@ const Training = ({ difficulty }) => {
               interval={interval}
               score={score}
               resetScore={resetScore}
+              difficulty={difficulty}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
@@ -69,6 +70,8 @@ const Training = ({ difficulty }) => {
               checkNote={checkNote}
               interval={interval}
               score={score}
+              resetScore={resetScore}
+              difficulty={difficulty}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
