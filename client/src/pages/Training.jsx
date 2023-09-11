@@ -1,22 +1,25 @@
 import { Note } from '../utils/audioStream';
 import playNote from '../utils/playNote';
 import { useEffect, useState } from 'react';
+import Timer from '../components/Timer';
 
-const Training = () => {
+const Training = ({ difficulty }) => {
   const currentNote = new Note();
-  const [playbackNote, setPlaybackNote] = useState();
+
+  const [playbackNote, setPlaybackNote] = useState(' ');
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(10);
+  const [interval, setInterval] = useState(null);
 
   const checkNote = (interval) => {
     if (playbackNote == currentNote.noteTracker) {
       setScore(score + 1);
       clearInterval(interval);
-      console.log('if statement called');
       note();
     }
-    console.log('playbackNote: ', playbackNote);
-    console.log('currentNote: ', currentNote.noteTracker);
+  };
+
+  const resetScore = () => {
+    setScore(0);
   };
 
   const tuner = () => currentNote.audioStream();
@@ -27,34 +30,58 @@ const Training = () => {
   };
 
   useEffect(() => {
-    currentNote.audioStream();
-
-    let time = 0;
-    const interval = setInterval(function () {
-      time++;
-      if (time >= 10) {
-        console.log("time's up");
-        clearInterval(interval);
-      }
-      checkNote(interval);
-    }, 1000);
-  }, [playbackNote]);
+    note();
+  }, []);
 
   return (
     <>
-      <button onClick={tuner}>Test</button>
-      <button onClick={note}>Play This Note</button>
-      {/* <button onClick={testInterval}>Testing Interval, sort of</button> */}
+      {difficulty ? (
+        <>
+          <button onClick={tuner}>Test</button>
+          <button onClick={note}>Play This Note</button>
 
-      <div style={{ color: 'white', fontSize: 100 }}>
-        Play This Note {playbackNote}
-      </div>
-      <div style={{ color: 'white', fontSize: 100 }}>Timeleft: {timer}</div>
-      <div style={{ color: 'white', fontSize: 100 }}>Your Score: {score}</div>
+          <div style={{ color: 'white', fontSize: 100 }}>
+            Play This Note {playbackNote}
+          </div>
+          <div style={{ color: 'white', fontSize: 100 }}>
+            <Timer
+              currentNote={currentNote}
+              checkNote={checkNote}
+              interval={interval}
+              score={score}
+              resetScore={resetScore}
+              difficulty={difficulty}
+            />
+          </div>
+          <div style={{ color: 'white', fontSize: 100 }}>
+            Your Score: {score}
+          </div>
 
-      <div id='note' style={{ color: 'white', fontSize: 100 }}></div>
+          <div id='note' style={{ color: 'white', fontSize: 100 }}></div>
+        </>
+      ) : (
+        <>
+          <button onClick={tuner}>Test</button>
+          <button onClick={note}>Play This Note</button>
+
+          <div style={{ color: 'white', fontSize: 100 }}>
+            <Timer
+              currentNote={currentNote}
+              checkNote={checkNote}
+              interval={interval}
+              score={score}
+              resetScore={resetScore}
+              difficulty={difficulty}
+            />
+          </div>
+          <div style={{ color: 'white', fontSize: 100 }}>
+            Your Score: {score}
+          </div>
+
+          <div id='note' style={{ color: 'white', fontSize: 100 }}></div>
+        </>
+      )}
     </>
   );
 };
-
 export default Training;

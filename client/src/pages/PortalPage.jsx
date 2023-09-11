@@ -1,4 +1,4 @@
-import PortalDom from '../3D/PortalDom';
+import PortalDom from '../3D/Canvas/PortalDom';
 
 export default function PortalPage() {
   return (

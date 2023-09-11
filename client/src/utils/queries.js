@@ -8,6 +8,8 @@ export const GET_USER_DATA = gql`
       username
       email
       goals
+      easyScore
+      hardScore
     }
   }
 `;
@@ -21,4 +23,16 @@ query GetUserGoals($userId: ID!) {
     completed
   }
 }
+`;
+
+export const CHECK_USERNAME_EXISTS = gql`
+  query CheckUsernameExists($username: String!) {
+    checkUsernameExists(username: $username)
+  }
+`;
+
+export const CHECK_EMAIL_EXISTS = gql `
+  query CheckEmailExists($email: String!) {
+    checkEmailExists(email: $email)
+  }
 `;

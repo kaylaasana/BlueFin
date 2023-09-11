@@ -36,39 +36,9 @@ class Note {
       });
   }
 
-  // mostFreqNote(arr, n) {
-  //   let hash = new Map();
-  //   for (let i = 0; i < n; i++) {
-  //     if (hash.has(arr[i])) {
-  //       hash.set(arr[i], hash.get(arr[i]) + 1);
-  //     } else {
-  //       hash.set(arr[i], 1);
-  //     }
-
-  //     let maxCount = 0;
-  //     let res = -1;
-  //     hash.forEach((value, key) => {
-  //       if (maxCount < value) {
-  //         res = key;
-  //         maxCount = value;
-  //       }
-  //     });
-  //     // console.log(res);
-  //     return res;
-  //   }
-  // }
-
   drawNote() {
     window.requestAnimationFrame(() => {
       this.drawNote();
-      // const time = this.clock.getElapsedTime();
-
-      // if (time < 1 && this.noteTracker) {
-      //   this.confirmNote.push(this.noteTracker);
-      //   console.log(this.noteTracker);
-      // } else {
-      //   console.log(this.mostFreqNote(this.confirmNote));
-      // }
     });
 
     let noteStrings = [

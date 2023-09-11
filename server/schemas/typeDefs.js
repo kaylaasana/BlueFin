@@ -6,6 +6,8 @@ type User {
     email: String!
     levels: [levelSchema] 
     goals: [Goal] 
+    easyScore: Int!
+    hardScore: Int!
   }
   
   type levelSchema {
@@ -31,6 +33,17 @@ type User {
     level: [String!]
     GetUserGoals(userId: ID!): [Goal] 
   }
+
+# Query for user by username
+  type Query {
+    checkUsernameExists(username: String!): Boolean
+  }
+  
+# Query for user by email
+  type Query {
+    checkEmailExists(email: String!): Boolean
+  }
+ 
  
 # Define mutation type for creating a new user
 # Define delete progress mutation
@@ -44,6 +57,8 @@ type User {
     updateGoalCompletion(userId: ID!, goalId: ID!, completed: Boolean!): User   # Add a mutation to update goal completion
     updateGoalName(userId: ID!, goalId: ID!, name: String!): User   # Add a mutation to update goal name
     deleteGoal(userId: ID!, goalId: ID!): User
+    updateEasyScore(userId: ID!, easyScore: Int!): User
+    updateHardScore(userId: ID!, hardScore: Int!): User
   }
 
 # The schema definition specifies the entry points for queries and mutations.
@@ -53,4 +68,4 @@ type User {
   }
   `;
 
-  module.exports = typeDefs
+module.exports = typeDefs;

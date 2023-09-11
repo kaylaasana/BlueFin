@@ -31,7 +31,7 @@ function Composition({clicked}) {
             state.camera.position.x -= delta * 3
             state.camera.position.z -= delta * 3
             if(state.camera.position.z < -0.75){
-                window.location.href = '/portal'
+                window.location.assign('/portal')
             }
 
         }else {
