@@ -21,3 +21,23 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const UPDATE_EASY_SCORE = gql`
+  mutation updateEasyScore($userId: ID!, $easyScore: Int!) {
+    updateEasyScore(userId: $userId, easyScore: $easyScore) {
+      easyScore
+      hardScore
+      username
+    }
+  }
+`;
+
+export const UPDATE_HARD_SCORE = gql`
+  mutation updateHardScore($userId: ID!, $hardScore: Int!) {
+    updateHardScore(userId: $userId, hardScore: $hardScore) {
+      hardScore
+      easyScore
+      username
+    }
+  }
+`;

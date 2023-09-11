@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 const levelSchema = require('./Level');
 const bcrypt = require('bcrypt');
 
@@ -18,7 +18,10 @@ const userSchema = new Schema({
   email: {
     type: String,
     // checking if the email input matches an email format
-    match: [/^([a-z0-9_.-]+)@([da-z.-]+)\.([a-z.]{2,6})$/, "not a valid email address"],
+    match: [
+      /^([a-z0-9_.-]+)@([da-z.-]+)\.([a-z.]{2,6})$/,
+      'not a valid email address',
+    ],
     // checks is email is unique
     unique: true,
     required: true,
@@ -30,13 +33,21 @@ const userSchema = new Schema({
     minlength: 8,
   },
   // reference Levels schema
-  level: [levelSchema]
+  level: [levelSchema],
+  easyScore: {
+    type: Number,
+    default: 0,
+  },
+  hardScore: {
+    type: Number,
+    default: 0,
+  },
 });
 
 // set up pre-save middleware to create password
-userSchema.pre("save", async function (next) {
-    // if password is new or modified, salt and hash password
-  if (this.isNew || this.isModified("password")) {
+userSchema.pre('save', async function (next) {
+  // if password is new or modified, salt and hash password
+  if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -49,6 +60,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const User = model("user", userSchema);
+const User = model('user', userSchema);
 
 module.exports = User;

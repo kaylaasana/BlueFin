@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useMutation } from '@apollo/client';
+import { UPDATE_EASY_SCORE, UPDATE_HARD_SCORE } from '../utils/mutation';
 import prompt from '../utils/prompt';
 
 const Timer = ({ currentNote, checkNote, interval, score, resetScore }) => {
