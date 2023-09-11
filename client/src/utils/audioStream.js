@@ -36,7 +36,6 @@ class Note {
       });
   }
 
-
   drawNote() {
     window.requestAnimationFrame(() => {
       this.drawNote();
