@@ -18,6 +18,10 @@ const Training = ({ difficulty }) => {
     }
   };
 
+  const resetScore = () => {
+    setScore(0);
+  };
+
   const tuner = () => currentNote.audioStream();
   const note = () => {
     playNote(playbackNote).then((noted) => {
@@ -45,6 +49,7 @@ const Training = ({ difficulty }) => {
               checkNote={checkNote}
               interval={interval}
               score={score}
+              resetScore={resetScore}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
