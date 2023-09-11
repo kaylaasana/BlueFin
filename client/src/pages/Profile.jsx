@@ -2,69 +2,84 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
 import Auth from '../utils/auth';
-import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client'; // Import gql
-import { GET_USER_DATA } from '../utils/queries';
+import { useQuery, useMutation, useApolloClient } from '@apollo/client';
+import {
+  GET_USER_DATA,
+  GET_USER_GOALS,
+} from '../utils/queries';
 
-const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql',
-  cache: new InMemoryCache(),
-});
+import { ADD_GOAL_TO_USER, UPDATE_USER_GOALS, UPDATE_GOAL_COMPLETION  } from '../utils/mutation';
 
 function ProfilePage() {
-  console.log(Auth.getUser());
-  const {data} = Auth.getUser();
-  const username = data?.username
-  const email = data?.email
-  // Initialize state variables
+  // Get user data from authentication (assuming Auth.getUser() returns user data)
+  const { data } = Auth.getUser();
+  const username = data?.username;
+  const email = data?.email;
+  const id = data?._id;
+
+  // Define GraphQL queries using useQuery hook
+  const { data: userDataQuery } = useQuery(GET_USER_DATA);
+  const { data: userGoalsData } = useQuery(GET_USER_GOALS, {
+    variables: {
+      userId: id,
+    }
+  });
+
+  const [addGoal, {error}] = useMutation(ADD_GOAL_TO_USER)
+  const [updateGoal] = useMutation(UPDATE_USER_GOALS) 
+  const [updateGoalCompletion] = useMutation(UPDATE_GOAL_COMPLETION) 
+
+  // Initialize Apollo Client
+  // const client = useApolloClient();
+
+  // State for user data
   const [userData, setUserData] = useState({
     username: username,
     email: email,
   });
 
-  const [completedTasks, setCompletedTasks] = useState(2);
-  const totalTasks = 5;
-  const [goals, setGoals] = useState([
-    { id: 1, name: 'Write your goals here' },
-    { id: 2, name: 'Write your goals here' },
-    { id: 3, name: 'Write your goals here' },
-    { id: 4, name: 'Write your goals here' },
-    { id: 5, name: 'Write your goals here' },
-  ]);
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedUserInfo, setEditedUserInfo] = useState({
-    username: userData.username,
-    email: userData.email,
-  });
+  // State for user goals
+  const [goals, setGoals] = useState([]);
+  const [newGoal, setNewGoal] = useState('');
   const [editingGoalId, setEditingGoalId] = useState(null);
 
-  const handleUserInfoSubmit = (e) => {
-    e.preventDefault();
-    setIsEditing(false);
-    setUserData({
-      username: editedUserInfo.username,
-      email: editedUserInfo.email,
+  // Update goals state when userGoalsData changes
+  useEffect(() => {
+    if (userGoalsData) {
+      setGoals(userGoalsData.GetUserGoals);
+      console.log(userGoalsData.GetUserGoals);
+    }
+  }, [userGoalsData]);
+
+  // Update goals state when userDataQuery changes
+  useEffect(() => {
+    if (userDataQuery && userDataQuery.user) {
+      const user = userDataQuery.user;
+      setGoals(user.goals || []);
+    }
+  }, [userDataQuery]);
+
+  // Toggle completion of a goal
+  const toggleGoalCompletion = async (goalId) => {
+    let goalCompletion = false;
+    const updatedGoals = goals.map((goal) => {
+      if(goal._id == goalId) {
+        goalCompletion = !goal.completed
+
+        return { ...goal, completed: !goal.completed}
+      } else {
+        return goal;
+      }
+    }
+  );
+    await updateGoalCompletion({
+      variables: {
+        userId: id,
+        goalId: goalId,
+        completed: goalCompletion,
+      }
     });
-  };
 
-  // // Update the state with the user data when it's available
-  // useEffect(() => {
-  //   if (!loading && !error && data && data.user) {
-  //     setUserData({
-  //       username: data.user.username,
-  //       email: data.user.email,
-  //     });
-  //   }
-  // }, [loading, error, data]);
-
-  const resetProgress = () => {
-    setCompletedTasks(0);
-  };
-
-  const toggleGoalCompletion = (goalId) => {
-    const updatedGoals = goals.map((goal) =>
-      goal.id === goalId ? { ...goal, completed: !goal.completed } : goal
-    );
     setGoals(updatedGoals);
   };
 
@@ -73,91 +88,93 @@ function ProfilePage() {
     setEditingGoalId(goalId);
   };
 
-  // Handler for editing a goal's name
-  const handleGoalEdit = (goalId, newName) => {
+  // Handle editing a goal
+  const handleGoalEdit = async (goalId, newName) => {
     const updatedGoals = goals.map((goal) =>
-      goal.id === goalId ? { ...goal, name: newName } : goal
+      goal._id === goalId ? { ...goal, name: newName } : goal
     );
+    await updateGoal({
+      variables: {
+        userId: id,
+        goalId: goalId,
+        name: newName,
+      }
+    });
+
     setGoals(updatedGoals);
   };
 
-  // Handler for saving changes made to a goal
+  // Save edited goal
   const saveGoalEdit = () => {
-    setEditingGoalId(null); // Exit editing mode by resetting the currently edited goal ID
+    setEditingGoalId(null);
+  };
+
+  // Handle adding a new goal
+  const handleAddGoal = async () => {
+    if (!data || !data.username || !data._id) {
+      console.error('User data is not available or incomplete:', data);
+      return;
+    }
+
+    if (newGoal.trim() !== '') {
+      const newGoalItem = {
+        name: newGoal,
+        completed: false,
+      };
+
+      const updatedGoals = [...goals, newGoalItem];
+      setGoals(updatedGoals);
+      await saveGoalsToServer(newGoal);
+
+      setNewGoal('');
+    }
+  };
+
+  // Save goals to the server
+  const saveGoalsToServer = async (updatedGoals) => {
+    if (data?._id) {
+      try{
+        await addGoal({
+          variables: {
+            userId: data._id,
+            goal: updatedGoals,
+          }
+        })
+      }catch(error){ 
+        console.log(error);
+      }
+    } else {
+      console.error('User data is not available or incomplete');
+    }
   };
 
   return (
-    <div>
-      <div className="top-left-buttons">
-        <Link to="/" className="homepage-button">
-          Homepage
-        </Link>
-      </div>
-
+    <div className="profile-page-container">
+      <Link to="/" className="homepage-button">
+        Homepage
+      </Link>
       <div>
-        <button onClick={Auth.logout}>Logout</button>
+        <button onClick={Auth.logout} className="logout-button">
+          Logout
+        </button>
       </div>
-
       <div className="profile-container">
         <div className="profile-info">
           <h2>{userData.username}'s Profile</h2>
           <p>Email: {userData.email}</p>
-          {isEditing ? (
-            <form onSubmit={handleUserInfoSubmit}>
-              <input
-                type="text"
-                name="username"
-                value={editedUserInfo.username}
-                onChange={(e) =>
-                  setEditedUserInfo({ ...editedUserInfo, username: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                name="email"
-                value={editedUserInfo.email}
-                onChange={(e) =>
-                  setEditedUserInfo({ ...editedUserInfo, email: e.target.value })
-                }
-              />
-              <button type="submit" className="button">
-                Save
-              </button>
-            </form>
-          ) : (
-            <button onClick={() => setIsEditing(true)} className="button">
-              Edit Info
-            </button>
-          )}
         </div>
-        <div className="progression">
-          <div className="progress-bar-container">
-            <div
-              className="progress-bar"
-              style={{ width: `${Math.floor((completedTasks / totalTasks) * 100)}%` }}
-            >
-              <span className="progress-text">
-                {Math.floor((completedTasks / totalTasks) * 100)}%
-              </span>
-            </div>
-          </div>
-          <button onClick={resetProgress} className="button">
-            Reset Progress
-          </button>
-        </div>
-
         <div className="goals-container">
           <div className="fixed-goals-box">
             <h3>Goals and Objectives</h3>
             <ul style={{ listStyleType: 'none' }}>
               {goals.map((goal) => (
-                <li key={goal.id} style={{ marginBottom: '20px' }}>
-                  {editingGoalId === goal.id ? (
+                <li key={goal._id} className="goal-item">
+                  {editingGoalId === goal._id ? (
                     <>
                       <input
                         type="text"
                         value={goal.name}
-                        onChange={(e) => handleGoalEdit(goal.id, e.target.value)}
+                        onChange={(e) => handleGoalEdit(goal._id, e.target.value)}
                       />
                       <button onClick={saveGoalEdit} className="button">
                         Save
@@ -168,19 +185,27 @@ function ProfilePage() {
                       <input
                         type="checkbox"
                         checked={goal.completed}
-                        onChange={() => toggleGoalCompletion(goal.id)}
+                        onChange={() => toggleGoalCompletion(goal._id)}
                         className="checkbox"
                       />
-                      <span
-                        onClick={() => startEditingGoal(goal.id)}
-                        style={{ cursor: 'pointer', marginLeft: '25px' }}
-                      >
+                      <span onClick={() => startEditingGoal(goal._id)} className="goal-name">
                         {goal.name}
                       </span>
                     </>
                   )}
                 </li>
               ))}
+              <li>
+                <input
+                  type="text"
+                  placeholder="Add a new goal"
+                  value={newGoal}
+                  onChange={(e) => setNewGoal(e.target.value)}
+                />
+                <button onClick={handleAddGoal} className="button">
+                  Add
+                </button>
+              </li>
             </ul>
           </div>
         </div>

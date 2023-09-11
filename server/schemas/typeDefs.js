@@ -4,7 +4,8 @@ type User {
     _id: ID!
     username: String!
     email: String!
-    levels: [levelSchema]
+    levels: [levelSchema] 
+    goals: [Goal] 
     easyScore: Int!
     hardScore: Int!
   }
@@ -13,6 +14,12 @@ type User {
     _id: ID!
     levelName: String!
     levelNumber: Int!
+  }
+ 
+  type Goal {
+    _id: ID!
+    name: String!
+    completed: Boolean!
   }
   
   type Auth {
@@ -24,6 +31,7 @@ type User {
   type Query {
     getUser(userId: ID!): User
     level: [String!]
+    GetUserGoals(userId: ID!): [Goal] 
   }
 
 # Query for user by username
@@ -45,6 +53,10 @@ type User {
     login(email: String!, password: String!): Auth
     updateUserProgress(userId: ID!, levelName: String!, levelNumber: Int!): User
     deleteUserProgress(userId: ID!, level: String!): User
+    addGoalToUser(userId: ID!, goal: String!): User   # Add a mutation to add a goal
+    updateGoalCompletion(userId: ID!, goalId: ID!, completed: Boolean!): User   # Add a mutation to update goal completion
+    updateGoalName(userId: ID!, goalId: ID!, name: String!): User   # Add a mutation to update goal name
+    deleteGoal(userId: ID!, goalId: ID!): User
     updateEasyScore(userId: ID!, easyScore: Int!): User
     updateHardScore(userId: ID!, hardScore: Int!): User
   }
