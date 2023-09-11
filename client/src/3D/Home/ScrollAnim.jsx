@@ -88,7 +88,7 @@ export default function ScrollAnim() {
 
     // debug panel
     const {textColor} = useControls('text', {
-        textColor: '#912F40'
+        textColor: '#eeb868'
     })
     
     return <>
@@ -99,10 +99,12 @@ export default function ScrollAnim() {
             <Scroll html>
                 { !clicked &&
                     <>
-                        <h1 className="intro mx-3" style={{ top: '30vh', color: textColor }} >Welcome</h1>
-                        <h1 className="intro mx-3" style={{ top: '140vh', color: textColor }}>To This</h1>
-                        <h1 className="intro mx-3" style={{ top: '240vh', color: textColor }}>Ready?</h1>
-                        <button className="intro p-2 mx-3 go-btn" style={{ top: '250vh', color: textColor }} onClick={()=> setClicked(true)} >GO!</button>
+                        <div className="intro-container" style={ { left: '5vw' } }>
+                            <h1 className="intro mx-3" style={{ top: '30vh', color: textColor }}>Welcome</h1>
+                            <h1 className="intro mx-3" style={{ top: '140vh', color: textColor, width: '40vw' }}>Start your musical journey</h1>
+                            <h1 className="intro mx-3" style={{ top: '240vh', color: textColor}}>Ready?</h1>
+                            <button className="px-4 mx-3 go-btn" style={{ top: '255vh'}} onClick={()=> setClicked(true)} >Play</button>
+                        </div>
                     </>
                 }
             </Scroll>
