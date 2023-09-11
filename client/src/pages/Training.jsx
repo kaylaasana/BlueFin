@@ -2,6 +2,8 @@ import { Note } from '../utils/audioStream';
 import playNote from '../utils/playNote';
 import { useEffect, useState } from 'react';
 import Timer from '../components/Timer';
+import { Canvas } from '@react-three/fiber';
+import DiffusedRingVisual from '../components/VisualRing';
 
 const Training = ({ difficulty }) => {
   const currentNote = new Note();
