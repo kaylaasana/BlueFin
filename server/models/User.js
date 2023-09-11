@@ -2,6 +2,18 @@ const { Schema, model } = require("mongoose");
 const levelSchema = require('./Level');
 const bcrypt = require('bcrypt');
 
+// Create a schema for user goals
+const goalSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 // establish user schema blueprint
 const userSchema = new Schema({
   username: {
@@ -21,13 +33,14 @@ const userSchema = new Schema({
     required: true,
     trim: true,
   },
-  password: {
-    type: String,
+  password: { type: String,
     required: true,
     minlength: 8,
   },
   // reference Levels schema
-  level: [levelSchema]
+  level: [levelSchema],
+  // Add goals field referencing the goalSchema
+  goals: [goalSchema],
 });
 
 // set up pre-save middleware to create password

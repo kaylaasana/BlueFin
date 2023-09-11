@@ -21,3 +21,15 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const ADD_GOAL_TO_USER = gql ` 
+mutation addGoalToUser($userId: ID!, $goal: String!) {
+  addGoalToUser(userId: $userId, goal: $goal) {
+    goals {
+      _id
+      name
+      completed
+    }
+  }
+}
+`;

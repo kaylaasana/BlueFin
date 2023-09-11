@@ -10,6 +10,14 @@ const resolvers = {
       // Find a user by their userId
       return User.findById(userId);
     },
+    GetUserGoals: async (parent, { userId }) => {
+      try{
+      const user = await User.findById(userId);
+      return user.goals;
+    }catch(error){
+      console.log(error);
+    }
+  }
   },
   Mutation: {
     // Mutation for creating a new user
@@ -105,59 +113,57 @@ const resolvers = {
       }
     },
         // Resolver for adding a new goal to a user
-        addGoalToUser: async (parent, { userId, goalName }) => {
+        addGoalToUser: async (parent, { userId, goal }) => {
           try {
             const user = await User.findById(userId);
             if (!user) {
               throw new Error("User not found");
             }
-    
-            // Create a new goal object
-            const newGoal = {
-              id: user.goals.length + 1,
-              name: goalName,
+
+            // Push the new goal (provided in the `goal` argument) to the user's goals array
+            const goalObj = {
+              name: goal,
               completed: false,
-            };
-    
-            // Push the new goal to the user's goals array
-            user.goals.push(newGoal);
-    
+            }
+            user.goals.push(goalObj);
+
             // Save the updated user
             await user.save();
-    
+
             return user;
           } catch (error) {
             console.error(error);
             throw new Error("Failed to add goal to user");
           }
         },
-    
-        // Resolver for updating a user's goal completion status
-        updateGoalCompletion: async (parent, { userId, goalId, completed }) => {
-          try {
-            const user = await User.findById(userId);
-            if (!user) {
-              throw new Error("User not found");
-            }
-    
-            // Find the goal by ID
-            const goalIndex = user.goals.findIndex((goal) => goal.id === goalId);
-            if (goalIndex === -1) {
-              throw new Error("Goal not found");
-            }
-    
-            // Update the goal's completion status
-            user.goals[goalIndex].completed = completed;
-    
-            // Save the updated user
-            await user.save();
-    
-            return user;
-          } catch (error) {
-            console.error(error);
-            throw new Error("Failed to update goal completion");
-          }
-        },
+
+  // Resolver for updating a user's goal completion status
+  updateGoalCompletion: async (parent, { userId, goalId, completed }) => {
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      // Find the goal by _id
+      const goalIndex = user.goals.findIndex((goal) => goal._id === goalId);
+      if (goalIndex === -1) {
+        throw new Error("Goal not found");
+      }
+
+      // Update the goal's completion status
+      user.goals[goalIndex].completed = completed;
+
+      // Save the updated user
+      await user.save();
+
+      return user;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to update goal completion");
+    }
+  },
+
   },
 };
 
