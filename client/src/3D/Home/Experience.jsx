@@ -11,7 +11,7 @@ import ScrollAnim from './ScrollAnim'
 export default function Experience()
 {
     const {displayPerform} = useControls('Perf', {
-        displayPerform: true
+        displayPerform: false
     })
 
     const {lightPosition} = useControls('light', {
