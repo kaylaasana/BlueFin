@@ -4,7 +4,9 @@ type User {
     _id: ID!
     username: String!
     email: String!
-    levels: [levelSchema] 
+    levels: [levelSchema]
+    easyScore: Int!
+    hardScore: Int!
   }
   
   type levelSchema {
@@ -43,6 +45,8 @@ type User {
     login(email: String!, password: String!): Auth
     updateUserProgress(userId: ID!, levelName: String!, levelNumber: Int!): User
     deleteUserProgress(userId: ID!, level: String!): User
+    updateEasyScore(userId: ID!, easyScore: Int!): User
+    updateHardScore(userId: ID!, hardScore: Int!): User
   }
 
 # The schema definition specifies the entry points for queries and mutations.

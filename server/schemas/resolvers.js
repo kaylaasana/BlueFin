@@ -1,6 +1,6 @@
-const User = require("../models/User");
+const User = require('../models/User');
 // const UserLevel = require("./models/Level");
-const { AuthenticationError, signToken } = require("../utils/auth");
+const { AuthenticationError, signToken } = require('../utils/auth');
 
 // Defining the GraphQL resolvers
 const resolvers = {
@@ -34,7 +34,7 @@ const resolvers = {
         return { token, user };
       } catch (error) {
         console.error(error);
-        throw new Error("Failed to create new user");
+        throw new Error('Failed to create new user');
       }
     },
 
@@ -68,12 +68,12 @@ const resolvers = {
         // Find the user by their userId
         const user = await User.findById(userId);
         if (!user) {
-          throw new Error("User not found");
+          throw new Error('User not found');
         }
 
         // Find the index of the specified level
         const levelIndex = user.levels.findIndex(
-          (level) => level.levelName === levelName
+          (level) => level.levelName === levelName,
         );
 
         // Check if the level exists in the user's levels
@@ -90,7 +90,7 @@ const resolvers = {
         return user;
       } catch (error) {
         console.error(error);
-        throw new Error("Failed to update progress");
+        throw new Error('Failed to update progress');
       }
     },
 
@@ -100,7 +100,7 @@ const resolvers = {
         // Find the user by their userId
         const user = await User.findById(userId);
         if (!user) {
-          throw new Error("User not found");
+          throw new Error('User not found');
         }
 
         // Clear user's levels
@@ -109,10 +109,46 @@ const resolvers = {
         await user.save();
 
         // Return a success message here
-        return "User progress deleted";
+        return 'User progress deleted';
       } catch (error) {
         console.error(error);
-        throw new Error("Failed to delete progress");
+        throw new Error('Failed to delete progress');
+      }
+    },
+
+    updateEasyScore: async (parent, { userId, easyScore }) => {
+      try {
+        const user = await User.findByIdAndUpdate(
+          userId,
+          { easyScore },
+          { new: true },
+        );
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        return user;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to update score');
+      }
+    },
+
+    updateHardScore: async (parent, { userId, hardScore }) => {
+      try {
+        const user = await User.findByIdAndUpdate(
+          userId,
+          { hardScore },
+          { new: true },
+        );
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        return user;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to update score');
       }
     },
   },
