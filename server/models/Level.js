@@ -7,7 +7,7 @@ const levelSchema = new Schema({
         required: true,
     },
     // progress stores the user's progress for the specific level they are on
-    levelNumber: {
+    levelScore: {
         type: Number,
         default: 0,
     },
