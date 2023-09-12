@@ -128,6 +128,9 @@ function ProfilePage() {
       await saveGoalsToServer(newGoal);
 
       setNewGoal('');
+
+      // Refresh the page
+      window.location.reload();
     }
   };
 
@@ -174,11 +177,9 @@ function ProfilePage() {
       <Link to="/Training" className="logout-button">
         Training Room
       </Link>
-      <div>
-        <button onClick={Auth.logout} className="logout-button">
-          Logout
-        </button>
-      </div>
+      <Link onClick={Auth.logout} className="logout-button">
+        Log Out
+      </Link>
       <div className="profile-container">
         <div className="profile-info">
           <h2>{userData.username}'s Profile</h2>
