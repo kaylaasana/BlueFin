@@ -18,9 +18,6 @@ const Timer = ({
 
   useEffect(() => {
     currentNote.audioStream();
-  }, []);
-
-  useEffect(() => {
     const timer = setInterval(() => {
       if (countdown <= 0) {
         clearInterval(timer);
