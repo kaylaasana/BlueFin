@@ -45,12 +45,14 @@
   text-decoration: none;
   background-color: #899091;
   color: white;
+  margin: 5px;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .logout-button {
+  margin: 5px;
   margin-top: 20px;
   text-decoration: none;
   background-color: #899091;
