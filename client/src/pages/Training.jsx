@@ -3,16 +3,20 @@ import playNote from '../utils/playNote';
 import { useEffect, useState } from 'react';
 import Timer from '../components/Timer';
 import { useQuery } from '@apollo/client';
-import { GET_USER_DATA } from '../utils/queries';
+import { GET_USER_SCORES } from '../utils/queries';
 import Auth from '../utils/auth';
 import visualizer from '../utils/visualizer';
 
-const Training = ({ difficulty, practice }) => {
+const Training = ({ difficulty }) => {
   const currentNote = new Note();
 
   const { data } = Auth.getUser();
   const id = data?._id;
-  // const { data: userScore } = useQuery(GET_USER_DATA);
+  const { data: userScore, loading } = useQuery(GET_USER_SCORES, {
+    variables: {
+      userId: id,
+    },
+  });
 
   const [playbackNote, setPlaybackNote] = useState(' ');
   const [score, setScore] = useState(0);
@@ -20,6 +24,7 @@ const Training = ({ difficulty, practice }) => {
   // const []
 
   const checkNote = (interval) => {
+    console.log(userScore);
     if (playbackNote == currentNote.noteTracker) {
       setScore(score + 1);
       clearInterval(interval);
@@ -31,7 +36,6 @@ const Training = ({ difficulty, practice }) => {
     setScore(0);
   };
 
-  const tuner = () => currentNote.audioStream();
   const note = () => {
     playNote(playbackNote).then((noted) => {
       setPlaybackNote(noted);
@@ -60,13 +64,15 @@ const Training = ({ difficulty, practice }) => {
               score={score}
               resetScore={resetScore}
               difficulty={difficulty}
-              practice={practice}
               setScore={setScore}
               playbackNote={playbackNote}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
             Your Score: {score}
+          </div>
+          <div style={{ color: 'white', fontSize: 100 }}>
+            Your Previous Score: {!loading && userScore.getUser.easyScore}
           </div>
 
           <div id='visual'></div>
@@ -85,12 +91,14 @@ const Training = ({ difficulty, practice }) => {
               score={score}
               resetScore={resetScore}
               difficulty={difficulty}
-              practice={practice}
               setScore={setScore}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
             Your Score: {score}
+          </div>
+          <div style={{ color: 'white', fontSize: 100 }}>
+            Your Previous Score: {!loading && userScore.getUser.hardScore}
           </div>
 
           <div id='note' style={{ color: 'white', fontSize: 100 }}></div>

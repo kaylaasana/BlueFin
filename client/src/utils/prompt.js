@@ -1,7 +1,9 @@
 import Swal from 'sweetalert2';
 import Auth from './auth';
+import { GET_USER_SCORES } from './queries';
 
 export default function prompt(
+  setScore,
   score,
   setCountdown,
   resetScore,
@@ -14,7 +16,7 @@ export default function prompt(
     text: `Your final score: ${score}`,
     allowOutsideClick: false,
     showConfirmButton: true,
-    confirmButtonText: 'Save Current Score & Try Again',
+    confirmButtonText: 'Save Current Score & Back to Menu',
     showDenyButton: true,
     denyButtonText: "Don't Save & Try Again",
     showCancelButton: true,
@@ -29,11 +31,12 @@ export default function prompt(
         easyScore({ variables: { userId: data._id, easyScore: score } });
       }
       hardScore({ variables: { userId: data._id, hardScore: score } });
+      window.location.reload();
     } else if (result.isDenied) {
       setCountdown(20);
       resetScore();
     } else {
-      console.log('dismiss');
+      setScore('Have fun');
     }
   });
 }
