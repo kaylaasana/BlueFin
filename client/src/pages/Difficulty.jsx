@@ -8,7 +8,7 @@ const Difficulty = () => {
 
   const handleClick = (e) => {
     console.log(e.target.id);
-    if (e.target.id == 'Easy') {
+    if (e.target.id == 'Easy' || 'None') {
       setEasy(true);
     } else {
       setEasy(false);

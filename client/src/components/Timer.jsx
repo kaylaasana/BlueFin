@@ -19,7 +19,8 @@ const Timer = ({
 
   useEffect(() => {
     currentNote.audioStream();
-
+    console.log(practice);
+    console.log(difficulty);
     if (practice == false) {
       const timer = setInterval(() => {
         if (countdown <= 0) {
@@ -41,7 +42,6 @@ const Timer = ({
       return () => clearInterval(timer);
     }
     setCountdown('Take your time');
-    setScore("You're doing great sweetie");
   }, [countdown]);
 
   return (
