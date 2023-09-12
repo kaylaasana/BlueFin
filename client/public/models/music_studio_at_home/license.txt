@@ -1,0 +1,11 @@
+Model Information:
+* title:	Music Studio at Home
+* source:	https://sketchfab.com/3d-models/music-studio-at-home-d4bcb0a0536f49929694768ba5a1d771
+* author:	Creap (https://sketchfab.com/ccreap21)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Music Studio at Home" (https://sketchfab.com/3d-models/music-studio-at-home-d4bcb0a0536f49929694768ba5a1d771) by Creap (https://sketchfab.com/ccreap21) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
