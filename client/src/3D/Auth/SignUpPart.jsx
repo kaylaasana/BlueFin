@@ -146,9 +146,8 @@ const SignUp = ({ occludeObj, handleRotate, text = 'SignUp' }) => {
 
 
         <div>
-          <div className="d-flex justify-content-between">
-            <button>Homepage</button>
-            <button id="toLogin" onClick={handleRotate}>Log In Instead</button>
+          <div className="buttonGroup d-flex justify-content-start">
+            <button id="homeButton" type="button">Homepage</button>
           </div>
           <div className="col d-flex justify-content-center">
             <form onSubmit={handleFormSubmit} onBlur={noInput}>
@@ -201,8 +200,9 @@ const SignUp = ({ occludeObj, handleRotate, text = 'SignUp' }) => {
                   onBlur={noInput}
                 />
               </label>
-              <div className="p-2">
+              <div className="p-2 buttonGroup">
                 <button type="submit">Submit</button>
+                <button type="button" id="toLogin" onClick={handleRotate}>Log In Instead</button>
               </div>
             </form>
           </div>

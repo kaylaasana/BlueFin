@@ -77,7 +77,7 @@ export default function Auth3D() {
         </EffectComposer>
 
         {/* To rotate the camera */}
-        <CameraControls ref={cameraControl} enabled={cameraControlEnable} mouseButtons-left={null}/>
+        <CameraControls ref={cameraControl} enabled={cameraControlEnable} mouseButtons-left={null} touches-one={null}/>
 
         {/* Cube */}
         <mesh ref={box}>

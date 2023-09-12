@@ -59,9 +59,8 @@ export default function LoginPart({ occludeObj, handleRotate, text = 'Login' }) 
             occlude={occludeObj}
         >
             <div className="container">
-                <div className="d-flex justify-content-between">
-                    <button>Homepage</button>
-                    <button id="toSignUp" onClick={handleRotate}>Sign Up Instead</button>
+                <div className="buttonGroup d-flex justify-content-end">
+                    <button id="homeButton2">Homepage</button>
                 </div>
                 <div className="row">
                     <div className="col d-flex justify-content-center">
@@ -90,8 +89,9 @@ export default function LoginPart({ occludeObj, handleRotate, text = 'Login' }) 
                                     onChange={handleChange}
                                 />
                             </label>
-                            <div className="p-2">
+                            <div className="p-2 buttonGroup">
                                 <button type="submit">Submit</button>
+                                <button type="button" id="toSignUp" onClick={handleRotate}>Sign Up Instead</button>
                             </div>
                         </form>
                     </div>
