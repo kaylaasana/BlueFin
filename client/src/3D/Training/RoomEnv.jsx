@@ -64,6 +64,11 @@ export default function RoomEnv(){
         />
         <BakeShadows/>
 
+        {/* <mesh position={[-3, 1, -2]} onClick={getCamPos}>
+            <boxGeometry/>
+            <meshNormalMaterial/>
+        </mesh> */}
+
         {/* Floor */}
         <mesh position={[0, -5, 0]} rotation-x={ -Math.PI / 2} scale={4.5}>
             <planeGeometry args={[5, 5]}/>
