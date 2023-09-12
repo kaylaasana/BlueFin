@@ -5,7 +5,6 @@ import Timer from '../components/Timer';
 import { useQuery } from '@apollo/client';
 import { GET_USER_SCORES } from '../utils/queries';
 import Auth from '../utils/auth';
-import visualizer from '../utils/visualizer';
 
 const Training = ({ difficulty }) => {
   const currentNote = new Note();
