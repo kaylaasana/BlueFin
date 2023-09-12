@@ -1,9 +1,13 @@
 import { Canvas } from '@react-three/fiber'
+import { Leva } from 'leva'
+import { Suspense } from 'react'
 
+import Loading from '../Loading'
 import TrainingEntrance from '../Training/TrainingEntrance'
 
 export default function TrainingCanvas(){
     return <>
+        <Leva collapsed/>
         <Canvas shadows 
             camera={{
                 fov: 45,
@@ -13,7 +17,9 @@ export default function TrainingCanvas(){
                 rotation: [-0.206, 0.945, 0.168]
             }}
         >
-            <TrainingEntrance/>
+            <Suspense fallback={<Loading/>}>
+                <TrainingEntrance/>
+            </Suspense>
         </Canvas>
     </>
 }

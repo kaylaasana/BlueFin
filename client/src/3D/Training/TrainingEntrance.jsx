@@ -1,9 +1,8 @@
-import { OrbitControls, Stars, Html, CameraControls } from '@react-three/drei'
+import { Stars, Html, CameraControls } from '@react-three/drei'
 import { useRef, useState } from 'react'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import { DEG2RAD } from 'three/src/math/MathUtils'
-import * as THREE from 'three'
 
 import MusicStudio from './MusicStudio'
 import RoomEnv from './RoomEnv'
