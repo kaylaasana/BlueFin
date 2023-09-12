@@ -66,6 +66,11 @@ export default function Auth3D() {
         // rotate the camera
         await cameraControl.current.rotate(180 * DEG2RAD, 0, true)
     }
+
+    const goHome = ()=>{
+        window.location.assign('/')
+    }
+
     return <>
         {/* Adding effect (glow) */}
         <EffectComposer>
@@ -89,7 +94,7 @@ export default function Auth3D() {
         </mesh>
 
         {/* Login and sign up component */}
-        <LoginPart occludeObj={ [box] } handleRotate={rotateCamera} text={loginText}/>
-        <SignUpPart occludeObj={ [box] } handleRotate={rotateCamera} text={signUpText} />
+        <LoginPart occludeObj={ [box] } handleRotate={rotateCamera} text={loginText} goHome={goHome}/>
+        <SignUpPart occludeObj={ [box] } handleRotate={rotateCamera} text={signUpText} goHome={goHome} />
     </>
 }

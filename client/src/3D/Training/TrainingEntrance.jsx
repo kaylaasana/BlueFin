@@ -7,14 +7,11 @@ import RoomEnv from './RoomEnv'
 
 export default function TrainingEntrance(){
 
-
     const { skyColor } = useControls('skyColor', {
         skyColor: {
             value: '#010209'
         }
     })
-
-    
 
     return <>
         <Perf position={'bottom-right'}/>
