@@ -16,6 +16,9 @@ const Timer = ({
   const [easyScore] = useMutation(UPDATE_EASY_SCORE);
   const [hardScore] = useMutation(UPDATE_HARD_SCORE);
 
+  // useEffect renders once the Timer component mounts.
+  // This will handle the audioStream that's passed from Training
+
   useEffect(() => {
     currentNote.audioStream();
     const timer = setInterval(() => {

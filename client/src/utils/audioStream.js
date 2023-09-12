@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+// Note class constructor used because it grants us acces to the noteTracker
+// that will be used in Training
 class Note {
   constructor() {
     this.confirmNote = [];
@@ -15,6 +17,7 @@ class Note {
   }
 
   audioStream() {
+    // gains access to the users audio input devices and passes in specfic audio options
     navigator.mediaDevices
       .getUserMedia({
         audio: {
@@ -24,9 +27,13 @@ class Note {
           latency: 0,
         },
       })
+
       .then((stream) => {
+        // createMediaStreamSource is called on AudioContext and takes the promise from getUserMedia
+        // this allows source to watch the microphone as an audio intake
         const source = this.context.createMediaStreamSource(stream);
 
+        // connect source to an audio analyser instatiated from this.analyser
         source.connect(this.analyser);
 
         this.drawNote();
@@ -35,6 +42,8 @@ class Note {
         console.log(err);
       });
   }
+
+  // drawNote constantly gets data from this.analyser for noteTracker
 
   drawNote() {
     window.requestAnimationFrame(() => {
