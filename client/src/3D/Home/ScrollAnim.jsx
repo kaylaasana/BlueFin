@@ -101,6 +101,7 @@ export default function ScrollAnim() {
                     <>
                         <div className="intro-container" style={ { left: '5vw' } }>
                             <h1 className="intro mx-3" style={{ top: '30vh', color: textColor }}>Welcome</h1>
+                            <img className="logo-img" src="./logo-no-background.png" alt="logo" style={ {top: '46vh', width: '23vw', position: 'absolute'} } />
                             <h1 className="intro mx-3" style={{ top: '140vh', color: textColor, width: '40vw' }}>Start your musical journey</h1>
                             <h1 className="intro mx-3" style={{ top: '240vh', color: textColor}}>Ready?</h1>
                             <button className="px-4 mx-3 go-btn" style={{ top: '255vh'}} onClick={()=> setClicked(true)} >Play</button>

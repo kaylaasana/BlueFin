@@ -27,10 +27,6 @@ const router = createBrowserRouter([
         element: <Homepage />,
       },
       {
-        path: '/training',
-        element: <Training />,
-      },
-      {
         path: '/portal',
         element: <PortalPage />,
       },
@@ -39,7 +35,7 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: '/difficulty',
+        path: '/training',
         element: <Difficulty />,
       },
       {
