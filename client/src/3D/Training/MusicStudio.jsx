@@ -9,7 +9,7 @@ import { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function MusicStudio(props) {
-  const { nodes, materials } = useGLTF('./models/music_studio_at_home/scene.gltf');
+  const { nodes, materials } = useGLTF('/models/music_studio_at_home/scene.gltf');
   return (
     <group {...props} dispose={null}>
       <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
@@ -662,4 +662,4 @@ export default function MusicStudio(props) {
   );
 }
 
-useGLTF.preload('./models/music_studio_at_home/scene.gltf');
+useGLTF.preload('/models/music_studio_at_home/scene.gltf');

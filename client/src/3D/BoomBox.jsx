@@ -71,4 +71,4 @@ export function BoomBox(props) {
     );
 }
 
-useGLTF.preload("./models/bluetooth_music_boombox/scene.gltf");
+useGLTF.preload("/models/bluetooth_music_boombox/scene.gltf");
