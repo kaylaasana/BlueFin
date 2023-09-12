@@ -8,7 +8,7 @@ import Portal from '../Portal'
  */
 export default function PortalDom() {
     return <>
-        <Leva collapsed/>
+        <Leva collapsed hidden/>
         <Canvas
             camera={{
                 fov: 45,

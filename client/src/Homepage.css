@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Sacramento&display=swap");
+
 html,
 body,
 #root {
@@ -31,13 +33,42 @@ body,
 }
 
 .intro {
-  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  font-size: 5rem;
+  text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+    color: #fff6a9;
+  font-family: "Sacramento", cursive;
+}
+
+.intro-container {
   position: absolute;
 }
 
+.logo-img{
+  filter: drop-shadow(0px 0px 15px #03e9f4);
+}
+
 .go-btn {
-  width: 5vw;
+  position: absolute;
+  font-family: "Sacramento", cursive;
+  border-radius: 10px;
+  font-size: 2.5rem;
+  width: fit-content;
   background-color: #181513;
+  overflow: hidden;
+  transition: 0.5s;
+  color: white;
+}
+
+.go-btn:hover{
+  background: #03e9f4;
+  border: none;
+  font-weight: bold;
+  color: #050801;
+  box-shadow: 0 0 5px #03e9f4,
+              0 0 25px #03e9f4,
+              0 0 50px #03e9f4,
+              0 0 200px #03e9f4;
 }
 
 ul {
@@ -48,4 +79,34 @@ ul {
 label,
 .error-text {
   color: white;
+}
+
+.buttonGroup > *{
+  border-radius: 10px;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  background-color: #181513;
+  padding: .5rem;
+  border: none;
+  overflow: hidden;
+  transition: 0.5s;
+  font-size: .85rem;
+  color: white;
+}
+
+.buttonGroup > *:hover{
+  background: #03e9f4;
+    color: #050801;
+    box-shadow: 0 0 5px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 50px #03e9f4,
+                0 0 200px #03e9f4;
+}
+
+#homeButton{
+  margin: 0;
+}
+
+#homeButton2{
+  margin: 0;
 }
