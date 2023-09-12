@@ -12,6 +12,7 @@ const Timer = ({
   difficulty,
   practice,
   setScore,
+  playbackNote,
 }) => {
   const [countdown, setCountdown] = useState(20);
   const [easyScore] = useMutation(UPDATE_EASY_SCORE);
@@ -19,8 +20,7 @@ const Timer = ({
 
   useEffect(() => {
     currentNote.audioStream();
-    console.log(practice);
-    console.log(difficulty);
+
     if (practice == false) {
       const timer = setInterval(() => {
         if (countdown <= 0) {
@@ -40,8 +40,13 @@ const Timer = ({
         }
       }, 1000);
       return () => clearInterval(timer);
+    } else {
+      const timer = setInterval(() => {
+        checkNote(interval);
+        setCountdown(countdown + 1);
+      }, 1000);
+      return () => clearInterval(timer);
     }
-    setCountdown('Take your time');
   }, [countdown]);
 
   return (

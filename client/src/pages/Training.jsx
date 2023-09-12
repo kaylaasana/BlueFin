@@ -62,6 +62,7 @@ const Training = ({ difficulty, practice }) => {
               difficulty={difficulty}
               practice={practice}
               setScore={setScore}
+              playbackNote={playbackNote}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
