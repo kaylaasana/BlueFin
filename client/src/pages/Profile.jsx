@@ -212,9 +212,11 @@ function ProfilePage() {
                       <span onClick={() => startEditingGoal(goal._id)} className="goal-name">
                         {goal.name}
                       </span>
+                      <div className="delete-buttons-container">
                       <button onClick={() => handleDeleteGoal(goal._id)} className="delete-button">
                         Delete
                       </button>
+                      </div>
                     </>
                   )}
                 </li>
