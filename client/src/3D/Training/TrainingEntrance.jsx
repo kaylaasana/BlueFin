@@ -32,10 +32,12 @@ export default function TrainingEntrance(){
         }
     })
 
+    // Timeout function to make it wait for a bit
     const timeout = (ms)=>{
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
+    // animating cam using camera control helper
     const animateCam = async ()=>{
         setShowText(false)
         await camControl.current?.rotate(-55 * DEG2RAD, 0, true)

@@ -11,7 +11,10 @@ import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 
 export default function MusicStudio(props) {
+  // getting nodes and materials from the model
   const { nodes, materials } = useGLTF('/models/music_studio_at_home/scene.gltf');
+
+  // for animating lights
   const screenLight = useRef()
   const lampLight = useRef()
 
@@ -19,6 +22,9 @@ export default function MusicStudio(props) {
     textLight: '#1b999f'
   })
 
+  /**
+   * Light animation
+   */
   useFrame((state, delta)=>{
     screenLight.current.intensity = 0.4 + Math.abs(Math.sin(state.clock.elapsedTime))
     lampLight.current.intensity = Math.abs(Math.sin(state.clock.elapsedTime) / 10)

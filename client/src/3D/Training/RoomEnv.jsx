@@ -4,11 +4,15 @@ import { useRef } from "react"
 import { useThree } from "@react-three/fiber"
 import * as THREE from 'three'
 
+/**
+ * This function sets the environment such as lighting, shadows, etc
+ */
 export default function RoomEnv(){
     const dirLight = useRef()
     const {camera, gl} = useThree()
 
 
+    // loading textures
     const textures = useTexture({
         metalnessMap: '/textures/ceiling/beige_wall_001_arm_1k.jpg',
         map: '/textures/ceiling/beige_wall_001_diff_1k.jpg',
@@ -40,11 +44,13 @@ export default function RoomEnv(){
         }
     })
 
+    // for debugging
     const getCamPos = ()=>{
         console.log(camera)
     }
 
     return <>
+        {/* Lights */}
         <ambientLight intensity={0.03}/>
         <directionalLight 
             ref={dirLight} 
@@ -62,6 +68,8 @@ export default function RoomEnv(){
             samples={17} 
             rings={11}
         />
+
+        {/* BakeShadows fix the shadow position and improve the performance */}
         <BakeShadows/>
 
         {/* <mesh position={[-3, 1, -2]} onClick={getCamPos}>
