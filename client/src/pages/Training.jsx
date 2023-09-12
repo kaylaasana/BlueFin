@@ -2,8 +2,7 @@ import { Note } from '../utils/audioStream';
 import playNote from '../utils/playNote';
 import { useEffect, useState } from 'react';
 import Timer from '../components/Timer';
-import { Canvas } from '@react-three/fiber';
-import DiffusedRingVisual from '../components/VisualRing';
+import visualizer from '../utils/visualizer';
 
 const Training = ({ difficulty }) => {
   const currentNote = new Note();
@@ -33,6 +32,7 @@ const Training = ({ difficulty }) => {
 
   useEffect(() => {
     note();
+    // visualizer();
   }, []);
 
   return (
@@ -58,6 +58,8 @@ const Training = ({ difficulty }) => {
           <div style={{ color: 'white', fontSize: 100 }}>
             Your Score: {score}
           </div>
+
+          <div id='visual'></div>
 
           <div id='note' style={{ color: 'white', fontSize: 100 }}></div>
         </>
@@ -86,4 +88,5 @@ const Training = ({ difficulty }) => {
     </>
   );
 };
+
 export default Training;
