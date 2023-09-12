@@ -19,6 +19,8 @@ import auth from './utils/auth.js';
 function ProtectedRoute({ children }){
   // Check if the user is logged in
   const isLoggedIn = auth.loggedIn()
+  // // comment the line above and uncomment the line below if you are bothered by the fact that you have to login
+  // const isLoggedIn = true 
   if(!isLoggedIn){
     // then navigate to /auth page
     window.location.assign('/auth')
