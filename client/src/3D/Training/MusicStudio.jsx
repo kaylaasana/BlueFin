@@ -8,11 +8,16 @@ Title: Music Studio at Home
 import { useRef } from "react";
 import { useGLTF, Text3D, Center } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { useControls } from "leva";
 
 export default function MusicStudio(props) {
   const { nodes, materials } = useGLTF('/models/music_studio_at_home/scene.gltf');
   const screenLight = useRef()
   const lampLight = useRef()
+
+  const {textLight} = useControls('text', {
+    textLight: '#1b999f'
+  })
 
   useFrame((state, delta)=>{
     screenLight.current.intensity = 0.4 + Math.abs(Math.sin(state.clock.elapsedTime))
@@ -159,7 +164,15 @@ export default function MusicStudio(props) {
           rotation={[Math.PI / 2, 0, 0]}
           scale={0.025}
         />
-        <pointLight ref={screenLight} name="screenLight" castShadow shadow-normalBias={0.04} position={[-8.817, 5.337, 3.326]} intensity={1.01} color={'green'}/>
+        <mesh 
+          position={[-8.817, 5.26, 4.726]} 
+          rotation={[Math.PI / 2, 0, 0]} 
+          scale={[2.75, 1.55, 1]}
+        >
+          <planeGeometry/>
+          <meshBasicMaterial color={textLight}/>
+        </mesh>
+        <pointLight ref={screenLight} name="screenLight" castShadow shadow-normalBias={0.04} position={[-8.817, 5.337, 3.326]} intensity={1.01} color={textLight}/>
         <mesh
           name="Sofa_0"
           castShadow
@@ -221,6 +234,7 @@ export default function MusicStudio(props) {
                 BLUEFIN
                 
             </Text3D>
+            <pointLight intensity={0.15} color={textLight}/>
         </Center>
         <mesh
           name="TeaTable_0"
