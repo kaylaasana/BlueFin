@@ -17,13 +17,11 @@ import auth from './utils/auth.js';
  * Redirect an unauthenticated user
  */
 function ProtectedRoute({ children }){
-  const navigate = useNavigate()
-  
   // Check if the user is logged in
   const isLoggedIn = auth.loggedIn()
   if(!isLoggedIn){
     // then navigate to /auth page
-    navigate('/auth')
+    window.location.assign('/auth')
     return null
   }
 
