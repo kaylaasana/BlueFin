@@ -64,6 +64,22 @@ mutation updateGoalCompletion($userId: ID!, $goalId: ID!, $completed: Boolean!) 
 }
 `;
 
+export const DELETE_USER_GOALS = gql`
+  mutation deleteGoal($userId: ID!, $goalId: ID!) {
+    deleteGoal(userId: $userId, goalId: $goalId) {
+      _id
+      username
+      email
+      goals {
+        _id
+        name
+        completed
+      }
+    }
+  }
+`;
+
+
 export const UPDATE_EASY_SCORE = gql`
   mutation updateEasyScore($userId: ID!, $easyScore: Int!) {
     updateEasyScore(userId: $userId, easyScore: $easyScore) {
