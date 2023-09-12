@@ -72,6 +72,17 @@
   font-size: 14px;
 }
 
+.delete-button {
+  background-color: #505050;
+  margin-top: 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
 /* CSS for the progression bar */
 .progression {
   margin-top: 20px;
