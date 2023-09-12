@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Timer from '../components/Timer';
 import visualizer from '../utils/visualizer';
 
-const Training = ({ difficulty }) => {
+const Training = ({ difficulty, practice }) => {
   const currentNote = new Note();
 
   const [playbackNote, setPlaybackNote] = useState(' ');
@@ -53,6 +53,8 @@ const Training = ({ difficulty }) => {
               score={score}
               resetScore={resetScore}
               difficulty={difficulty}
+              practice={practice}
+              setScore={setScore}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
@@ -76,6 +78,8 @@ const Training = ({ difficulty }) => {
               score={score}
               resetScore={resetScore}
               difficulty={difficulty}
+              practice={practice}
+              setScore={setScore}
             />
           </div>
           <div style={{ color: 'white', fontSize: 100 }}>
