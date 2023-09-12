@@ -128,6 +128,9 @@ function ProfilePage() {
       await saveGoalsToServer(newGoal);
 
       setNewGoal('');
+
+      // Refresh the page
+      window.location.reload();
     }
   };
 
