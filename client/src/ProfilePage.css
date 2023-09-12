@@ -45,12 +45,14 @@
   text-decoration: none;
   background-color: #899091;
   color: white;
+  margin: 5px;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .logout-button {
+  margin: 5px;
   margin-top: 20px;
   text-decoration: none;
   background-color: #899091;
@@ -71,6 +73,38 @@
   cursor: pointer;
   font-size: 14px;
 }
+
+/* CSS for styling the fixed goals box */
+.fixed-goals-box {
+  width: 400px;
+  border: 2px solid #ccc;
+  padding: 20px;
+  position: relative; /* Add this line to create a relative positioning context */
+}
+
+/* CSS for the Delete buttons container */
+.delete-buttons-container {
+  position: absolute; /* Position the container absolutely within the fixed-goals-box */
+  top: 1;
+  right: 0; /* Adjust the right value to position it on the right side */
+  display: flex;
+  flex-direction: column; /* Stack the Delete buttons vertically */
+  align-items: flex-end; /* Align the Delete buttons to the right */
+}
+
+/* Style the Delete button */
+.delete-button {
+  background-color: #773232;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px; /* Adjust the margin to separate the Delete buttons */
+  margin-right: 25px;
+}
+
 
 /* CSS for the progression bar */
 .progression {

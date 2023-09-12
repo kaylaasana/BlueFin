@@ -47,7 +47,7 @@ class Auth {
     // clear user's token and profile data from local storage
     localStorage.removeItem("id_token");
     // reloads the page and resets the state of the app
-    window.location.assign("/login");
+    window.location.assign("/auth");
   }
 }
 

@@ -25,6 +25,17 @@ export const GET_USER_GOALS = gql`
   }
 `;
 
+// deleting a users goal by _id
+export const DELETE_USER_GOALS = gql `
+query DeleteGoal($userId: ID!, $goalId: ID!) {
+  deleteUserGoal(userId: $userId, goalId: $goalId) {
+    _id
+    name
+    completed
+  }
+}
+`;
+
 export const CHECK_USERNAME_EXISTS = gql`
   query CheckUsernameExists($username: String!) {
     checkUsernameExists(username: $username)

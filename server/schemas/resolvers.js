@@ -18,7 +18,7 @@ const resolvers = {
         console.log(error);
       }
     },
-    
+
     // check if username already exists in database
     checkUsernameExists: async (parent, { username }) => {
       const existingUser = await User.findOne({ username });
@@ -195,9 +195,9 @@ const resolvers = {
         console.log(user);
 
         const { goals } = user;
-        for(let i = 0; i < goals.length; i++) {
-          if(goalId == goals[i]._id) {
-            goals[i].name = name; 
+        for (let i = 0; i < goals.length; i++) {
+          if (goalId == goals[i]._id) {
+            goals[i].name = name;
           }
         }
         await user.save();
@@ -218,8 +218,8 @@ const resolvers = {
         }
         // Find the goal by _id
         const { goals } = user;
-        for(let i = 0; i < goals.length; i++) {
-          if(goalId == goals[i]._id) {
+        for (let i = 0; i < goals.length; i++) {
+          if (goalId == goals[i]._id) {
             goals[i].completed = completed;
           }
         }
@@ -232,6 +232,37 @@ const resolvers = {
         throw new Error("Failed to update goal completion");
       }
     },
+
+    // Resolver for deleting specific goals by _id
+    deleteGoal: async (parent, { userId, goalId }) => {
+      try {
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error("User not found");
+        }
+        const { goals } = user;
+        let goalIndex = -1; // Initialize goalIndex with -1
+
+        for (let i = 0; i < goals.length; i++) {
+          if (goals[i]._id.toString() === goalId) {
+            goalIndex = i;
+            break; // break exits the loop prematurely when a certain condition is met
+          }
+        }
+        if (goalIndex === -1) {
+          throw new Error("Goal not found");
+        }
+        // Remove the goal from the array
+        goals.splice(goalIndex, 1);
+
+        await user.save();
+        return user;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Failed to Delete goal");
+      }
+    },
+
   },
 };
 

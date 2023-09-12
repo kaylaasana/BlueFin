@@ -8,7 +8,7 @@ import {
   GET_USER_GOALS,
 } from '../utils/queries';
 
-import { ADD_GOAL_TO_USER, UPDATE_USER_GOALS, UPDATE_GOAL_COMPLETION  } from '../utils/mutation';
+import { ADD_GOAL_TO_USER, UPDATE_USER_GOALS, UPDATE_GOAL_COMPLETION, DELETE_USER_GOALS } from '../utils/mutation';
 
 function ProfilePage() {
   // Get user data from authentication (assuming Auth.getUser() returns user data)
@@ -25,6 +25,7 @@ function ProfilePage() {
     }
   });
 
+  const [deleteUserGoals] = useMutation(DELETE_USER_GOALS);
   const [addGoal, {error}] = useMutation(ADD_GOAL_TO_USER)
   const [updateGoal] = useMutation(UPDATE_USER_GOALS) 
   const [updateGoalCompletion] = useMutation(UPDATE_GOAL_COMPLETION) 
@@ -127,6 +128,9 @@ function ProfilePage() {
       await saveGoalsToServer(newGoal);
 
       setNewGoal('');
+
+      // Refresh the page
+      window.location.reload();
     }
   };
 
@@ -148,16 +152,34 @@ function ProfilePage() {
     }
   };
 
+  const handleDeleteGoal = async (goalId) => {
+    try {
+      await deleteUserGoals({
+        variables: {
+          userId: id, // Assuming `id` is the current user's ID
+          goalId: goalId,
+        },
+      });
+  
+      // Remove the deleted goal from the local state
+      const updatedGoals = goals.filter((goal) => goal._id !== goalId);
+      setGoals(updatedGoals);
+    } catch (error) {
+      console.error('Error deleting goal:', error);
+    }
+  };
+  
   return (
     <div className="profile-page-container">
       <Link to="/" className="homepage-button">
         Homepage
       </Link>
-      <div>
-        <button onClick={Auth.logout} className="logout-button">
-          Logout
-        </button>
-      </div>
+      <Link to="/Training" className="logout-button">
+        Training Room
+      </Link>
+      <Link onClick={Auth.logout} className="logout-button">
+        Log Out
+      </Link>
       <div className="profile-container">
         <div className="profile-info">
           <h2>{userData.username}'s Profile</h2>
@@ -191,6 +213,11 @@ function ProfilePage() {
                       <span onClick={() => startEditingGoal(goal._id)} className="goal-name">
                         {goal.name}
                       </span>
+                      <div className="delete-buttons-container">
+                      <button onClick={() => handleDeleteGoal(goal._id)} className="delete-button">
+                        Delete
+                      </button>
+                      </div>
                     </>
                   )}
                 </li>

@@ -87,7 +87,7 @@ const SignUp = ({ occludeObj, handleRotate, text = 'SignUp' }) => {
       return;
     }
 
-    if (formState.username.length <= 4 || formState.username.length >= 10) {
+    if (formState.username.length < 4 || formState.username.length > 10) {
       errors.push("Username must be between 4-10 characters long");
       setErrorMessages(errors);
       return;
