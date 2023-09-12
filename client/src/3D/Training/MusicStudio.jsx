@@ -6,10 +6,19 @@ Title: Music Studio at Home
 */
 
 import { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Text3D, Center } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
 export default function MusicStudio(props) {
   const { nodes, materials } = useGLTF('/models/music_studio_at_home/scene.gltf');
+  const screenLight = useRef()
+  const lampLight = useRef()
+
+  useFrame((state, delta)=>{
+    screenLight.current.intensity = 0.4 + Math.abs(Math.sin(state.clock.elapsedTime))
+    lampLight.current.intensity = Math.abs(Math.sin(state.clock.elapsedTime) / 10)
+  })
+
   return (
     <group {...props} dispose={null}>
       <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
@@ -150,6 +159,7 @@ export default function MusicStudio(props) {
           rotation={[Math.PI / 2, 0, 0]}
           scale={0.025}
         />
+        <pointLight ref={screenLight} name="screenLight" castShadow shadow-normalBias={0.04} position={[-8.817, 5.337, 3.326]} intensity={1.01} color={'green'}/>
         <mesh
           name="Sofa_0"
           castShadow
@@ -200,16 +210,18 @@ export default function MusicStudio(props) {
           rotation={[Math.PI / 2, 0, 0]}
           scale={0.1}
         />
-        <mesh
-          name="Sermstyle_0"
-          castShadow
-          receiveShadow
-          geometry={nodes.Sermstyle_0.geometry}
-          material={materials["palette.015"]}
-          position={[-8.996, 5.455, 6.086]}
-          rotation={[Math.PI / 2, 0, 0]}
-          scale={0.125}
-        />
+        <Center position={[-8.996, 5.455, 6.686]} rotation={[Math.PI / 2, 0, 0]}>
+            <Text3D 
+                font={'/3d-fonts/Autumn.json'}
+                size={0.75}
+                height={0.2}
+                curveSegments={15}
+                material-color={'#03e9f4'}
+            >
+                BLUEFIN
+                
+            </Text3D>
+        </Center>
         <mesh
           name="TeaTable_0"
           castShadow
@@ -519,6 +531,7 @@ export default function MusicStudio(props) {
           rotation={[Math.PI / 2, -1.532, 0]}
           scale={[0.04, 0.049, 0.04]}
         />
+        <pointLight ref={lampLight} name="lampLight" castShadow shadow-normalBias={0.04} position={[-5.262, 4.804, 4.26]} color={'orange'} intensity={0.08}/>
         <mesh
           name="LavaLamp001_0"
           castShadow

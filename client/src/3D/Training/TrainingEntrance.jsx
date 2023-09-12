@@ -1,5 +1,6 @@
 import { OrbitControls, Stars } from '@react-three/drei'
 import { useControls } from 'leva'
+import { Perf } from 'r3f-perf'
 
 import MusicStudio from './MusicStudio'
 import RoomEnv from './RoomEnv'
@@ -16,6 +17,7 @@ export default function TrainingEntrance(){
     
 
     return <>
+        <Perf position={'bottom-right'}/>
         <OrbitControls/>
         <RoomEnv/>
 
