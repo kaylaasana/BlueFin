@@ -22,6 +22,48 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const ADD_GOAL_TO_USER = gql ` 
+mutation addGoalToUser($userId: ID!, $goal: String!) {
+  addGoalToUser(userId: $userId, goal: $goal) {
+    goals {
+      _id
+      name
+      completed
+    }
+  }
+}
+`;
+
+export const UPDATE_USER_GOALS = gql `
+mutation updateGoalName($userId: ID!, $goalId: ID!, $name: String!) {
+  updateGoalName(userId: $userId, goalId: $goalId, name: $name) {
+    _id
+    username
+    email
+    goals {
+      _id
+      name
+      completed
+    }
+  }
+}
+`;
+
+export const  UPDATE_GOAL_COMPLETION = gql `
+mutation updateGoalCompletion($userId: ID!, $goalId: ID!, $completed: Boolean!) {
+  updateGoalCompletion(userId: $userId, goalId: $goalId, completed: $completed) {
+    _id
+    username
+    email
+    goals {
+      _id
+      name
+      completed
+    }
+  }
+}
+`;
+
 export const UPDATE_EASY_SCORE = gql`
   mutation updateEasyScore($userId: ID!, $easyScore: Int!) {
     updateEasyScore(userId: $userId, easyScore: $easyScore) {
