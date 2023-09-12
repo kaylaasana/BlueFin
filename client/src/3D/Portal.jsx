@@ -83,6 +83,7 @@ function Frame({
             Auth.logout();
           } else {
             window.location.assign(link);
+            setClicked(false)
           }
         }
       }
