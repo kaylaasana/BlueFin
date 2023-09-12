@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-// Getting the user's data to display 
+// Getting the user's data to display
 export const GET_USER_DATA = gql`
-  query GetUser {
+  query getUser {
     user {
       _id
       username
@@ -16,13 +16,13 @@ export const GET_USER_DATA = gql`
 
 // Getting the user's goals
 export const GET_USER_GOALS = gql`
-query GetUserGoals($userId: ID!) {
-  GetUserGoals(userId: $userId) {
-    _id
-    name
-    completed
+  query GetUserGoals($userId: ID!) {
+    GetUserGoals(userId: $userId) {
+      _id
+      name
+      completed
+    }
   }
-}
 `;
 
 export const CHECK_USERNAME_EXISTS = gql`
@@ -31,8 +31,17 @@ export const CHECK_USERNAME_EXISTS = gql`
   }
 `;
 
-export const CHECK_EMAIL_EXISTS = gql `
+export const CHECK_EMAIL_EXISTS = gql`
   query CheckEmailExists($email: String!) {
     checkEmailExists(email: $email)
+  }
+`;
+
+export const GET_USER_SCORES = gql`
+  query getUser($userId: ID!) {
+    getUser(userId: $userId) {
+      easyScore
+      hardScore
+    }
   }
 `;

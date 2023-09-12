@@ -10,17 +10,22 @@ const Timer = ({
   score,
   resetScore,
   difficulty,
+  setScore,
 }) => {
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(20);
   const [easyScore] = useMutation(UPDATE_EASY_SCORE);
   const [hardScore] = useMutation(UPDATE_HARD_SCORE);
 
   useEffect(() => {
     currentNote.audioStream();
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       if (countdown <= 0) {
         clearInterval(timer);
         prompt(
+          setScore,
           score,
           setCountdown,
           resetScore,
@@ -39,7 +44,7 @@ const Timer = ({
 
   return (
     <>
-      <div> Timeleft: {countdown}</div>
+      <div> Time Left: {countdown}</div>
     </>
   );
 };

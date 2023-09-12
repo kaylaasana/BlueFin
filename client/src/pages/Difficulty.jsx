@@ -12,6 +12,7 @@ const Difficulty = () => {
     } else {
       setEasy(false);
     }
+
     setIsClicked(true);
   };
 
