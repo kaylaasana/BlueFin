@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
 import Auth from '../utils/auth';
 import { useQuery, useMutation, useApolloClient } from '@apollo/client';
-import {
-  GET_USER_DATA,
-  GET_USER_GOALS,
-} from '../utils/queries';
+import { GET_USER_DATA, GET_USER_GOALS } from '../utils/queries';
 
-import { ADD_GOAL_TO_USER, UPDATE_USER_GOALS, UPDATE_GOAL_COMPLETION, DELETE_USER_GOALS } from '../utils/mutation';
+import {
+  ADD_GOAL_TO_USER,
+  UPDATE_USER_GOALS,
+  UPDATE_GOAL_COMPLETION,
+  DELETE_USER_GOALS,
+} from '../utils/mutation';
 
 function ProfilePage() {
   // Get user data from authentication (assuming Auth.getUser() returns user data)
@@ -22,13 +24,13 @@ function ProfilePage() {
   const { data: userGoalsData } = useQuery(GET_USER_GOALS, {
     variables: {
       userId: id,
-    }
+    },
   });
 
   const [deleteUserGoals] = useMutation(DELETE_USER_GOALS);
-  const [addGoal, {error}] = useMutation(ADD_GOAL_TO_USER)
-  const [updateGoal] = useMutation(UPDATE_USER_GOALS) 
-  const [updateGoalCompletion] = useMutation(UPDATE_GOAL_COMPLETION) 
+  const [addGoal, { error }] = useMutation(ADD_GOAL_TO_USER);
+  const [updateGoal] = useMutation(UPDATE_USER_GOALS);
+  const [updateGoalCompletion] = useMutation(UPDATE_GOAL_COMPLETION);
 
   // Initialize Apollo Client
   // const client = useApolloClient();
@@ -43,6 +45,9 @@ function ProfilePage() {
   const [goals, setGoals] = useState([]);
   const [newGoal, setNewGoal] = useState('');
   const [editingGoalId, setEditingGoalId] = useState(null);
+
+  // State for edited goals
+  const [editedGoals, setEditedGoals] = useState({});
 
   // Update goals state when userGoalsData changes
   useEffect(() => {
@@ -64,21 +69,20 @@ function ProfilePage() {
   const toggleGoalCompletion = async (goalId) => {
     let goalCompletion = false;
     const updatedGoals = goals.map((goal) => {
-      if(goal._id == goalId) {
-        goalCompletion = !goal.completed
+      if (goal._id === goalId) {
+        goalCompletion = !goal.completed;
 
-        return { ...goal, completed: !goal.completed}
+        return { ...goal, completed: !goal.completed };
       } else {
         return goal;
       }
-    }
-  );
+    });
     await updateGoalCompletion({
       variables: {
         userId: id,
         goalId: goalId,
         completed: goalCompletion,
-      }
+      },
     });
 
     setGoals(updatedGoals);
@@ -87,27 +91,40 @@ function ProfilePage() {
   // Start editing a goal
   const startEditingGoal = (goalId) => {
     setEditingGoalId(goalId);
+
+    // Initialize the edited content with the current goal name
+    const goal = goals.find((goal) => goal._id === goalId);
+    setEditedGoals({ ...editedGoals, [goalId]: goal.name });
   };
 
   // Handle editing a goal
-  const handleGoalEdit = async (goalId, newName) => {
-    const updatedGoals = goals.map((goal) =>
-      goal._id === goalId ? { ...goal, name: newName } : goal
-    );
-    await updateGoal({
-      variables: {
-        userId: id,
-        goalId: goalId,
-        name: newName,
-      }
-    });
-
-    setGoals(updatedGoals);
+  const handleGoalEdit = (goalId, newName) => {
+    // Update the edited content for the specific goal
+    setEditedGoals({ ...editedGoals, [goalId]: newName });
   };
 
   // Save edited goal
-  const saveGoalEdit = () => {
-    setEditingGoalId(null);
+  const saveGoalEdit = async (goalId) => {
+    try {
+      // Save the edited goal to the server
+      await updateGoal({
+        variables: {
+          userId: id,
+          goalId: goalId,
+          name: editedGoals[goalId],
+        },
+      });
+
+      // Update the local goals state after successful server update
+      const updatedGoals = goals.map((goal) =>
+        goal._id === goalId ? { ...goal, name: editedGoals[goalId] } : goal,
+      );
+      setGoals(updatedGoals);
+    } catch (error) {
+      console.error('Error saving goal edit:', error);
+    } finally {
+      setEditingGoalId(null);
+    }
   };
 
   // Handle adding a new goal
@@ -137,14 +154,14 @@ function ProfilePage() {
   // Save goals to the server
   const saveGoalsToServer = async (updatedGoals) => {
     if (data?._id) {
-      try{
+      try {
         await addGoal({
           variables: {
             userId: data._id,
             goal: updatedGoals,
-          }
-        })
-      }catch(error){ 
+          },
+        });
+      } catch (error) {
         console.log(error);
       }
     } else {
@@ -160,7 +177,7 @@ function ProfilePage() {
           goalId: goalId,
         },
       });
-  
+
       // Remove the deleted goal from the local state
       const updatedGoals = goals.filter((goal) => goal._id !== goalId);
       setGoals(updatedGoals);
@@ -168,55 +185,63 @@ function ProfilePage() {
       console.error('Error deleting goal:', error);
     }
   };
-  
+
   return (
-    <div className="profile-page-container">
-      <Link to="/" className="homepage-button">
+    <div className='profile-page-container'>
+      <Link to='/' className='homepage-button'>
         Homepage
       </Link>
-      <Link to="/Training" className="logout-button">
+      <Link to='/Training' className='logout-button'>
         Training Room
       </Link>
-      <Link onClick={Auth.logout} className="logout-button">
+      <Link onClick={Auth.logout} className='logout-button'>
         Log Out
       </Link>
-      <div className="profile-container">
-        <div className="profile-info">
+      <div className='profile-container'>
+        <div className='profile-info'>
           <h2>{userData.username}'s Profile</h2>
           <p>Email: {userData.email}</p>
         </div>
-        <div className="goals-container">
-          <div className="fixed-goals-box">
+        <div className='goals-container'>
+          <div className='fixed-goals-box'>
             <h3>Goals and Objectives</h3>
             <ul style={{ listStyleType: 'none' }}>
               {goals.map((goal) => (
-                <li key={goal._id} className="goal-item">
+                <li key={goal._id} className='goal-item'>
                   {editingGoalId === goal._id ? (
                     <>
                       <input
-                        type="text"
-                        value={goal.name}
-                        onChange={(e) => handleGoalEdit(goal._id, e.target.value)}
+                        type='text'
+                        value={editedGoals[goal._id] || goal.name}
+                        onChange={(e) =>
+                          handleGoalEdit(goal._id, e.target.value)
+                        }
                       />
-                      <button onClick={saveGoalEdit} className="button">
+                      <button
+                        onClick={() => saveGoalEdit(goal._id)}
+                        className='button'>
                         Save
                       </button>
                     </>
                   ) : (
                     <>
                       <input
-                        type="checkbox"
+                        type='checkbox'
                         checked={goal.completed}
                         onChange={() => toggleGoalCompletion(goal._id)}
-                        className="checkbox"
+                        className='checkbox'
                       />
-                      <span onClick={() => startEditingGoal(goal._id)} className="goal-name">
+                      <span
+                        onClick={() => startEditingGoal(goal._id)}
+                        className='goal-name'>
                         {goal.name}
                       </span>
-                      <div className="delete-buttons-container">
-                      <button onClick={() => handleDeleteGoal(goal._id)} className="delete-button">
-                        Delete
-                      </button>
+                      <div className='delete-buttons-container'>
+                        <button
+                          onClick={() => handleDeleteGoal(goal._id)}
+                          className='delete-button'>
+                          Delete
+                        </button>
                       </div>
                     </>
                   )}
@@ -224,12 +249,12 @@ function ProfilePage() {
               ))}
               <li>
                 <input
-                  type="text"
-                  placeholder="Add a new goal"
+                  type='text'
+                  placeholder='Add a new goal'
                   value={newGoal}
                   onChange={(e) => setNewGoal(e.target.value)}
                 />
-                <button onClick={handleAddGoal} className="button">
+                <button onClick={handleAddGoal} className='button'>
                   Add
                 </button>
               </li>

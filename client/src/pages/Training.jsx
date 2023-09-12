@@ -5,7 +5,7 @@ import Timer from '../components/Timer';
 import { useQuery } from '@apollo/client';
 import { GET_USER_SCORES } from '../utils/queries';
 import Auth from '../utils/auth';
-import visualizer from '../utils/visualizer';
+import { Link } from 'react-router-dom';
 
 const Training = ({ difficulty }) => {
   const currentNote = new Note();
@@ -49,9 +49,20 @@ const Training = ({ difficulty }) => {
 
   return (
     <>
+      <Link to='/' className='homepage-button'>
+        Homepage
+      </Link>
+      <Link to='/profile' className='logout-button'>
+        Profile
+      </Link>
+      <Link onClick={Auth.logout} className='logout-button'>
+        Log Out
+      </Link>
       {difficulty ? (
         <>
-          <button onClick={note}>Play This Note</button>
+          <button onClick={note} className='go'>
+            Play This Note
+          </button>
 
           <div style={{ color: 'white', fontSize: 100 }}>
             Play This Note {playbackNote}
