@@ -13,6 +13,7 @@ import SignUp from './pages/SignUp.jsx';
 import Difficulty from './pages/Difficulty.jsx';
 import Auth from './pages/Auth.jsx';
 import auth from './utils/auth.js';
+import TrainingCanvas from './3D/Canvas/TrainingCanvas.jsx';
 /**
  * Redirect an unauthenticated user
  */
@@ -54,8 +55,12 @@ const router = createBrowserRouter([
         element: <ProtectedRoute><Profile /></ProtectedRoute>,
       },
       {
-        path: '/training',
+        path: '/training/main',
         element: <ProtectedRoute><Difficulty /></ProtectedRoute>,
+      },
+      {
+        path: '/training/entrance',
+        element: <TrainingCanvas/>
       },
       {
         path: '/auth',

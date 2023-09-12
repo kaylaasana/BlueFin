@@ -7,7 +7,8 @@ import * as THREE from 'three'
 /**
  * Sub component for scroll animation
  */
-function Composition({clicked}) {
+function Composition({clicked, setClicked}) {
+    const [goLink, setGoLink] = useState(true)
     
     // useScroll method returns variety of values related with scroll such as offset, range etc
     const scroll = useScroll()
@@ -30,8 +31,9 @@ function Composition({clicked}) {
         if(clicked){
             state.camera.position.x -= delta * 3
             state.camera.position.z -= delta * 3
-            if(state.camera.position.z < -0.75){
+            if(state.camera.position.z < -0.75 && goLink){
                 window.location.assign('/portal')
+                setGoLink(false)
             }
 
         }else {
@@ -95,7 +97,7 @@ export default function ScrollAnim() {
 
         {/* Putting Scroll components inside scroll controls */}
         <ScrollControls pages={3} damping={0.1}>
-            <Composition clicked={clicked}/>
+            <Composition clicked={clicked} setClicked={setClicked}/>
             <Scroll html>
                 { !clicked &&
                     <>

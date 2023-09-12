@@ -6,7 +6,7 @@ import { CHECK_USERNAME_EXISTS, CHECK_EMAIL_EXISTS } from "../../utils/queries";
 import Auth from "../../utils/auth";
 import { validateEmail } from "../../utils/helpers";
 
-const SignUp = ({ occludeObj, handleRotate, text = 'SignUp' }) => {
+const SignUp = ({ occludeObj, handleRotate, text = 'SignUp', goHome }) => {
   /**
    * Everything not related with 3D
    */
@@ -147,7 +147,7 @@ const SignUp = ({ occludeObj, handleRotate, text = 'SignUp' }) => {
 
         <div>
           <div className="buttonGroup d-flex justify-content-start">
-            <button id="homeButton" type="button">Homepage</button>
+            <button id="homeButton" type="button" onClick={goHome}>Homepage</button>
           </div>
           <div className="col d-flex justify-content-center">
             <form onSubmit={handleFormSubmit} onBlur={noInput}>

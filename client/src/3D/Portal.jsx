@@ -83,6 +83,7 @@ function Frame({
             Auth.logout();
           } else {
             window.location.assign(link);
+            setClicked(false)
           }
         }
       }
@@ -213,7 +214,7 @@ export default function Portal() {
           position={[0, 0, 0]}
           bg={middleColor}
           text={'Train'}
-          link={'/training'}
+          link={'/training/entrance'}
           setOrbit={setOrbit}
           isAudio={true}>
           <Environment files={'./envMap/blender-2k.hdr'} resolution={16} />

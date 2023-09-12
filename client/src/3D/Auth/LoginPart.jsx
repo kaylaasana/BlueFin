@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutation";
 import Auth from "../../utils/auth";
 
-export default function LoginPart({ occludeObj, handleRotate, text = 'Login' }) {
+export default function LoginPart({ occludeObj, handleRotate, text = 'Login', goHome }) {
     /**
      * Everything not related with 3D
      */
@@ -60,7 +60,7 @@ export default function LoginPart({ occludeObj, handleRotate, text = 'Login' }) 
         >
             <div className="container">
                 <div className="buttonGroup d-flex justify-content-end">
-                    <button id="homeButton2">Homepage</button>
+                    <button id="homeButton2" onClick={goHome}>Homepage</button>
                 </div>
                 <div className="row">
                     <div className="col d-flex justify-content-center">
