@@ -56,7 +56,7 @@ export default function TrainingEntrance(){
         <MusicStudio position={[9, -3, 0]}/>
         {showText && <Html position-x={textPosition.x} position-y={textPosition.y} position-z={textPosition.z}  rotation={[-0.206, 0.945, 0.168]} transform>
             <div className="buttonGroup">
-                <button onClick={animateCam} style={{ backgroundColor: '#E2E8CE', color: 'black' }}>Go Train</button>
+                <button onClick={animateCam} id="goTrainBtn">Go Train</button>
             </div>
         </Html>}
 

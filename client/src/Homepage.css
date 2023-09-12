@@ -102,6 +102,28 @@ label,
                 0 0 200px #03e9f4;
 }
 
+#goTrainBtn {
+  border-radius: 10px;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  background-color: #ffa500;
+  padding: .5rem;
+  border: none;
+  overflow: hidden;
+  transition: 0.5s;
+  font-size: .85rem;
+  color: black;
+}
+
+#goTrainBtn:hover{
+  background: #ffa500;
+  color: #050801;
+  box-shadow: 0 0 5px #ffa500,
+              0 0 25px #ffa500,
+              0 0 50px #ffa500,
+              0 0 200px #ffa500;
+}
+
 #homeButton{
   margin: 0;
 }
