@@ -2,14 +2,22 @@ import { Note } from '../utils/audioStream';
 import playNote from '../utils/playNote';
 import { useEffect, useState } from 'react';
 import Timer from '../components/Timer';
+import { useQuery } from '@apollo/client';
+import { GET_USER_DATA } from '../utils/queries';
+
 import visualizer from '../utils/visualizer';
 
 const Training = ({ difficulty, practice }) => {
   const currentNote = new Note();
 
+  const { data } = Auth.getUser();
+  const id = data?._id;
+  // const { data: userScore } = useQuery(GET_USER_DATA);
+
   const [playbackNote, setPlaybackNote] = useState(' ');
   const [score, setScore] = useState(0);
   const [interval, setInterval] = useState(null);
+  // const []
 
   const checkNote = (interval) => {
     if (playbackNote == currentNote.noteTracker) {
@@ -39,7 +47,6 @@ const Training = ({ difficulty, practice }) => {
     <>
       {difficulty ? (
         <>
-          <button onClick={tuner}>Test</button>
           <button onClick={note}>Play This Note</button>
 
           <div style={{ color: 'white', fontSize: 100 }}>
@@ -67,7 +74,6 @@ const Training = ({ difficulty, practice }) => {
         </>
       ) : (
         <>
-          <button onClick={tuner}>Test</button>
           <button onClick={note}>Play This Note</button>
 
           <div style={{ color: 'white', fontSize: 100 }}>

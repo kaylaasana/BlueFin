@@ -13,7 +13,7 @@ const Timer = ({
   practice,
   setScore,
 }) => {
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(20);
   const [easyScore] = useMutation(UPDATE_EASY_SCORE);
   const [hardScore] = useMutation(UPDATE_HARD_SCORE);
 
@@ -41,7 +41,7 @@ const Timer = ({
       return () => clearInterval(timer);
     }
     setCountdown('Take your time');
-    setScore('No Score');
+    setScore("You're doing great sweetie");
   }, [countdown]);
 
   return (
