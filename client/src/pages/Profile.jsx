@@ -152,7 +152,10 @@ function ProfilePage() {
     <div className="profile-page-container">
       <Link to="/" className="homepage-button">
         Homepage
-      </Link>
+      </Link> 
+      <Link to="/Training" className="logout-button">
+          Training Room
+        </Link>
       <div>
         <button onClick={Auth.logout} className="logout-button">
           Logout
