@@ -39,7 +39,7 @@ class Note {
         this.drawNote();
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 

@@ -23,7 +23,6 @@ const Training = ({ difficulty }) => {
   const [interval, setInterval] = useState(null);
 
   const checkNote = (interval) => {
-    console.log(userScore);
     if (playbackNote == currentNote.noteTracker) {
       setScore(score + 1);
       clearInterval(interval);

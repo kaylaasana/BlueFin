@@ -6,7 +6,7 @@ const Difficulty = () => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = (e) => {
-    console.log(e.target.id);
+   
     if (e.target.id == 'Easy') {
       setEasy(true);
     } else {
