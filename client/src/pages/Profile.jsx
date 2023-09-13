@@ -191,7 +191,7 @@ function ProfilePage() {
       <Link to='/' className='homepage-button'>
         Homepage
       </Link>
-      <Link to='/Training' className='logout-button'>
+      <Link to='/Training/main' className='logout-button'>
         Training Room
       </Link>
       <Link onClick={Auth.logout} className='logout-button'>
