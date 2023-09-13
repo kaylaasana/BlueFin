@@ -15,7 +15,7 @@ const resolvers = {
         const user = await User.findById(userId);
         return user.goals;
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
 
@@ -192,7 +192,7 @@ const resolvers = {
         if (!user) {
           throw new Error("User not found");
         }
-        console.log(user);
+
 
         const { goals } = user;
         for (let i = 0; i < goals.length; i++) {
