@@ -49,7 +49,7 @@ export default function TrainingEntrance(){
     }
 
     return <>
-        <Perf position={'bottom-right'}/>
+        {/* <Perf position={'bottom-right'}/> */}
         <CameraControls ref={camControl} mouseButtons={null} touches={null}/>
         <RoomEnv/>
 

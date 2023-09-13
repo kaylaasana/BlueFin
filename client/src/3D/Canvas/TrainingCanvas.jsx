@@ -7,7 +7,7 @@ import TrainingEntrance from '../Training/TrainingEntrance'
 
 export default function TrainingCanvas(){
     return <>
-        <Leva collapsed/>
+        <Leva collapsed hidden/>
         <Canvas shadows 
             camera={{
                 fov: 45,
