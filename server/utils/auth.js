@@ -1,20 +1,20 @@
-const { GraphQLError } = require("graphql");
+const { GraphQLError } = require('graphql');
 // require JWT
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 // creating secret for  web token
 const secret = 'mysecretssshhhhhhh';
 // creating expiration for web token
-const expiration = "2h";
+const expiration = '2h';
 
 module.exports = {
   // error handling for authentication
-  AuthenticationError: new GraphQLError("Incorrect email or password", {
+  AuthenticationError: new GraphQLError('Incorrect email or password', {
     extensions: {
-      code: "UNAUTHENTICATED",
+      code: 'UNAUTHENTICATED',
     },
   }),
-  
+
   authMiddleware: function ({ req }) {
     // storing the token in 'token' if it comes from req.body, req.query or headers
     let token = req.body.token || req.query.token || req.headers.authorization;
@@ -33,8 +33,7 @@ module.exports = {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.user = data;
     } catch {
-      // console.error(error)
-      console.log('Invalid token');
+      console.error(error);
     }
 
     return req;

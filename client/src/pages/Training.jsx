@@ -21,10 +21,8 @@ const Training = ({ difficulty }) => {
   const [playbackNote, setPlaybackNote] = useState(' ');
   const [score, setScore] = useState(0);
   const [interval, setInterval] = useState(null);
-  // const []
 
   const checkNote = (interval) => {
-    console.log(userScore);
     if (playbackNote == currentNote.noteTracker) {
       setScore(score + 1);
       clearInterval(interval);
@@ -44,7 +42,6 @@ const Training = ({ difficulty }) => {
 
   useEffect(() => {
     note();
-    // visualizer();
   }, []);
 
   return (
@@ -58,6 +55,7 @@ const Training = ({ difficulty }) => {
       <Link onClick={Auth.logout} className='logout-button'>
         Log Out
       </Link>
+
       {difficulty ? (
         <>
           <button onClick={note} className='go'>

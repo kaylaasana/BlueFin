@@ -26,7 +26,6 @@ export default function prompt(
       setCountdown(20);
       resetScore();
       const { data } = Auth.getUser();
-      console.log(Auth.getUser());
       if (difficulty == true) {
         easyScore({ variables: { userId: data._id, easyScore: score } });
       }
