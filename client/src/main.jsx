@@ -33,6 +33,24 @@ function ProtectedRoute({ children }){
 }
 
 /**
+ * Redirect the user to profile page when they are trying to log in when they are not logged in
+ */
+function GoProfile({ children }){
+  // Check if the user is logged in
+  const isLoggedIn = auth.loggedIn()
+  // // comment the line above and uncomment the line below if you are bothered by the fact that you have to login
+  // const isLoggedIn = true 
+  if(isLoggedIn){
+    // then navigate to /profile page
+    window.location.assign('/profile')
+    return null
+  }
+
+  // renders the children
+  return children
+}
+
+/**
  * Router setup
  * Insert more children as we go
  */
@@ -64,7 +82,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/auth',
-        element: <Auth/>
+        element: <GoProfile><Auth/></GoProfile>
       }
     ],
   },
