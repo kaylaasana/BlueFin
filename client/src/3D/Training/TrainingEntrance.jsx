@@ -1,4 +1,4 @@
-import { Stars, Html, CameraControls } from '@react-three/drei'
+import { Stars, Html, CameraControls, Float } from '@react-three/drei'
 import { useRef, useState } from 'react'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
@@ -11,8 +11,9 @@ import { useThree } from '@react-three/fiber'
 export default function TrainingEntrance(){
     const camControl = useRef()
     const [showText, setShowText] = useState(true)
-    const { camera } = useThree()
-
+    const { camera, gl } = useThree()
+    console.log(gl.domElement.height)
+    console.log(gl.domElement.width)
     const { skyColor } = useControls('skyColor', {
         skyColor: {
             value: '#010209'
@@ -23,7 +24,7 @@ export default function TrainingEntrance(){
         textPosition: {
             value: {
                 x: -5,
-                y: 2.62,
+                y: -2.55,
                 z: 5
             },
             min: -5,
@@ -56,11 +57,11 @@ export default function TrainingEntrance(){
 
         <Stars radius={300} count={2000}/>
         <MusicStudio position={[9, -3, 0]}/>
-        {showText && <Html position-x={textPosition.x} position-y={textPosition.y} position-z={textPosition.z}  rotation={[-0.206, 0.945, 0.168]} transform>
+        {showText && <Float speed={2} floatIntensity={2} rotationIntensity={0.1}><Html position-x={textPosition.x} position-y={textPosition.y} position-z={(textPosition.z / gl.domElement.width)}  rotation={[-0.206, 1.545, 0.168]} transform>
             <div className="buttonGroup">
                 <button onClick={animateCam} id="goTrainBtn">Go Train</button>
             </div>
-        </Html>}
+        </Html></Float>}
 
     </>
 }

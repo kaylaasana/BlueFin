@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Training from './Training';
 
+import '../Training.css'
+
 const Difficulty = () => {
   const [easy, setEasy] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
@@ -20,12 +22,22 @@ const Difficulty = () => {
     <>
       {!isClicked && (
         <>
-          <button id={'Easy'} onClick={handleClick}>
-            Easy
-          </button>
-          <button id={'Hard'} onClick={handleClick}>
-            Hard
-          </button>
+          <div className="buttonContainer">
+            <button className="coolBtn" id={'Easy'} onClick={handleClick} style={{ '--color': 'blue' }} >
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Easy
+            </button>
+            <button className="coolBtn" id={'Hard'} onClick={handleClick} style={{ '--color': 'red' }}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Hard
+            </button>
+          </div>
         </>
       )}
       {isClicked ? (
