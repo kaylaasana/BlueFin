@@ -23,14 +23,12 @@ export default function prompt(
     cancelButtonText: "I'd like to practice on my own",
   }).then((result) => {
     if (result.isConfirmed) {
-      setCountdown(20);
-      resetScore();
       const { data } = Auth.getUser();
-      console.log(Auth.getUser());
       if (difficulty == true) {
         easyScore({ variables: { userId: data._id, easyScore: score } });
+      }else{
+        hardScore({ variables: { userId: data._id, hardScore: score } });
       }
-      hardScore({ variables: { userId: data._id, hardScore: score } });
       window.location.reload();
     } else if (result.isDenied) {
       setCountdown(20);

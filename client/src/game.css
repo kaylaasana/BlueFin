@@ -1,0 +1,29 @@
+.coolNeon{
+    text-shadow:
+    0 0 6px rgba(202,228,225,0.92),
+    0 0 30px rgba(202,228,225,0.34),
+    0 0 12px rgba(30,132,242,0.52),
+    0 0 21px rgba(30,132,242,0.92),
+    0 0 34px rgba(30,132,242,0.78),
+    0 0 54px rgba(30,132,242,0.92);
+}
+
+.coolNeon-red{
+    text-shadow:
+    0 0 6px rgba(228, 205, 202, 0.92),
+    0 0 30px rgba(228, 223, 202, 0.34),
+    0 0 12px rgba(242, 51, 30, 0.52),
+    0 0 21px rgba(242, 48, 30, 0.92),
+    0 0 34px rgba(242, 30, 30, 0.78),
+    0 0 54px rgba(242, 30, 30, 0.92);
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
