@@ -53,6 +53,7 @@ function Frame({
     // window.location.href = link
     setOrbit(false);
     setClicked(true);
+    setMusicDistance(0.05)
   };
 
   /**
@@ -108,12 +109,16 @@ function Frame({
       <mesh
         ref={obj}
         onPointerEnter={() => {
-          document.body.style.cursor = 'pointer';
-          setMusicDistance(0.5);
+          if(!isClicked){
+            document.body.style.cursor = 'pointer';
+            setMusicDistance(0.35);
+          }
         }}
         onPointerLeave={() => {
-          document.body.style.cursor = 'default';
-          setMusicDistance(0.1);
+          if(!isClicked){
+            document.body.style.cursor = 'default';
+            setMusicDistance(0.1);
+          }
         }}
         onClick={handleClick}>
         {isAudio && (
