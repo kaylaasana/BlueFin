@@ -39,7 +39,7 @@ class Note {
         this.drawNote();
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -64,14 +64,24 @@ class Note {
       'A#',
       'B',
     ];
+
+    // analyser.fftSize is set to create spectral lines out of the data
     let bufferLength = this.analyser.fftSize;
+
+    // buffer then creates an array out of the bufferlength
     let buffer = new Float32Array(bufferLength);
+
+    // getFloatTime will copy the data into the array, but if the array has excess elements than
+    // the bufferLength, those excess elements will be dropped
     this.analyser.getFloatTimeDomainData(buffer);
     let autoCorrelateValue = this.autoCorrelate(
       buffer,
       this.context.sampleRate,
     );
 
+    // valueToDisplay looks into noteStrings and returns a note
+    // that correlates with the sound data it receives after doing
+    // a lot of math handled by noteFromPitch and autoCorrelateValue
     let valueToDisplay =
       noteStrings[this.noteFromPitch(autoCorrelateValue) % 12];
 
@@ -89,6 +99,7 @@ class Note {
     return Math.round(noteNum) + 69;
   }
 
+  // autoCorrelate does most of the heavy math
   autoCorrelate(buffer, sampleRate) {
     // Perform a quick root-mean-square to see if we have enough signal
     var SIZE = buffer.length;

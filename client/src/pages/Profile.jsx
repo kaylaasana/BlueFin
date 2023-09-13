@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import '../ProfilePage.css';
 import Auth from '../utils/auth';
 import { useQuery, useMutation, useApolloClient } from '@apollo/client';
-import { GET_USER_DATA, GET_USER_GOALS } from '../utils/queries';
+import {
+  GET_USER_DATA,
+  GET_USER_GOALS,
+  GET_USER_SCORES,
+} from '../utils/queries';
 
 import {
   ADD_GOAL_TO_USER,
@@ -22,6 +26,11 @@ function ProfilePage() {
   // Define GraphQL queries using useQuery hook
   const { data: userDataQuery } = useQuery(GET_USER_DATA);
   const { data: userGoalsData } = useQuery(GET_USER_GOALS, {
+    variables: {
+      userId: id,
+    },
+  });
+  const { data: userScore, loading } = useQuery(GET_USER_SCORES, {
     variables: {
       userId: id,
     },
@@ -53,7 +62,6 @@ function ProfilePage() {
   useEffect(() => {
     if (userGoalsData) {
       setGoals(userGoalsData.GetUserGoals);
-      console.log(userGoalsData.GetUserGoals);
     }
   }, [userGoalsData]);
 
@@ -162,7 +170,7 @@ function ProfilePage() {
           },
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     } else {
       console.error('User data is not available or incomplete');
@@ -201,6 +209,12 @@ function ProfilePage() {
         <div className='profile-info'>
           <h2>{userData.username}'s Profile</h2>
           <p>Email: {userData.email}</p>
+          <div>
+            Your Score on Easy Mode: {!loading && userScore.getUser.easyScore}
+          </div>
+          <div>
+            Your Score on Hard Mode: {!loading && userScore.getUser.hardScore}
+          </div>
         </div>
         <div className='goals-container'>
           <div className='fixed-goals-box'>
@@ -212,7 +226,11 @@ function ProfilePage() {
                     <>
                       <input
                         type='text'
-                        value={editedGoals[goal._id] || editedGoals[goal._id] === '' ? editedGoals[goal._id] : goal.name}
+                        value={
+                          editedGoals[goal._id] || editedGoals[goal._id] === ''
+                            ? editedGoals[goal._id]
+                            : goal.name
+                        }
                         onChange={(e) =>
                           handleGoalEdit(goal._id, e.target.value)
                         }
