@@ -14,7 +14,7 @@ function Composition({clicked, setClicked}) {
     const scroll = useScroll()
 
     // Loading Models
-    const mic = useGLTF('./models/microphone.glb')
+    const mic = useGLTF('./models/condenser_microphone/scene.gltf')
 
     // Using reference for later to use in animation
     const micObj = useRef()
