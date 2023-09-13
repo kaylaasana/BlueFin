@@ -1,0 +1,11 @@
+Model Information:
+* title:	Condenser Microphone
+* source:	https://sketchfab.com/3d-models/condenser-microphone-75827daad76d40d897c1ad6a2f5c128d
+* author:	Jan Vančík (https://sketchfab.com/JanVancik3D)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Condenser Microphone" (https://sketchfab.com/3d-models/condenser-microphone-75827daad76d40d897c1ad6a2f5c128d) by Jan Vančík (https://sketchfab.com/JanVancik3D) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
