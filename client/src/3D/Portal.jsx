@@ -53,7 +53,6 @@ function Frame({
     // window.location.href = link
     setOrbit(false);
     setClicked(true);
-    setMusicDistance(0.05)
   };
 
   /**
@@ -78,6 +77,9 @@ function Frame({
         if (state.camera.position.z > -1) {
           state.camera.position.z -= delta * 15;
           state.camera.position.x += delta * (x * 3);
+          if(state.camera.position.z > 0.05){
+            setMusicDistance(0)
+          }
         } else {
           // after zooming in enough, redirect the user to different page or log out
           if (link == 'Logout') {
@@ -111,7 +113,7 @@ function Frame({
         onPointerEnter={() => {
           if(!isClicked){
             document.body.style.cursor = 'pointer';
-            setMusicDistance(0.35);
+            setMusicDistance(0.4);
           }
         }}
         onPointerLeave={() => {
@@ -124,7 +126,7 @@ function Frame({
         {isAudio && (
           // setting positional audio
           <PositionalAudio
-            url='./music/sexy-music.mp3'
+            url='./music/night-street.mp3'
             distance={musicDistance}
             detune={1}
             autoplay

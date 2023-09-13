@@ -6,7 +6,7 @@ Title: Music Studio at Home
 */
 
 import { useRef } from "react";
-import { useGLTF, Text3D, Center } from "@react-three/drei";
+import { useGLTF, Text3D, Center, PositionalAudio } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 
@@ -351,7 +351,15 @@ export default function MusicStudio(props) {
           position={[-13.926, 4.824, 3.884]}
           rotation={[Math.PI / 2, 0.341, 0]}
           scale={0.02}
-        />
+        >
+          <PositionalAudio
+            url='/music/night-street.mp3'
+            distance={0.5}
+            detune={1}
+            autoplay
+            loop
+          />
+        </mesh>
         <mesh
           name="Ashtray_0"
           castShadow
@@ -371,7 +379,15 @@ export default function MusicStudio(props) {
           position={[-3.936, 5.033, 3.673]}
           rotation={[Math.PI / 2, -0.394, 0]}
           scale={0.02}
-        />
+        >
+          <PositionalAudio
+            url='/music/night-street.mp3'
+            distance={0.5}
+            detune={1}
+            autoplay
+            loop
+          />
+        </mesh>
         <mesh
           name="BigSpeaker_0"
           castShadow
