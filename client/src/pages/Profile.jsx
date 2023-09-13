@@ -212,7 +212,7 @@ function ProfilePage() {
                     <>
                       <input
                         type='text'
-                        value={editedGoals[goal._id] || goal.name}
+                        value={editedGoals[goal._id] || editedGoals[goal._id] === '' ? editedGoals[goal._id] : goal.name}
                         onChange={(e) =>
                           handleGoalEdit(goal._id, e.target.value)
                         }
