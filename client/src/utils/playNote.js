@@ -118,7 +118,7 @@ async function playNote(prevNote) {
     piano.triggerAttackRelease(newNote, 4);
     return extractedNote;
   } else {
-    playNote(prevNote);
+    return playNote(prevNote);
   }
 }
 
